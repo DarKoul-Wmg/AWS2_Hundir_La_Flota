@@ -1,0 +1,27 @@
+.landingPageTitle{
+    text-align: center;
+    font: 4.2em "Fira Sans", sans-serif;
+    margin: 30px;
+}
+
+.landingPageCover{
+    max-height: 400px;
+    display: block;
+    margin: auto;
+}
+
+.landingPageDescription{
+    text-align: center;
+    font: 2.4em "Fira Sans", sans-serif;
+}
+
+.landingPageNewGameButton{
+    display: block;
+    margin: auto;
+}
+
+.landingPageRankingButton{
+    display: block;
+    margin: auto;
+}
+
