@@ -1,0 +1,32 @@
+body#game{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4em;
+    
+
+    background-color: rgba(15, 44, 73, 0.811);
+    text-align: center;
+    font-weight:900;
+    color: aliceblue;
+
+    
+}
+
+
+body#game table{
+    border: 6px solid rgb(0, 0, 0); 
+    border-collapse: collapse;
+
+}
+
+    body#game table td{
+        width:4em;
+        height: 4em;
+        border: 3px solid rgb(255, 255, 255);
+        border-style: dashed;
+        border-collapse: collapse
+    }
+
+
+
