@@ -6,7 +6,7 @@
     <title>Troba la petxina</title>
     <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
-<body id="index">
+<body id="index" class="landingPageBody">
     <p class="landingPageTitle">Troba la petxina</p>
     <img class ="landingPageCover" src="../sources/coverPlaceholder.png" alt="Portada del joc"/>
     <p class="landingPageDescription">
