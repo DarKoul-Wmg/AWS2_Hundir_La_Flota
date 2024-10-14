@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" media="screen" href="style.css">
 	<script src="game.js"></script>
+
     <title>Troba la petxina</title>
 </head>
 
