@@ -21,12 +21,27 @@
 }
 
 .landingPageNewGameButton{
-    display: block;
+    font: 2.4em "Fira Sans", sans-serif;
     margin: auto;
+    background-color: #A663CC; 
+    color: #ffffff; 
+    border-radius: 40px; 
+    border: none;
+    padding: 10px;
 }
 
 .landingPageRankingButton{
-    display: block;
-    margin: auto;
+    font: 2.4em "Fira Sans", sans-serif;
+    margin-left: 80px;
+    background-color: #A663CC; 
+    color: #ffffff; 
+    border-radius: 40px; 
+    border: none;
+    padding: 10px;
+}
+
+.landingPageCenterButtons{
+    display: flex;
+    justify-content: center;
 }
 
