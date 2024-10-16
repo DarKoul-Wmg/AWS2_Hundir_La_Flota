@@ -3,29 +3,99 @@ body#game{
     justify-content: center;
     align-items: center;
     margin-top: 4em;
+    min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
+    overflow: hidden; /* Evita el scroll */
     
-
+    background-image: url('../images/backgroundGame3.png'); /* Ruta de tu imagen */
+    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
     background-color: rgba(15, 44, 73, 0.811);
-    text-align: center;
-    font-weight:900;
-    color: aliceblue;
-
-    
 }
 
 body#game table{
-    border: 6px solid rgb(0, 0, 0); 
+    border: 4px solid rgb(0, 0, 0); 
     border-collapse: collapse;
+    background-color: rgba(111, 111, 111, 0.337);
 
 }
 
 body#game table td{
-    width:4em;
-    height: 4em;
-    border: 3px solid rgb(255, 255, 255);
+    width: 3vw; /* Ajusta dinámicamente el tamaño basado en el ancho de la pantalla */
+    height: 3vw;
+    border: 2px solid rgb(255, 255, 255);
     border-style: dashed;
     border-collapse: collapse
 }
+
+body#game table td.number, body#game table td.letter,  body#game table td.empty{ 
+    background-color: rgba(40, 40, 40, 0.419);
+    text-align: center;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}
+
+/* Estructura principal */
+body#game .main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between; /* Espaciar los elementos */
+}
+
+    /* Botón de salir alineado a la izquierda */
+body#game .leftContainer {
+    /*background-color: aquamarine;*/
+    min-width: 150px; /* Evita que se encojan demasiado */
+    max-width: 200px; /* Controla el máximo ancho */
+    margin-left: 4em;
+}
+
+    /* Tablero centrado */
+body#game .centerContainer {
+    flex-grow: 1; /* Para que este div ocupe el máximo espacio disponible */
+    /*background-color: rgb(193, 127, 255);*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Div de puntuación y tiempo */
+body#game .rightContainer {
+    background-color: rgb(239, 37, 37);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+    width: 300px; 
+    padding: 10px;
+}
+
+/* Boton salir*/
+body#game .exit {
+    font-size: 2rem;
+    padding: 10px;
+    background-color: #251934a7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 90px;
+    border-radius: 50px;
+}
+
+
+#time, #points {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+#message {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
 
 
 /* $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus"];*/
@@ -34,58 +104,67 @@ body#game td[data-photo="nautilus"]{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
+    background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="mejillon"]{
     background-image: url('../images/mejillonC.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="erizo"]{
     background-image: url('../images/erizo-de-marC.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="concha"]{
     background-image: url('../images/cascaraC.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="caracola"]{
-    background-image: url('../images/caracola.png');
+    background-image: url('../images/caracolaC.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="caracol"]{
     background-image: url('../images/caracol-de-marC.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="caparazon2"]{
     background-image: url('../images/caparazon2C.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="caparazon"]{
     background-image: url('../images/caparazonC.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="ermitano"]{
     background-image: url('../images/cangrejo-ermitanoC.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
 }
 
 body#game td[data-photo="sand"]{
-    background-image: url('../images/sand.jpg');
+    background-image: url('../images/sand.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
