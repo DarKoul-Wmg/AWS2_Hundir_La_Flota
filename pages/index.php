@@ -18,7 +18,7 @@
             <a href="game.php">
                 <button type="button" class="landingPageNewGameButton">Nova Partida</button>
             </a>
-            <a href="ranking.php">
+            <a href="ranking.php?page=1">
                 <button type="button" class="landingPageRankingButton">Ranking</button>
             </a>
         </div>

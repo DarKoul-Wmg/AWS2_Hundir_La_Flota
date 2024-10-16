@@ -56,3 +56,72 @@
     display: flex;
     justify-content: center;
 }
+
+.rankingBody {
+    background-image: url("../sources/backgroundRanking.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.rankingBox{
+    margin:auto;
+}
+.rankingTitle{
+    text-align: center;
+    color: #232f5f;
+    font: 5.0em "Fira Sans", sans-serif;
+    margin: 30px;
+    font-weight: bold;
+
+}
+.rankingTable{
+    background-color: #232f5f8c;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+    font: 1.4em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+.rankingTable th{
+    background-color: #434b71;
+    border-radius: 12px;
+
+}
+.rankingTable th,
+.rankingTable td {
+    padding: 20px 6vw;
+}
+.rankingTable tbody tr:hover {
+    background-color: #436e7179;
+}
+.rankingTable tbody tr:nth-of-type(even) {
+    background-color: #434b71a9;
+}
+.rankingTable tbody tr:hover:nth-of-type(even) {
+    background-color: #436e7179;
+}
+
+.pagination{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 45vw;
+}
+.pagination a{
+    padding: 14px;
+    font: 1.4em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+.pagination a.active {
+    background-color: #434b71;
+    color: #fcd4a7;
+}
+.pagination a:not(.active) {
+    background-color: #fcd4a76b;
+    color: #434b71;
+}
+  .pagination a:hover:not(.active) {
+    background-color: #fcd4a7;
+}
