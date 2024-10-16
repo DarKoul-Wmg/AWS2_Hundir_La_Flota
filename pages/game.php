@@ -144,8 +144,7 @@ function placeShip(&$ship, $size, $tipe, &$board) { // Cambia $ships a $ship
                     echo "<td class='letter'> $chrx </td>";
                 } else {
                     // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                    $cellContent = $board[$i][$j] ? "X" : " ";
-                    echo "<td id='$id' data-x=$i data-y=$j data-touched='false' photo='none' class='selectCells'>$cellContent</td>";
+                    echo "<td id='$id' data-x=$i data-y=$j data-touched='false' photo='none' class='selectCells'></td>";
                 }
             }
             echo "</tr>";

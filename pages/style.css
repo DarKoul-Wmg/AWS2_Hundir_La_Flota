@@ -53,3 +53,9 @@ body#game td[data-photo="conchita"]{
     background-position: center;
     background-repeat: no-repeat; 
 }
+body#game td[data-photo="sand"]{
+    background-image: url('../images/sand.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
