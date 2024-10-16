@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" type="text/css" media="screen" href="style.css">
-	  <script src="game.js"></script>
+	<script src="game.js"></script>
+    
     <title>Troba la petxina</title>
 </head>
 
@@ -47,32 +49,40 @@
     }
 
     // Función para colocar un barco en el tablero
-    function placeShip($size, $color, &$board) {
-        $placed = false;
-        while (!$placed) {
-            $direction = rand(0, 1) > 0 ? 'horizontal' : 'vertical';
-            if ($direction == 'horizontal') {
-                $startX = rand(1, 11 - $size);
-                $startY = rand(1, 10);
-            } else {
-                $startX = rand(1, 10);
-                $startY = rand(1, 11 - $size);
+function placeShip(&$ship, $size, $color, &$board) { // Cambia $ships a $ship
+    $placed = false;
+    while (!$placed) {
+        $direction = rand(0, 1) > 0 ? 'horizontal' : 'vertical';
+        if ($direction == 'horizontal') {
+            $startX = rand(1, 11 - $size);
+            $startY = rand(1, 10);
+        } else {
+            $startX = rand(1, 10);
+            $startY = rand(1, 11 - $size);
+        }
+
+        if (isEmpty($startX, $startY, $size, $direction, $board)) {
+            $shipCoordinates = [];
+
+            for ($i = 0; $i < $size; $i++) {
+                if ($direction == 'horizontal') {
+                    $board[$startX + $i][$startY] = true;
+                    $shipCoordinates[] = [$startX + $i, $startY];
+                } else {
+                    $board[$startX][$startY + $i] = true;
+                    $shipCoordinates[] = [$startX, $startY + $i];
+                }
             }
 
-            if (isEmpty($startX, $startY, $size, $direction, $board)) {
-                for ($i = 0; $i < $size; $i++) {
-                    if ($direction == 'horizontal') {
-                        $board[$startX + $i][$startY] = true;
-                    } else {
-                        $board[$startX][$startY + $i] = true;
-                    }
-                }
-                $placed = true;
-            }
+            // Aquí asignas las coordenadas al barco actual
+            $ship['coordinates'] = $shipCoordinates;
+
+            $placed = true;
         }
     }
+}
 
-    // Función para generar barcos (los colores pueden ser sustituidos por imagenes en un futuro)
+    // Función para generar barcos (los colores pueden ser sustituidos por imágenes en un futuro)
     function generateShips(&$board) {
         $ships = [];
         $colors = ["#6F2DBD", "#B298DC", "#3C3A3E", "#B9FAF8", "#A663CC"];
@@ -82,24 +92,32 @@
             $randomIndex = array_rand($colors);
             $color = $colors[$randomIndex];
             array_splice($colors, $randomIndex, 1);
-            placeShip($size, $color, $board);
 
-            $ships[] = [
+            $ship = [ // Crear un nuevo barco
                 'size' => $size,
-                'coordinates' => [], // Aquí podrías almacenar coordenadas si es necesario
-                'damaged' => [], // Aquí puedes almacenar las coordenadas tocadas de cada entidad
+                'coordinates' => [], // Inicialmente vacío
+                'touchedCoordinates' => [],
                 'color' => $color
             ];
+
+            placeShip($ship, $size, $color, $board); // Pasar el barco actual a la función
+
+            $ships[] = $ship; // Agregar el barco a la lista de barcos
         }
 
-        return $ships; //array con los barcos (hay que pasarla al js para hacer "magia")
+        return $ships;
     }
 
     // Generar barcos y tablero
-    generateShips($board);
+    $ships = generateShips($board);
+
+    // pasar a js el diccionario de conchas
+    echo    "<script>
+                var dicShells = " . json_encode($ships) . ";
+            </script>";
 
     // Convertir $board a JSON (esto es solo para hacer el console.log y ver el tablero en terminal)
-    $boardJson = json_encode($board);
+    //$boardJson = json_encode($board);
     ?>
 	
 <!-- --------------- TABLERO DE JUEGO --------------- -->
@@ -135,10 +153,10 @@
         ?>
     </table>
 
-    <script>
-        // Imprimir el estado del tablero en la consola
-        console.log(<?php echo $boardJson; ?>);
-    </script>
+    <div id="message"></div>
+  
+
+    
 
 </body>
 </html>
