@@ -102,22 +102,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // diccionario de mensajes
         const messageClickCells = {
-            water : "Aigua!",
-            shell : "Tocat!",
-            groupShell : "Tocal i enfonsat!",
-            win : "Has guanyat!"
+            water : "Informació<br/><br/>Aigua",
+            shell : "Informació<br/><br/>Tocat",
+            groupShell : "Informació<br/><br/>Tocal i enfonsat",
+            win : "Èxit<br/><br/>Has guanyat!"
         };
 
          // Mostrar el string en el div con id="resultado" | <div id="message"></div>
         const messageElement = document.getElementById("message"); // se guarda el elemento
-        messageElement.textContent = messageClickCells[cellState]; // se imprime el mensaje
+        messageElement.innerHTML = messageClickCells[cellState];
+
+        if(cellState=='win'){
+            messageElement.style.border = "3px solid green";
+            messageElement.style.borderLeft = "5px solid green";
+            messageElement.style.color = "rgb(26, 182, 26)";
+
+        }
+        else{
+            messageElement.style.border = "3px solid red";
+            messageElement.style.borderLeft = "5px solid red";
+            messageElement.style.color = "rgb(245, 30, 30)"
+        }
 
         // Que desaparezca el mensaje
         setTimeout(function() {
-
-            // para ocultarlo del todo: 'messageElement.style.display = "none"
-            messageElement.textContent = "";
-        }, 5000);
+            messageElement.innerHTML = "";
+            messageElement.style.border = "none";
+        }, 8000);
     }
 
     // función click
