@@ -9,6 +9,7 @@
 - [Descripción del juego](#descripción-del-juego)
 - [Características](#características)
 - [Cómo jugar](#cómo-jugar)
+- [Sistemas de puntos](#sistema-de-puntos)
 - [Instalación](#instalación)
 - [Tecnologías utilizadas](#tecnologías-utilizadas)
 
