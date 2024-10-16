@@ -1,5 +1,5 @@
 
-# Proyecto AWS2 Hundir la flota
+# Proyecto AWS2 Hundir la flota - Troba la petxina
 
 ![](https://github.com/DarKoul-Wmg/AWS2_Hundir_La_Flota/blob/dev/images/backgroundGame2.png)
 
