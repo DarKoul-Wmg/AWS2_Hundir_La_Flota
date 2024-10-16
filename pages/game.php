@@ -49,7 +49,7 @@
     }
 
     // Función para colocar un barco en el tablero
-function placeShip(&$ship, $size, $color, &$board) { // Cambia $ships a $ship
+function placeShip(&$ship, $size, $tipe, &$board) { // Cambia $ships a $ship
     $placed = false;
     while (!$placed) {
         $direction = rand(0, 1) > 0 ? 'horizontal' : 'vertical';
@@ -85,22 +85,22 @@ function placeShip(&$ship, $size, $color, &$board) { // Cambia $ships a $ship
     // Función para generar barcos (los colores pueden ser sustituidos por imágenes en un futuro)
     function generateShips(&$board) {
         $ships = [];
-        $colors = ["#6F2DBD", "#B298DC", "#3C3A3E", "#B9FAF8", "#A663CC"];
+        $tipes = ["nautilus", "concha", "erizo", "conchita"];
         $shipSizes = [2, 3, 4, 5];
 
         foreach ($shipSizes as $size) {
-            $randomIndex = array_rand($colors);
-            $color = $colors[$randomIndex];
-            array_splice($colors, $randomIndex, 1);
+            $randomIndex = array_rand($tipes);
+            $tipe = $tipes[$randomIndex];
+            array_splice($tipes, $randomIndex, 1);
 
             $ship = [ // Crear un nuevo barco
                 'size' => $size,
                 'coordinates' => [], // Inicialmente vacío
                 'touchedCoordinates' => [],
-                'color' => $color
+                'shellTipe' => $tipe
             ];
 
-            placeShip($ship, $size, $color, $board); // Pasar el barco actual a la función
+            placeShip($ship, $size, $tipe, $board); // Pasar el barco actual a la función
 
             $ships[] = $ship; // Agregar el barco a la lista de barcos
         }
@@ -145,7 +145,7 @@ function placeShip(&$ship, $size, $color, &$board) { // Cambia $ships a $ship
                 } else {
                     // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
                     $cellContent = $board[$i][$j] ? "X" : " ";
-                    echo "<td id='$id'>$cellContent</td>";
+                    echo "<td id='$id' data-x=$i data-y=$j data-touched='false' photo='none' class='selectCells'>$cellContent</td>";
                 }
             }
             echo "</tr>";

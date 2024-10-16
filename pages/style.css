@@ -13,20 +13,43 @@ body#game{
     
 }
 
-
 body#game table{
     border: 6px solid rgb(0, 0, 0); 
     border-collapse: collapse;
 
 }
 
-    body#game table td{
-        width:4em;
-        height: 4em;
-        border: 3px solid rgb(255, 255, 255);
-        border-style: dashed;
-        border-collapse: collapse
-    }
+body#game table td{
+    width:4em;
+    height: 4em;
+    border: 3px solid rgb(255, 255, 255);
+    border-style: dashed;
+    border-collapse: collapse
+}
 
 
 
+body#game td[data-photo="nautilus"]{
+    background-image: url('../images/erizo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+body#game td[data-photo="concha"]{
+    background-image: url('../images/erizo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+body#game td[data-photo="erizo"]{
+    background-image: url('../images/erizo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+body#game td[data-photo="conchita"]{
+    background-image: url('../images/erizo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
