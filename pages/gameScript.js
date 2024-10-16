@@ -11,10 +11,10 @@ var totalSeconds = 0;
 var minutes = 0;
 var countUp = 0;
 
-function calculatePoints(){
+function calculatePointsByTime(){
   timerPoints = 100000*((9/Math.pow(100,(totalSeconds/300)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
   //el ritmo de la formula se puede modificar cambiando los valores 100 y 300; ahora mismo en 150 segundos el multiplicador es alrededor de 2, y en 300 segundos es cercano a 1
-  roundedPoints = Math.round(timerPoints);
+  roundedPoints = Math.round(timerPoints); //redondeamos porque a nadie le gusta ver decimales en la puntuación
 }
 
 function testAdd(){
@@ -34,9 +34,9 @@ function testSubstract(){
 }
 
 function endgamePoints(){
-  stopChronometer();
-  if(streak==0){streak = 1};
-  let totalPoints = (roundedPoints + (actionPoints * streak)) * maxStreak;
+  stopChronometer(); //paramos el reloj
+  if(streak==0){streak = 1}; //vamos a multiplicar la racha actual así que debemos evitar el 0
+  let totalPoints = (roundedPoints + (actionPoints * streak)) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida 
   document.getElementById('endgame').innerHTML =  totalPoints;
   document.getElementById('endgameHidden').value =  totalPoints;
   return totalPoints;
@@ -49,7 +49,7 @@ function chronometer() {
   if (seconds > 59){seconds = 0; minutes++;}; //cuando los segundos llegan a superar 59, ponerlos a 0 y sumar un minuto
   seconds = formatTime(seconds);
   minutes = formatTime(minutes);
-  calculatePoints();
+  calculatePointsByTime();
   document.getElementById('chrono').innerHTML =  minutes + ":" + seconds; //printear cronometro
   document.getElementById('score').innerHTML =  roundedPoints;
   

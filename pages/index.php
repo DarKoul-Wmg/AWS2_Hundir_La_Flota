@@ -9,18 +9,19 @@
 </head>
 
 <body id="index" class="landingPageBody">
-    <p class="landingPageTitle">Troba la petxina</p>
-    <img class="landingPageCover" src="../sources/coverPlaceholder.png" alt="Portada del joc" />
-    <p class="landingPageDescription">
-        Troba totes les petxines com més aviat millor!
-    </p>
-    <div class="landingPageCenterButtons">
-        <a href="game.php">
-            <button type="button" class="landingPageNewGameButton">Nova Partida</button>
-        </a>
-        <a href="ranking.php">
-            <button type="button" class="landingPageRankingButton">Ranking</button>
-        </a>
+    <div class="landingPageBox">
+        <p class="landingPageTitle">Troba la petxina</p>
+        <p class="landingPageDescription">
+            Troba totes les petxines com més aviat millor!
+        </p>
+        <div class="landingPageCenterButtons">
+            <a href="game.php">
+                <button type="button" class="landingPageNewGameButton">Nova Partida</button>
+            </a>
+            <a href="ranking.php">
+                <button type="button" class="landingPageRankingButton">Ranking</button>
+            </a>
+        </div>
     </div>
 </body>
 

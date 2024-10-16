@@ -1,47 +1,58 @@
 .landingPageBody {
-    min-height: 100vh;
-    background-image: linear-gradient(to bottom right, #A663CC, #B9FAF8);
+    background-image: url("../sources/backgroundLandingPage.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .landingPageTitle{
     text-align: center;
+    color: #fcd4a7;
+    max-width: 40vw;
     font: 4.2em "Fira Sans", sans-serif;
     margin: 30px;
+    
 }
 
-.landingPageCover{
-    max-height: 400px;
-    display: block;
-    margin: auto;
+.landingPageBox{
+    margin: 35px;
+    background-color: #232f5f8c;
+    max-width: 40vw;
+    padding: 20px;
 }
 
 .landingPageDescription{
     text-align: center;
+    color: #fcd4a7;
+    max-width: 35vw;
     font: 2.4em "Fira Sans", sans-serif;
+    margin: 30px;
+
 }
 
 .landingPageNewGameButton{
     font: 2.4em "Fira Sans", sans-serif;
-    margin: auto;
-    background-color: #A663CC; 
-    color: #ffffff; 
+    margin-right: 5vh;
+    background-color: #434b71; 
+    color: #fcd4a7; 
     border-radius: 40px; 
-    border: none;
+    border-color: #fcc486;
     padding: 10px;
 }
 
 .landingPageRankingButton{
     font: 2.4em "Fira Sans", sans-serif;
-    margin-left: 80px;
-    background-color: #A663CC; 
-    color: #ffffff; 
+    background-color: #434b71; 
+    color: #fcd4a7; 
     border-radius: 40px; 
-    border: none;
+    border-color: #fcc486;
     padding: 10px;
 }
 
 .landingPageCenterButtons{
+    max-width: 35vw;
+
     display: flex;
     justify-content: center;
 }
-
