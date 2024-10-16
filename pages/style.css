@@ -9,7 +9,6 @@ body#game{
     text-align: center;
     font-weight:900;
     color: aliceblue;
-
     
 }
 
@@ -26,8 +25,6 @@ body#game table td{
     border-style: dashed;
     border-collapse: collapse
 }
-
-
 
 body#game td[data-photo="nautilus"]{
     background-image: url('../images/erizo.jpg');
@@ -52,4 +49,20 @@ body#game td[data-photo="conchita"]{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
+}
+
+body#game #containerMessage{
+    width: 300px; 
+    height: 150px;
+    background-color: #fdb1b1;
+    opacity: 0.8;  
+}
+
+body#game #message {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

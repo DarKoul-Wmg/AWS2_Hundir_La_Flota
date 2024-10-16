@@ -152,10 +152,10 @@ function placeShip(&$ship, $size, $tipe, &$board) { // Cambia $ships a $ship
         }
         ?>
     </table>
-
-    <div id="message"></div>
-  
-
+    
+    <div id="containerMessage">
+        <div id="message"></div>
+    </div>
     
 
 </body>
