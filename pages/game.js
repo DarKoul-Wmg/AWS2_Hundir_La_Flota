@@ -83,6 +83,8 @@ document.addEventListener("DOMContentLoaded", function() {
     function setImageInCell(dicShells,coordinateClickedCell,e){
         const cell = e.target;
 
+        let isShell = false;
+
         for(const shell of dicShells){
             for(const coordinate of shell.coordinates){
 
@@ -91,8 +93,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     const tipeShell = shell.shellTipe;
                     console.log(tipeShell);
                     cell.setAttribute('data-photo', tipeShell);
+                    isShell = true;
                 }
             }
+        }
+
+        if(!isShell){
+            cell.setAttribute('data-photo', 'sand');
         }
 
     }
