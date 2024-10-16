@@ -49,7 +49,7 @@
     }
 
     // Función para colocar un barco en el tablero
-function placeShip(&$ship, $size, $tipe, &$board) { // Cambia $ships a $ship
+function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
     $placed = false;
     while (!$placed) {
         $direction = rand(0, 1) > 0 ? 'horizontal' : 'vertical';
@@ -85,22 +85,22 @@ function placeShip(&$ship, $size, $tipe, &$board) { // Cambia $ships a $ship
     // Función para generar barcos (los colores pueden ser sustituidos por imágenes en un futuro)
     function generateShips(&$board) {
         $ships = [];
-        $tipes = ["nautilus", "concha", "erizo", "conchita"];
+        $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus"];
         $shipSizes = [2, 3, 4, 5];
 
         foreach ($shipSizes as $size) {
-            $randomIndex = array_rand($tipes);
-            $tipe = $tipes[$randomIndex];
-            array_splice($tipes, $randomIndex, 1);
+            $randomIndex = array_rand($types);
+            $type = $types[$randomIndex];
+            array_splice($types, $randomIndex, 1);
 
             $ship = [ // Crear un nuevo barco
                 'size' => $size,
                 'coordinates' => [], // Inicialmente vacío
                 'touchedCoordinates' => [],
-                'shellTipe' => $tipe
+                'shelltype' => $type
             ];
 
-            placeShip($ship, $size, $tipe, $board); // Pasar el barco actual a la función
+            placeShip($ship, $size, $type, $board); // Pasar el barco actual a la función
 
             $ships[] = $ship; // Agregar el barco a la lista de barcos
         }
