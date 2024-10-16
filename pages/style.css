@@ -5,11 +5,10 @@ body#game{
     margin-top: 4em;
     
 
-    background-color: rgba(15, 44, 73, 0.811);
+    background-color: rgba(189, 222, 255, 0.811);
     text-align: center;
     font-weight:900;
     color: aliceblue;
-
     
 }
 
@@ -26,8 +25,6 @@ body#game table td{
     border-style: dashed;
     border-collapse: collapse
 }
-
-
 
 body#game td[data-photo="nautilus"]{
     background-image: url('../images/erizo.jpg');
@@ -53,9 +50,42 @@ body#game td[data-photo="conchita"]{
     background-position: center;
     background-repeat: no-repeat; 
 }
+
+body#game .containerMessage{
+    width: 300px; 
+    height: 150px;
+    opacity: 0.8;  
+    margin: 50px;
+
+    background-color: aqua;
+}
+
+body#game #message {
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    background-color: transparent;
+    
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    text-align: left;
+    font-size: 24px;
+
+    border: none;
+    border-radius: 15px;
+
+    transition: border 0.5s;
+}
+
+
 body#game td[data-photo="sand"]{
     background-image: url('../images/sand.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
 }
+
