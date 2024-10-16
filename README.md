@@ -32,7 +32,15 @@ En **Troba la Petxina**, el objetivo del juego es encontrar las conchas que encu
 3. Al encontrar todas las conchas podrás volver a jugar una partida o introducir tus datos en el salón de la fama.
 
 
+## Sistemas de puntos
+
+Troba la petxina tiene un sistema de puntos basado en el tiempo que tardes en encontrar todas las conchas, así que sé listo y ten una estrategia preparado.
+Las rachas de acietos que tengas también influirán en la puntuación final.
+
+
 ## Instalación
+> [!WARNING]
+> Se requiere tener instalado PHP para poder jugar al juego.
 
 Para ejecutar el juego en tu máquina local, sigue estos pasos:
 
