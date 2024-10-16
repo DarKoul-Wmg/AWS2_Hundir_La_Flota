@@ -1,24 +1,45 @@
-//todo: rachas, fallos, máxima racha
+//todo:
 
-var timerPoints = -5;
+var timerPoints = 0;
 var actionPoints = 0;
 var roundedPoints = 0;
 var lastHit = false;
+var streak = 0;
+var maxStreak = 1;
 var seconds = 0;
 var totalSeconds = 0;
 var minutes = 0;
 var countUp = 0;
 
 function calculatePoints(){
-  timerPoints = 1000*((9/Math.pow(100,(totalSeconds/300)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
+  timerPoints = 100000*((9/Math.pow(100,(totalSeconds/300)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
   //el ritmo de la formula se puede modificar cambiando los valores 100 y 300; ahora mismo en 150 segundos el multiplicador es alrededor de 2, y en 300 segundos es cercano a 1
   roundedPoints = Math.round(timerPoints);
-  totalPoints = roundedPoints;
 }
 
 function testAdd(){
+  if(lastHit === true){streak++};
+  lastHit = true;
   actionPoints = actionPoints + 5000;
   document.getElementById('shipScore').innerHTML =  actionPoints;
+}
+
+function testSubstract(){
+  lastHit = false;
+  if(streak>maxStreak){maxStreak=streak}; //guardar racha maxima para aplicarla al final de la partida
+  if(streak>0){actionPoints = actionPoints * streak}; //al finalizar racha existente, multiplicar puntos de barcos por racha y reiniciar la racha a 0
+  streak = 0;
+  actionPoints = actionPoints - 250;
+  document.getElementById('shipScore').innerHTML =  actionPoints;
+}
+
+function endgamePoints(){
+  stopChronometer();
+  if(streak==0){streak = 1};
+  let totalPoints = (roundedPoints + (actionPoints * streak)) * maxStreak;
+  document.getElementById('endgame').innerHTML =  totalPoints;
+  document.getElementById('endgameHidden').value =  totalPoints;
+  return totalPoints;
 }
 
 
