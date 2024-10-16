@@ -1,6 +1,8 @@
 
 # Proyecto AWS2 Hundir la flota
 
+![](https://github.com/DarKoul-Wmg/AWS2_Hundir_La_Flota/blob/dev/images/backgroundGame2.png)
+
 ¡Bienvenido a **Troba la Petxina**! Este es un juego interactivo en el que los jugadores deberán encontrar las conchas perdidas por la playa, utilizando una mecánica similar al clásico juego "Hundir la flota".
 
 

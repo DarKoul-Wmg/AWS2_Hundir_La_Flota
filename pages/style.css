@@ -171,7 +171,7 @@ body#game .containerMessage{
     opacity: 0.8;  
     margin: 50px;
 
-    background-color: aqua;
+    background-color: rgb(59, 136, 238);
 }
 
 body#game #message {
