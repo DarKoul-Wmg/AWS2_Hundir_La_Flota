@@ -49,7 +49,7 @@
     }
 
     // Función para colocar un barco en el tablero
-function placeShip(&$ship, $size, $tipe, &$board) { // Cambia $ships a $ship
+function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
     $placed = false;
     while (!$placed) {
         $direction = rand(0, 1) > 0 ? 'horizontal' : 'vertical';
@@ -85,22 +85,22 @@ function placeShip(&$ship, $size, $tipe, &$board) { // Cambia $ships a $ship
     // Función para generar barcos (los colores pueden ser sustituidos por imágenes en un futuro)
     function generateShips(&$board) {
         $ships = [];
-        $tipes = ["nautilus", "concha", "erizo", "conchita"];
+        $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus"];
         $shipSizes = [2, 3, 4, 5];
 
         foreach ($shipSizes as $size) {
-            $randomIndex = array_rand($tipes);
-            $tipe = $tipes[$randomIndex];
-            array_splice($tipes, $randomIndex, 1);
+            $randomIndex = array_rand($types);
+            $type = $types[$randomIndex];
+            array_splice($types, $randomIndex, 1);
 
             $ship = [ // Crear un nuevo barco
                 'size' => $size,
                 'coordinates' => [], // Inicialmente vacío
                 'touchedCoordinates' => [],
-                'shellTipe' => $tipe
+                'shellType' => $type
             ];
 
-            placeShip($ship, $size, $tipe, $board); // Pasar el barco actual a la función
+            placeShip($ship, $size, $type, $board); // Pasar el barco actual a la función
 
             $ships[] = $ship; // Agregar el barco a la lista de barcos
         }
@@ -119,44 +119,59 @@ function placeShip(&$ship, $size, $tipe, &$board) { // Cambia $ships a $ship
     // Convertir $board a JSON (esto es solo para hacer el console.log y ver el tablero en terminal)
     //$boardJson = json_encode($board);
     ?>
-	
-<!-- --------------- TABLERO DE JUEGO --------------- -->
-    <table>
-        <?php
-        $filas = 11;
-        $columnas = 11;
-        for ($i = 0; $i < $filas; $i++) {
-            echo "<tr>";
-            for ($j = 0; $j < $columnas; $j++) {
-				 # Crear un ID único para cada celda
-                $id = "cell_" . $i . "_" . $j;
-				# En el caso de que sea el puesto superior izquierda no pinte nada
-                if ($j == 0 && $i == 0) {
-                    echo "<td class='empty'> </td>";
+    <div class ="main">
+        <div class ="leftContainer">
+            <button class="exit">&larrhk;</button>
+    
+        </div>
+        <div class ="centerContainer">
+            <!-- --------------- TABLERO DE JUEGO --------------- -->
+            <table>
+                <?php
+                $filas = 11;
+                $columnas = 11;
+                for ($i = 0; $i < $filas; $i++) {
+                    echo "<tr>";
+                    for ($j = 0; $j < $columnas; $j++) {
+                        # Crear un ID único para cada celda
+                        $id = "cell_" . $i . "_" . $j;
+                        # En el caso de que sea el puesto superior izquierda no pinte nada
+                        if ($j == 0 && $i == 0) {
+                            echo "<td class='empty'>⛧</td>";
 
-				# primera columna
-                } elseif ($j == 0 && $i >= 1) {
-                    echo "<td class='number'> $i </td>";
-				
-				# primera columna
-                } elseif ($j >= 1 && $i == 0) {
-                    $chrx = chr(64 + $j);
-                    echo "<td class='letter'> $chrx </td>";
-                } else {
-                    // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                    echo "<td id='$id' data-x=$i data-y=$j data-touched='false' photo='none' class='selectCells'></td>";
+                        # primera columna
+                        } elseif ($j == 0 && $i >= 1) {
+                            echo "<td class='number'> $i </td>";
+                        
+                        # primera columna
+                        } elseif ($j >= 1 && $i == 0) {
+                            $chrx = chr(64 + $j);
+                            echo "<td class='letter'> $chrx </td>";
+                        } else {
+                            // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
+                            echo "<td id='$id' data-x=$i data-y=$j data-touched='false' photo='none' class='selectCells'></td>";
+                        }
+                    }
+                    echo "</tr>";
                 }
-            }
-            echo "</tr>";
-        }
-        ?>
-    </table>
-    
-    <div class="containerMessage">
-        <div id="message"></div>
+                ?>
+            </table>
+        </div>
+        <div class ="rightContainer">
+            
+        <!-- Contador -->
+            <div id="time">
+                00 00
+            </div>
+            <!-- Points -->
+            <div id="points">
+                1111111PT
+            </div>
+
+            <!-- Message Log -->
+            <div id="message"></div>
+        
+        </div>
     </div>
-
-    
-
 </body>
 </html>

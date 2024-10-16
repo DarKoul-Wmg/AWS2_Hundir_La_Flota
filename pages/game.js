@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 if (compareCoordinates(coordinate,coordinateClickedCell)){
 
-                    const tipeShell = shell.shellTipe;
+                    const tipeShell = shell.shellType;
                     console.log(tipeShell);
                     cell.setAttribute('data-photo', tipeShell);
                     isShell = true;
