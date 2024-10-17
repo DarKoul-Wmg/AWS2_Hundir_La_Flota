@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
    let btnEasterEgg = document.getElementById('btnEasterEgg');
     //    let btnmessage = document.getElementById('btnMensaje');    
 
-
    // Asignar los audios a variables
    let sonidoAccion = document.getElementById('sonidoAccion');
    let sonidoAgua = document.getElementById('sonidoAgua');
@@ -34,11 +33,13 @@ document.addEventListener("DOMContentLoaded", function() {
     var minutes = 0; //minutos del cronometro
     var countUp = 0; //ID del cronometro
 
-     // click
- const cells = document.getElementsByClassName("selectCells");
- 
+    let messageTimeout = null;
 
- for(let cell of cells){
+    // click
+    const cells = document.getElementsByClassName("selectCells");
+    
+
+    for(let cell of cells){
 
      // creamos una función anónima en la que le pasamos los parámetros que queremos
      cell.addEventListener("click",function(event){ 
@@ -185,16 +186,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
         }
         else{
-            messageElement.style.border = "3px solid red";
-            messageElement.style.borderLeft = "5px solid red";
-            messageElement.style.color = "rgb(245, 30, 30)"
+            messageElement.style.border = "3px solid blue";
+            messageElement.style.borderLeft = "5px solid blue";
+            messageElement.style.color = "rgb(94, 94, 245)"
         }
 
-        // Que desaparezca el mensaje
-        setTimeout(function() {
+        // Limpiar el timeout anterior si existe
+        if (messageTimeout !== null) {
+            clearTimeout(messageTimeout);
+        }
+
+        // Establecer un nuevo timeout para ocultar el mensaje
+        messageTimeout = setTimeout(function() {
             messageElement.innerHTML = "";
             messageElement.style.border = "none";
-        }, 8000);
+        }, 4000);
     }
 
     // función click
