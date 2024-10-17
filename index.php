@@ -55,7 +55,7 @@
             Troba totes les petxines com més aviat millor!
         </p>
         <div class="landingPageCenterButtons">
-            <a href="game.php">
+            <a href="game.php" class="landingPageStartBtn">
                 <button type="button" class="landingPageNewGameButton">Nova Partida</button>
             </a>
             <a href="ranking.php?page=1">
