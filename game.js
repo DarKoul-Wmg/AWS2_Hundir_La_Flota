@@ -1,26 +1,23 @@
 document.addEventListener("DOMContentLoaded", function() {
    
  //Sonidos   
-    // Asignar los botones a variables
-   let btnAccion = document.getElementById('btnAccion');
-   let btnWin = document.getElementById('btnWin');
-   let btnEasterEgg = document.getElementById('btnEasterEgg');
-    //    let btnmessage = document.getElementById('btnMensaje');    
 
    // Asignar los audios a variables
    let sonidoAccion = document.getElementById('sonidoAccion');
    let sonidoAgua = document.getElementById('sonidoAgua');
    let sonidoAcierto = document.getElementById('sonidoAcierto');
-   let sonidoWin = document.getElementById('sonidoWin'); //sonidoWin.play();
-   let sonidoEE = document.getElementById('sonidoEE'); //sonidoEE.play();
-
-   // let sonidomessageIn = document.getElementById('sonidoMensajeIn');
 
 
-   // Reproducir sonido al hacer clic en el botón
-   btnAccion.addEventListener('click', function() {
-       sonidoAccion.play();
-   });
+  // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
+    let botones = document.querySelectorAll('button');
+
+    // Añade un evento 'click' a cada botón para reproducir el sonido
+    botones.forEach(function(boton) {
+        boton.addEventListener('click', function() {
+            sonidoAccion.play();
+        });
+    });
+
 
     var timerPoints = 0; //puntos por tiempo
     var actionPoints = 0; //puntos por aciertos/fallos

@@ -32,17 +32,6 @@
         Sonido no habilitado
     </audio>
 
-    <audio id="sonidoEE">
-        <source src="sounds/ee.mp3" type="audio/mpeg">
-        Sonido no habilitado
-    </audio>
-
-    <audio id="sonidoEE2">
-        <source src="sounds/ee2.mp3" type="audio/mpeg">
-        Sonido no habilitado
-    </audio>
-
-
     <noscript>
         <div class="noscript-overlay">
             <div class="noscript-warning">
@@ -156,8 +145,8 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
     // Función para generar barcos (los colores pueden ser sustituidos por imágenes en un futuro)
     function generateShips(&$board) {
         $ships = [];
-        $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus"];
-        $shipSizes = [2, 3, 4, 5];
+        $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus","estrella"];
+        $shipSizes = [1,1,1,1,2,2,2,3,3,4];
 
         foreach ($shipSizes as $size) {
             $randomIndex = array_rand($types);
