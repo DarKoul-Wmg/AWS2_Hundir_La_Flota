@@ -358,3 +358,77 @@ body#ranking .pagination a:hover:not(.active) {
     background-color: #fcd4a7;
 }
 
+body#win {
+    min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
+    overflow: hidden; /* Evita el scroll */
+    
+    background-image: url('../images/backgroundGame.jpeg'); /* Ruta de tu imagen */
+    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-color: rgba(15, 44, 73, 0.811);
+}
+
+body#win .winBox {
+    background-color: #232f5f8c;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+}
+
+body#win .winVictoryMsg{
+    font: 4.0em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+
+body#win .winNewGameButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#win .winRankingButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#win .winRegisterButton{
+    font: 2em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+body#win .winScoreTitle{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+
+body#win .winCenterButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body#win input[type=text] {
+    font: 2em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #E91E63;
+}

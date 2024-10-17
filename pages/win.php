@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troba la petxina</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
 </head>
 
 <body id="win">
-    <p class="winVictoryMsg">Has guanyat!</p>
-
-    <?php
+    <div class="winBox">
+        <p class="winVictoryMsg">Has guanyat!</p>
+<?php
 session_start();
 //si el POST viene de game.php, mantener la variable en una sesión, pero si el POST viene de win.php no machacar la variable con un NULL
 if($_POST["score"] != NULL):
@@ -33,17 +35,18 @@ if($playerName != NULL && strlen($playerName) >= 3):
 else: echo '
 <form action="win.php" method="post">
     <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30">
-    <input type="submit" value="Registra nom al Hall of Fame" onsubmit="disableRankingReg()">
+    <input type="submit" class="winRegisterButton" value="Registra nom al Hall of Fame">
 </form>   
 ';
 endif;
 ?>
-<div class="landingPageCenterButtons">
+</div>
+        <div class="winCenterButtons">
             <a href="game.php">
-                <button type="button" class="landingPageNewGameButton">Nova Partida</button>
+                <button type="button" class="winNewGameButton">Nova Partida</button>
             </a>
             <a href="ranking.php?page=1">
-                <button type="button" class="landingPageRankingButton">Ranking</button>
+                <button type="button" class="winRankingButton">Ranking</button>
             </a>
         </div>
     <script>
