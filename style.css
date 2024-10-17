@@ -245,6 +245,7 @@ body#index .landingPageBox{
     max-width: 40vw;
     height: 500px;
     padding: 20px;
+    border-radius: 15px;
 }
 
 body#index .landingPageDescription{
@@ -259,12 +260,15 @@ body#index .landingPageDescription{
 
 body#index .landingPageNewGameButton{
     font: 2.4em "Fira Sans", sans-serif;
-    margin-right: 5vh;
     background-color: #434b71; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px;
+}
+
+body#index .landingPageStartBtn{
+    margin-right: 5vh;
 }
 
 body#index .landingPageRankingButton{
@@ -321,11 +325,21 @@ body#ranking .rankingTable{
     font: 1.4em "Fira Sans", sans-serif;
     font-weight: bold;
 }
-body#ranking .rankingTable th{
-    background-color: #434b71;
-    border-radius: 12px;
 
+body#ranking .rankingTable th:nth-child(1){
+    background-color: #434b71;
+    border-radius: 12px 0 0 0;
 }
+
+body#ranking .rankingTable th:nth-child(2){
+    background-color: #434b71;
+    border-radius: 0;
+}
+body#ranking .rankingTable th:nth-child(3){
+    background-color: #434b71;
+    border-radius: 0 12px 0 0;
+}
+
 body#ranking .rankingTable th,
 body#ranking .rankingTable td {
     padding: 20px 6vw;
@@ -353,6 +367,7 @@ body#ranking .pagination a{
 body#ranking .pagination a.active {
     background-color: #434b71;
     color: #fcd4a7;
+    pointer-events: none;
 }
 body#ranking .pagination a:not(.active) {
     background-color: #fcd4a76b;
@@ -380,6 +395,8 @@ body#win .winBox {
     margin: auto;
     text-align: center;
     color: #fcd4a7;
+    width: 75vh;
+
 }
 
 body#win .winVictoryMsg{
@@ -389,12 +406,15 @@ body#win .winVictoryMsg{
 
 body#win .winNewGameButton{
     font: 2.4em "Fira Sans", sans-serif;
-    
     background-color: #434b71; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px;
+}
+
+body#win .winHomeBtnLink{
+    margin-right: 80px;
 }
 
 body#win .winRankingButton{
@@ -418,11 +438,17 @@ body#win .winScoreTitle{
     font: 3em "Fira Sans", sans-serif;
 }
 
+body#win .winScoreDesc{
+    font: 3em "Fira Sans", sans-serif;
+}
+
 
 body#win .winCenterButtons{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 40px;
+    padding-bottom: 40px;
 }
 
 body#win input[type=text] {
