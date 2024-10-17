@@ -46,8 +46,8 @@ endif;
 ?>
     </div>
         <div class="winCenterButtons">
-            <a href="game.php">
-                <button type="button" class="winNewGameButton">Nova Partida</button>
+            <a href="index.php">
+                <button type="button" class="winNewGameButton">Inici</button>
             </a>
             <a href="ranking.php?page=1">
                 <button type="button" class="winRankingButton">Ranking</button>
