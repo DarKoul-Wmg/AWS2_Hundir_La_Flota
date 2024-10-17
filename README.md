@@ -55,10 +55,10 @@ Para ejecutar el juego en tu máquina local, sigue estos pasos:
 2. Abrir en consola y entrar en el directorio del repositorio y ejecutar el siguiente comando para inicia run servidor al vuelo:
    ```bash
    php -S 0:8080
-Si este comando, el cual es un atajo, no inicia correctamnete el servidor php ejecuta este en cambio:
+
+3. En el caso de que no funcione, ya que es un atajo, ejecuta el siguiente comando:
    ```bash
    php -S 0.0.0.0:8080
-   
 
 ## Tecnologías usadas
 
