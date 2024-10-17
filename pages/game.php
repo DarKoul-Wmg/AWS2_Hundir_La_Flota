@@ -173,7 +173,7 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
         
         </div>
     </div>
-    <form class="endForm" action="win.php" method="post">
+    <form class="endForm" id="endForm" action="win.php" method="post">
         <input type="hidden" id="endgameHidden" name="score">
         <input class="buttonEnd" type="submit" onclick="endgamePoints()" value="End Game PHP">
     </form>
