@@ -88,19 +88,28 @@ body#game .exit {
 
 
 #time, #points {
-    text-align: center;
-    margin-bottom: 20px;
     font: 1.5rem "Fira Sans", sans-serif;
     font-weight: bold;
     color: white;
+    height: 33%;
+    display: flex;
+    justify-content: center;
 }
- 
+
+#chrono{
+    margin: auto;
+}
+
 #chrono:before {
     content: "⏱️: ";  
 }
 #totalScore:before {
     content: "🎯: ";
 }
+#totalScore{
+    margin: auto;
+}
+
 #message {
     margin-top: 10px;
     font-size: 1.2rem;
@@ -175,22 +184,17 @@ body#game td[data-photo="ermitano"]{
     background-color: rgba(0, 0, 0, 0.652);
 }
 
-body#game .containerMessage{
-    width: 300px; 
-    height: 150px;
-    opacity: 0.8;  
-    margin: 50px;
-
-    background-color: rgb(59, 136, 238);
+body#game #containerMessage{
+    width: 96%;
+    opacity: 0.8;
+    margin: auto;
 }
 
 body#game #message {
     box-sizing: border-box;
 
     width: 100%;
-    height: 20%;
     padding: 30px;
-    background-color: transparent;
     
     display: flex;
     justify-content: flex-start;

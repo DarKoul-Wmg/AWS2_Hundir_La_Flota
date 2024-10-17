@@ -182,13 +182,16 @@ document.addEventListener("DOMContentLoaded", function() {
         if(cellState=='win'){
             messageElement.style.border = "3px solid green";
             messageElement.style.borderLeft = "5px solid green";
-            messageElement.style.color = "rgb(26, 182, 26)";
+            messageElement.style.color = "rgb(4, 155, 4)";
+            messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
+
 
         }
         else{
             messageElement.style.border = "3px solid blue";
             messageElement.style.borderLeft = "5px solid blue";
-            messageElement.style.color = "rgb(94, 94, 245)"
+            messageElement.style.color = "rgb(20, 20, 249)"
+            messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
         }
 
         // Limpiar el timeout anterior si existe
@@ -200,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function() {
         messageTimeout = setTimeout(function() {
             messageElement.innerHTML = "";
             messageElement.style.border = "none";
+            messageElement.style.backgroundColor = "transparent";
         }, 4000);
     }
 
