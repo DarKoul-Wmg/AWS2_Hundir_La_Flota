@@ -1,4 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
+
+
+
+    var timerPoints = 0; //puntos por tiempo
+    var actionPoints = 0; //puntos por aciertos/fallos
+    var roundedPoints = 0; //puntos por tiempo sin decimales
+    var lastHit = false; //comprobar rachas
+    var streak = 0; //racha actual
+    var maxStreak = 1; //racha maxima de la partida
+    var seconds = 0; //segundos del cronometro
+    var totalSeconds = 0; //segundos totales de partida, para calcular puntos
+    var minutes = 0; //minutos del cronometro
+    var countUp = 0; //ID del cronometro
+
+     // click
+ const cells = document.getElementsByClassName("selectCells");
+ 
+
+ for(let cell of cells){
+
+     // creamos una función anónima en la que le pasamos los parámetros que queremos
+     cell.addEventListener("click",function(event){ 
+         discoverCell(event,dicShells);
+     }); 
+ }
+
     chronometer();
     
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
@@ -256,28 +282,6 @@ document.addEventListener("DOMContentLoaded", function() {
           return i;
       }   
 
-    // click
-    const cells = document.getElementsByClassName("selectCells");
-
-    //variables para tiempo y puntos
-    var timerPoints = 0; //puntos por tiempo
-    var actionPoints = 0; //
-    var roundedPoints = 0;
-    var lastHit = false;
-    var streak = 0;
-    var maxStreak = 1;
-    var seconds = 0;
-    var totalSeconds = 0;
-    var minutes = 0;
-    var countUp = 0;
-
-    for(let cell of cells){
-
-        // creamos una función anónima en la que le pasamos los parámetros que queremos
-        cell.addEventListener("click",function(event){ 
-            discoverCell(event,dicShells);
-        }); 
-    }
 
 });
 
