@@ -13,27 +13,27 @@
 <body id="game">
     <!-- Aud  -->
     <audio id="sonidoAccion">
-        <source src="../sounds/action.mp3" type="audio/mpeg">
+        <source src="sounds/action.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
 
     <audio id="sonidoAgua">
-        <source src="../sounds/water3.mp3" type="audio/mpeg">
+        <source src="sounds/water3.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
 
     <audio id="sonidoAcierto">
-        <source src="../sounds/discovered.mp3" type="audio/mpeg">
+        <source src="sounds/discovered.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
 
     <audio id="sonidoWin">
-        <source src="../sounds/win.mp3" type="audio/mpeg">
+        <source src="sounds/win.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
 
     <audio id="sonidoEE">
-        <source src="../sounds/ee.mp3" type="audio/mpeg">
+        <source src="sounds/ee.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
 

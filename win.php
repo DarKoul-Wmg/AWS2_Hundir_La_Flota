@@ -10,12 +10,13 @@
 
 <body id="win">
     <audio id="sonidoEE">
-        <source src="../sounds/ee.mp3" type="audio/mpeg">
+        <source src="sounds/ee.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
     <div class="winBox">
         <p class="winVictoryMsg">Has guanyat!</p>
 <?php
+date_default_timezone_set('Europe/Madrid');
 session_start();
 //si el POST viene de game.php, mantener la variable en una sesión, pero si el POST viene de win.php no machacar la variable con un NULL
 if($_POST["score"] != NULL):
@@ -71,6 +72,7 @@ endif;
 
                 return false; // Detiene el envío hasta que pase el tiempo
             } else {
+                document.querySelector('form').submit();
                 return true; // Si no es el nombre especial, envía el formulario normalmente
             }
         }    
