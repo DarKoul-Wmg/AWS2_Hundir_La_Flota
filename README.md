@@ -52,6 +52,14 @@ Para ejecutar el juego en tu máquina local, sigue estos pasos:
    ```bash
    git clone https://github.com/DarKoul-Wmg/AWS2_Hundir_La_Flota.git
 
+2. Abrir en consola y entrar en el directorio del repositorio y ejecutar el siguiente comando para inicia run servidor al vuelo:
+   ```bash
+   php -S 0:8080
+Si este comando, el cual es un atajo, no inicia correctamnete el servidor php ejecuta este en cambio:
+   ```bash
+   php -S 0.0.0.0:8080
+   
+
 ## Tecnologías usadas
 
 - HTML5
