@@ -50,7 +50,7 @@ Para ejecutar el juego en tu máquina local, sigue estos pasos:
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu_usuario/troba-la-petxina.git
+   git clone https://github.com/DarKoul-Wmg/AWS2_Hundir_La_Flota.git
 
 ## Tecnologías usadas
 
