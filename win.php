@@ -24,7 +24,7 @@ if($_POST["score"] != NULL):
 endif;
 
 echo '<p class="winScoreTitle">Puntuació: ',$_SESSION["score"],'</p>';
-
+echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
 $playerName = $_POST["playerName"];
 $date = date('Y-m-d h:i:s', time());
 $array = [$playerName, $_SESSION["score"], $date];
@@ -39,20 +39,21 @@ if($playerName != NULL && strlen($playerName) >= 3):
 else: echo '
 <form action="win.php" method="post" onsubmit="return easterEgg(event)">
     <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30">
-    <input type="submit" class="winRegisterButton" value="Registra nom al Hall of Fame">
+    <input type="submit" class="winRegisterButton" value="Registra">
 </form>   
 ';
 endif;
 ?>
-    </div>
         <div class="winCenterButtons">
-            <a href="index.php">
+            <a href="index.php" class="winHomeBtnLink">
                 <button type="button" class="winNewGameButton">Inici</button>
             </a>
             <a href="ranking.php?page=1">
                 <button type="button" class="winRankingButton">Ranking</button>
             </a>
         </div>
+    </div>
+
     <script>
         function easterEgg(event) {
             event.preventDefault(); // Evita el envío inmediato del formulario
