@@ -60,6 +60,8 @@ Para ejecutar el juego en tu máquina local, sigue estos pasos:
    ```bash
    php -S 0.0.0.0:8080
 
+Ahora ya podrás jugar a "[Trova la petxina](http://localhost:8080/indexphp)" y difrutar del juego.
+
 ## Tecnologías usadas
 
 - HTML5
