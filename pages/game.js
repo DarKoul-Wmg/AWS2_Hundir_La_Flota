@@ -1,4 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
+   
+ //Sonidos   
+    // Asignar los botones a variables
+   let btnAccion = document.getElementById('btnAccion');
+   let btnWin = document.getElementById('btnWin');
+   let btnEasterEgg = document.getElementById('btnEasterEgg');
+    //    let btnmessage = document.getElementById('btnMensaje');    
+
+   // Asignar los audios a variables
+   let sonidoAccion = document.getElementById('sonidoAccion');
+   let sonidoAgua = document.getElementById('sonidoAgua');
+   let sonidoAcierto = document.getElementById('sonidoAcierto');
+   let sonidoWin = document.getElementById('sonidoWin'); //sonidoWin.play();
+   let sonidoEE = document.getElementById('sonidoEE'); //sonidoEE.play();
+
+   // let sonidomessageIn = document.getElementById('sonidoMensajeIn');
+
+
+   // Reproducir sonido al hacer clic en el botón
+   btnAccion.addEventListener('click', function() {
+       sonidoAccion.play();
+   });
 
     var timerPoints = 0; //puntos por tiempo
     var actionPoints = 0; //puntos por aciertos/fallos
@@ -84,6 +106,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     touch = true;
                     cellState = "shell";
 
+                    //Sonido de acierto
+                    sonidoAcierto.play();
+
                     // añadimos esta coordenada a las de touched
                     shell.touchedCoordinates.push(coordinateClickedCell);
                     console.log("coordenada añadida")
@@ -106,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // si es agua
 
         //resta puntos
+        sonidoAgua.play();
         pointsSubstract();
 
         return [touch,cellState,groupIsDiscovered];
@@ -207,6 +233,8 @@ document.addEventListener("DOMContentLoaded", function() {
             // comprueba si has ganado la partida
             if(groupIsDiscovered){
                 if(isWin(dicShells)){
+                    //Sonido win
+                    sonidoWin.play();
                     printMessageOnClick('win');
 
                     //calcular puntos del final
@@ -216,13 +244,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     setTimeout(function() {
                         document.getElementById("endForm").submit();
                         //window.location.href = "win.php";
-                    }, 2000);
+                    }, 6000);
                 }
-                    
             }
 
             console.log("touch es "+touch+ "\n y cellState es "+cellState+" y el grupo está descubierto? "+groupIsDiscovered);
-
         }
 
         for(const shell of dicShells){

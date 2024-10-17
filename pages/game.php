@@ -11,7 +11,32 @@
 </head>
 
 <body id="game">
-    
+    <!-- Aud  -->
+    <audio id="sonidoAccion">
+        <source src="../sounds/action.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
+    <audio id="sonidoAgua">
+        <source src="../sounds/water3.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
+    <audio id="sonidoAcierto">
+        <source src="../sounds/discovered.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
+    <audio id="sonidoWin">
+        <source src="../sounds/win.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
+    <audio id="sonidoEE">
+        <source src="../sounds/ee.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
     <noscript>
         <div class="noscript-overlay">
             <div class="noscript-warning">
@@ -161,7 +186,7 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
     ?>
     <div class ="main">
         <div class ="leftContainer">
-            <button class="exit">&larrhk;</button>
+            <a href="index.php" ><button id ="btnAccion" class="exit">&larrhk;</button></a>
     
         </div>
         <div class ="centerContainer">
