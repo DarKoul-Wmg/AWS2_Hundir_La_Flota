@@ -117,7 +117,7 @@ body#game .exit {
 
 
 
-/* $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus"];*/
+/* $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus","estrella"];*/
 
 body#game td[data-photo="nautilus"]{
     background-image: url('images/nautiloC.png');
@@ -183,6 +183,15 @@ body#game td[data-photo="ermitano"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+
+body#game td[data-photo="estrella"]{
+    background-image: url('images/estrella-de-marC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 
 body#game #containerMessage{
     width: 96%;

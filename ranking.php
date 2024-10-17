@@ -5,13 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troba la petxina</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="game.js"></script>
 
 </head>
+
+
+
+<body id="ranking" class="rankingBody">
 <a href="index.php">
   <button class="exit">&larrhk;</button>
-</a>
-<body id="ranking" class="rankingBody">
-  <p class="rankingTitle">Hall of Fame</p>
+</a> 
+<p class="rankingTitle">Hall of Fame</p>
+  <!-- Aud  -->
+  <audio id="sonidoAccion">
+        <source src="sounds/action.mp3" type="audio/mpeg">
+        Sonido no habilitado
+  </audio>
 <?php
 $filePath="ranking.txt";
 $linecount = 0;
@@ -39,15 +48,17 @@ while($line = fgets($file)){
   if($linecount >= $startLine&&$linecount <= $endLine){
 
     $values = explode(',',$line);
-    echo'
-        <tr>
-            <td>',$values[0],'</td>
-            <td>',$values[1],'</td>
-            <td>',$values[2],'</td>
-        </tr>
-    ';
-  } ;
-
+    
+    //control de errores para Windows (warnings)
+    if (count($values) >= 3) {
+      echo '
+      <tr>
+          <td>',$values[0],'</td>
+          <td>',$values[1],'</td>
+          <td>',$values[2],'</td>
+      </tr>';
+    }
+  }
 }
 echo'
 </table>
