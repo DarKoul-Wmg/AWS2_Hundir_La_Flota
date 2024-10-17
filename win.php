@@ -60,11 +60,12 @@ endif;
 
             var playerName = document.getElementById("playerName").value;
             var audio = document.getElementById("sonidoEE");
+            var audio2 = document.getElementById("sonidoEE2");
 
             // Compara el nombre de usuario
-            if (playerName.toLowerCase() === 'sirxavio') {
+            if (playerName.toLowerCase() === 'xavi') {
                 console.log("Nombre de usuario especial detectado. Reproduciendo sonido...");
-                audio.play();  // Reproduce el sonido si el nombre es 'sirxavio'
+                audio.play();  // Reproduce el sonido 
 
                 // Espera a que termine el sonido 8s
                 setTimeout(function() {
@@ -72,6 +73,17 @@ endif;
                 }, 8000); 
 
                 return false; // Detiene el envío hasta que pase el tiempo
+
+            } else if(playerName.toLowerCase() === 'jhin') {
+                console.log("Nombre de usuario especial detectado2. Reproduciendo sonido...");
+                audio2.play();  // Reproduce el sonido 
+
+                // Espera a que termine el sonido 8s
+                setTimeout(function() {
+                    document.querySelector('form').submit();  // Envía el formulario tras el retraso
+                }, 8000);
+
+                return false; 
             } else {
                 document.querySelector('form').submit();
                 return true; // Si no es el nombre especial, envía el formulario normalmente

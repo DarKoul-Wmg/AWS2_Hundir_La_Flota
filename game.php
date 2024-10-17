@@ -37,6 +37,12 @@
         Sonido no habilitado
     </audio>
 
+    <audio id="sonidoEE2">
+        <source src="sounds/ee2.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
+
     <noscript>
         <div class="noscript-overlay">
             <div class="noscript-warning">

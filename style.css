@@ -462,3 +462,8 @@ body#win input[type=text] {
 	padding: .4em;
 	color: #E91E63;
 }
+
+/*Estilos genéricos para todas las paginas*/
+td:hover {
+    cursor: crosshair;
+}
