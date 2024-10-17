@@ -1,0 +1,438 @@
+body#game{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
+    overflow: hidden; /* Evita el scroll */
+    
+    background-image: url('images/backgroundGame3.png'); /* Ruta de tu imagen */
+    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-color: rgba(15, 44, 73, 0.811);
+}
+
+body#game table{
+    border: 4px solid rgb(0, 0, 0); 
+    border-collapse: collapse;
+    background-color: rgba(111, 111, 111, 0.337);
+
+}
+
+body#game table td{
+    width: 3vw; /* Ajusta dinámicamente el tamaño basado en el ancho de la pantalla */
+    height: 3vw;
+    border: 2px solid rgb(255, 255, 255);
+    border-style: dashed;
+    border-collapse: collapse
+}
+
+body#game table td.number, body#game table td.letter,  body#game table td.empty{ 
+    background-color: rgba(40, 40, 40, 0.419);
+    text-align: center;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}
+
+/* Estructura principal */
+body#game .main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between; /* Espaciar los elementos */
+}
+
+    /* Botón de salir alineado a la izquierda */
+body#game .leftContainer {
+    /*background-color: aquamarine;*/
+    min-width: 150px; /* Evita que se encojan demasiado */
+    max-width: 200px; /* Controla el máximo ancho */
+    margin-left: 4em;
+}
+
+    /* Tablero centrado */
+body#game .centerContainer {
+    flex-grow: 1; /* Para que este div ocupe el máximo espacio disponible */
+    /*background-color: rgb(193, 127, 255);*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Div de puntuación y tiempo */
+body#game .rightContainer {
+    background-color: #251934a7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 300px; 
+    padding: 10px;
+    
+    
+}
+
+/* Boton salir*/
+body#game .exit {
+    font-size: 2rem;
+    padding: 10px;
+    background-color: #251934a7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 90px;
+    border-radius: 50px;
+}
+
+
+#time, #points {
+    font: 1.5rem "Fira Sans", sans-serif;
+    font-weight: bold;
+    color: white;
+    height: 33%;
+    display: flex;
+    justify-content: center;
+}
+
+#chrono{
+    margin: auto;
+}
+
+#chrono:before {
+    content: "⏱️: ";  
+}
+#totalScore:before {
+    content: "🎯: ";
+}
+#totalScore{
+    margin: auto;
+}
+
+#message {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+
+
+/* $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus"];*/
+
+body#game td[data-photo="nautilus"]{
+    background-image: url('images/nautiloC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="mejillon"]{
+    background-image: url('images/mejillonC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="erizo"]{
+    background-image: url('images/erizo-de-marC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="concha"]{
+    background-image: url('images/cascaraC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="caracola"]{
+    background-image: url('images/caracolaC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
+body#game td[data-photo="caracol"]{
+    background-image: url('images/caracol-de-marC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="caparazon2"]{
+    background-image: url('images/caparazon2C.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="caparazon"]{
+    background-image: url('images/caparazonC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="ermitano"]{
+    background-image: url('images/cangrejo-ermitanoC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
+body#game #containerMessage{
+    width: 96%;
+    opacity: 0.8;
+    margin: auto;
+}
+
+body#game #message {
+    box-sizing: border-box;
+
+    width: 100%;
+    padding: 30px;
+    
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    text-align: left;
+    font-size: 24px;
+
+    border: none;
+    border-radius: 15px;
+
+    transition: border 0.5s;
+}
+
+body#game td[data-photo="sand"]{
+    background-image: url('images/sand.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+body#game .endForm,
+body#game .buttonEnd{
+    display:none;
+}
+
+.landingPageBody {
+    background-image: url("images/backgroundLandingPage.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+body#index .landingPageTitle{
+    text-align: center;
+    align-items: center;
+    color: #fcd4a7;
+    max-width: 40vw;
+    font: 4.2em "Fira Sans", sans-serif;
+    margin: 30px;
+    
+}
+
+body#index .landingPageBox{
+    margin: 35px;
+    background-color: #232f5f8c;
+    max-width: 40vw;
+    height: 500px;
+    padding: 20px;
+}
+
+body#index .landingPageDescription{
+    text-align: center;
+    align-items: center;
+    color: #fcd4a7;
+    max-width: 35vw;
+    font: 2.4em "Fira Sans", sans-serif;
+    margin: 30px;
+    padding-top: 40px;
+}
+
+body#index .landingPageNewGameButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    margin-right: 5vh;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#index .landingPageRankingButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#index .landingPageCenterButtons{
+    max-width: 35vw;
+    padding-top: 15vh;
+    display: flex;
+    justify-content: center;
+}
+
+body#ranking .exit {
+    font-size: 2rem;
+    padding: 10px;
+    background-color: #251934a7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 90px;
+    border-radius: 50px;
+}
+.rankingBody {
+    background-image: url("images/backgroundRanking.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+body#ranking .rankingBox{
+    margin:auto;
+}
+body#ranking .rankingTitle{
+    text-align: center;
+    color: #232f5f;
+    font: 5.0em "Fira Sans", sans-serif;
+    margin: 30px;
+    font-weight: bold;
+
+}
+body#ranking .rankingTable{
+    background-color: #232f5f8c;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+    font: 1.4em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+body#ranking .rankingTable th{
+    background-color: #434b71;
+    border-radius: 12px;
+
+}
+body#ranking .rankingTable th,
+body#ranking .rankingTable td {
+    padding: 20px 6vw;
+}
+body#ranking .rankingTable tbody tr:hover {
+    background-color: #436e7179;
+}
+body#ranking .rankingTable tbody tr:nth-of-type(even) {
+    background-color: #434b71a9;
+}
+body#ranking .rankingTable tbody tr:hover:nth-of-type(even) {
+    background-color: #436e7179;
+}
+
+body#ranking .pagination{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 45vw;
+}
+body#ranking .pagination a{
+    padding: 14px;
+    font: 1.4em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+body#ranking .pagination a.active {
+    background-color: #434b71;
+    color: #fcd4a7;
+}
+body#ranking .pagination a:not(.active) {
+    background-color: #fcd4a76b;
+    color: #434b71;
+}
+body#ranking .pagination a:hover:not(.active) {
+    background-color: #fcd4a7;
+}
+
+body#win {
+    min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
+    overflow: hidden; /* Evita el scroll */
+    
+    background-image: url('images/backgroundGame.jpeg'); /* Ruta de tu imagen */
+    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-color: rgba(15, 44, 73, 0.811);
+}
+
+body#win .winBox {
+    background-color: #232f5f8c;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+}
+
+body#win .winVictoryMsg{
+    font: 4.0em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+
+body#win .winNewGameButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#win .winRankingButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#win .winRegisterButton{
+    font: 2em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+body#win .winScoreTitle{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+
+body#win .winCenterButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body#win input[type=text] {
+    font: 2em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #E91E63;
+}
