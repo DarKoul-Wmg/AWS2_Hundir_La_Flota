@@ -161,11 +161,11 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
             
         <!-- Contador -->
             <div id="time">
-                00 00
+                <div id="chrono"></div>
             </div>
             <!-- Points -->
             <div id="points">
-                1111111PT
+                <div id="totalScore"></div>
             </div>
 
             <!-- Message Log -->
@@ -173,5 +173,9 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
         
         </div>
     </div>
+    <form class="endForm" action="win.php" method="post">
+        <input type="hidden" id="endgameHidden" name="score">
+        <input class="buttonEnd" type="submit" onclick="endgamePoints()" value="End Game PHP">
+    </form>
 </body>
 </html>

@@ -202,3 +202,135 @@ body#game td[data-photo="sand"]{
     background-repeat: no-repeat; 
 }
 
+body#game .endForm,
+body#game .buttonEnd{
+    display:none;
+}
+
+body#index .landingPageBody {
+    background-image: url("../sources/backgroundLandingPage.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+body#index .landingPageTitle{
+    text-align: center;
+    color: #fcd4a7;
+    max-width: 40vw;
+    font: 4.2em "Fira Sans", sans-serif;
+    margin: 30px;
+    
+}
+
+body#index .landingPageBox{
+    margin: 35px;
+    background-color: #232f5f8c;
+    max-width: 40vw;
+    padding: 20px;
+}
+
+body#index .landingPageDescription{
+    text-align: center;
+    color: #fcd4a7;
+    max-width: 35vw;
+    font: 2.4em "Fira Sans", sans-serif;
+    margin: 30px;
+
+}
+
+body#index .landingPageNewGameButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    margin-right: 5vh;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#index .landingPageRankingButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#index .landingPageCenterButtons{
+    max-width: 35vw;
+
+    display: flex;
+    justify-content: center;
+}
+
+body#ranking .rankingBody {
+    background-image: url("../sources/backgroundRanking.jpg");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+body#ranking .rankingBox{
+    margin:auto;
+}
+body#ranking .rankingTitle{
+    text-align: center;
+    color: #232f5f;
+    font: 5.0em "Fira Sans", sans-serif;
+    margin: 30px;
+    font-weight: bold;
+
+}
+body#ranking .rankingTable{
+    background-color: #232f5f8c;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+    font: 1.4em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+body#ranking .rankingTable th{
+    background-color: #434b71;
+    border-radius: 12px;
+
+}
+body#ranking .rankingTable th,
+body#ranking .rankingTable td {
+    padding: 20px 6vw;
+}
+body#ranking .rankingTable tbody tr:hover {
+    background-color: #436e7179;
+}
+body#ranking .rankingTable tbody tr:nth-of-type(even) {
+    background-color: #434b71a9;
+}
+body#ranking .rankingTable tbody tr:hover:nth-of-type(even) {
+    background-color: #436e7179;
+}
+
+body#ranking .pagination{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 45vw;
+}
+body#ranking .pagination a{
+    padding: 14px;
+    font: 1.4em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+body#ranking .pagination a.active {
+    background-color: #434b71;
+    color: #fcd4a7;
+}
+body#ranking .pagination a:not(.active) {
+    background-color: #fcd4a76b;
+    color: #434b71;
+}
+body#ranking .pagination a:hover:not(.active) {
+    background-color: #fcd4a7;
+}
