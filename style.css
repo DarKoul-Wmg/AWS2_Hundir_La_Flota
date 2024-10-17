@@ -6,7 +6,7 @@ body#game{
     min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
     overflow: hidden; /* Evita el scroll */
     
-    background-image: url('../images/backgroundGame3.png'); /* Ruta de tu imagen */
+    background-image: url('images/backgroundGame3.png'); /* Ruta de tu imagen */
     background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -88,19 +88,28 @@ body#game .exit {
 
 
 #time, #points {
-    text-align: center;
-    margin-bottom: 20px;
     font: 1.5rem "Fira Sans", sans-serif;
     font-weight: bold;
     color: white;
+    height: 33%;
+    display: flex;
+    justify-content: center;
 }
- 
+
+#chrono{
+    margin: auto;
+}
+
 #chrono:before {
     content: "⏱️: ";  
 }
 #totalScore:before {
     content: "🎯: ";
 }
+#totalScore{
+    margin: auto;
+}
+
 #message {
     margin-top: 10px;
     font-size: 1.2rem;
@@ -111,35 +120,35 @@ body#game .exit {
 /* $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus"];*/
 
 body#game td[data-photo="nautilus"]{
-    background-image: url('../images/nautiloC.png');
+    background-image: url('images/nautiloC.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
     background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="mejillon"]{
-    background-image: url('../images/mejillonC.png');
+    background-image: url('images/mejillonC.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="erizo"]{
-    background-image: url('../images/erizo-de-marC.png');
+    background-image: url('images/erizo-de-marC.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="concha"]{
-    background-image: url('../images/cascaraC.png');
+    background-image: url('images/cascaraC.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="caracola"]{
-    background-image: url('../images/caracolaC.png');
+    background-image: url('images/caracolaC.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -147,50 +156,45 @@ body#game td[data-photo="caracola"]{
 }
 
 body#game td[data-photo="caracol"]{
-    background-image: url('../images/caracol-de-marC.png');
+    background-image: url('images/caracol-de-marC.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="caparazon2"]{
-    background-image: url('../images/caparazon2C.png');
+    background-image: url('images/caparazon2C.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="caparazon"]{
-    background-image: url('../images/caparazonC.png');
+    background-image: url('images/caparazonC.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
 body#game td[data-photo="ermitano"]{
-    background-image: url('../images/cangrejo-ermitanoC.png');
+    background-image: url('images/cangrejo-ermitanoC.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
 
-body#game .containerMessage{
-    width: 300px; 
-    height: 150px;
-    opacity: 0.8;  
-    margin: 50px;
-
-    background-color: rgb(59, 136, 238);
+body#game #containerMessage{
+    width: 96%;
+    opacity: 0.8;
+    margin: auto;
 }
 
 body#game #message {
     box-sizing: border-box;
 
     width: 100%;
-    height: 20%;
     padding: 30px;
-    background-color: transparent;
     
     display: flex;
     justify-content: flex-start;
@@ -206,7 +210,7 @@ body#game #message {
 }
 
 body#game td[data-photo="sand"]{
-    background-image: url('../images/sand.png');
+    background-image: url('images/sand.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
@@ -218,7 +222,7 @@ body#game .buttonEnd{
 }
 
 .landingPageBody {
-    background-image: url("../images/backgroundLandingPage.png");
+    background-image: url("images/backgroundLandingPage.png");
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -290,7 +294,7 @@ body#ranking .exit {
     border-radius: 50px;
 }
 .rankingBody {
-    background-image: url("../images/backgroundRanking.jpg");
+    background-image: url("images/backgroundRanking.jpg");
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -362,7 +366,7 @@ body#win {
     min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
     overflow: hidden; /* Evita el scroll */
     
-    background-image: url('../images/backgroundGame.jpeg'); /* Ruta de tu imagen */
+    background-image: url('images/backgroundGame.jpeg'); /* Ruta de tu imagen */
     background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
