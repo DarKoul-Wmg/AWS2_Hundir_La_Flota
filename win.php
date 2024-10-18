@@ -20,13 +20,10 @@
         <source src="sounds/ee.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
-
     <audio id="sonidoEE2">
         <source src="sounds/ee2.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
-    
-
 
     <div class="winBox">
         <p class="winVictoryMsg">Has guanyat!</p>
@@ -55,11 +52,12 @@ $array = [$playerName, $_SESSION["score"], $date];
     $processedLine .= "\n";
     fwrite($file,$processedLine);
     fclose($file);
- }*/
- echo '
-<form action="win.php" method="post" onsubmit="easterEgg(event)">
-    <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" value="',$playerName,'">
-    <input type="button" class="winRegisterButton" value="Registra">
+else:*/
+
+echo '
+<form action="win.php" method="post" onsubmit="return easterEgg(event)">
+    <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" required>
+    <input type="submit" class="winRegisterButton" value="Registra">
 </form>   
 ';
 
