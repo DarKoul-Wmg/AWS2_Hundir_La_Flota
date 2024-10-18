@@ -22,6 +22,7 @@
         Sonido no habilitado
   </audio>
 <?php
+session_start();
 $filePath="ranking.txt";
 $linecount = 0;
 $file = fopen($filePath, "r");
@@ -37,13 +38,9 @@ $file = fopen($filePath, "r");
       </thead>';
 while($line = fgets($file)){ 
   $linecount++;
-  if($_GET["page"]!=1) {
-    $startLine = (($_GET["page"]-1)*25+1);
-    $endLine = $startLine+24;
-  }else {
-    $startLine = 0;
-    $endLine = $startLine+25;
-  };
+  // Verifica si "page" está definido en la URL
+  $startLine = (isset($_GET["page"]) ? ($_GET["page"] - 1) * 25 + 1 : 1);
+  $endLine = $startLine + 24;
   
   if($linecount >= $startLine&&$linecount <= $endLine){
 
@@ -79,7 +76,7 @@ if ($linecount>25) {
           <a class="',$classPaginator,'" href="?page=',$i+1,'">',$i+1,'</a>
           ';
   }
-  echo'<div>';
+  echo'</div>';
 }
 fclose($file);
 ?>
