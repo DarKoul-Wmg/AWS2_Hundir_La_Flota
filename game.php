@@ -109,38 +109,38 @@
     }
 
     // Función para colocar un barco en el tablero
-function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
-    $placed = false;
-    while (!$placed) {
-        $direction = rand(0, 1) > 0 ? 'horizontal' : 'vertical';
-        if ($direction == 'horizontal') {
-            $startX = rand(1, 11 - $size);
-            $startY = rand(1, 10);
-        } else {
-            $startX = rand(1, 10);
-            $startY = rand(1, 11 - $size);
-        }
-
-        if (isEmpty($startX, $startY, $size, $direction, $board)) {
-            $shipCoordinates = [];
-
-            for ($i = 0; $i < $size; $i++) {
-                if ($direction == 'horizontal') {
-                    $board[$startX + $i][$startY] = true;
-                    $shipCoordinates[] = [$startX + $i, $startY];
-                } else {
-                    $board[$startX][$startY + $i] = true;
-                    $shipCoordinates[] = [$startX, $startY + $i];
-                }
+    function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
+        $placed = false;
+        while (!$placed) {
+            $direction = rand(0, 1) > 0 ? 'horizontal' : 'vertical';
+            if ($direction == 'horizontal') {
+                $startX = rand(1, 11 - $size);
+                $startY = rand(1, 10);
+            } else {
+                $startX = rand(1, 10);
+                $startY = rand(1, 11 - $size);
             }
 
-            // Aquí asignas las coordenadas al barco actual
-            $ship['coordinates'] = $shipCoordinates;
+            if (isEmpty($startX, $startY, $size, $direction, $board)) {
+                $shipCoordinates = [];
 
-            $placed = true;
+                for ($i = 0; $i < $size; $i++) {
+                    if ($direction == 'horizontal') {
+                        $board[$startX + $i][$startY] = true;
+                        $shipCoordinates[] = [$startX + $i, $startY];
+                    } else {
+                        $board[$startX][$startY + $i] = true;
+                        $shipCoordinates[] = [$startX, $startY + $i];
+                    }
+                }
+
+                // Aquí asignas las coordenadas al barco actual
+                $ship['coordinates'] = $shipCoordinates;
+
+                $placed = true;
+            }
         }
     }
-}
 
     // Función para generar barcos (los colores pueden ser sustituidos por imágenes en un futuro)
     function generateShips(&$board) {
@@ -182,11 +182,11 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
     <div class ="main">
         <div class ="leftContainer">
             <a href="index.php" ><button id ="btnAccion" class="exit">&larrhk;</button></a>
-    
         </div>
+
         <div class ="centerContainer">
             <!-- --------------- TABLERO DE JUEGO --------------- -->
-            <table>
+            <table id="tableUser">
                 <?php
                 $filas = 11;
                 $columnas = 11;
@@ -194,7 +194,6 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
                     echo "<tr>";
                     for ($j = 0; $j < $columnas; $j++) {
                         # Crear un ID único para cada celda
-                        $id = "cell_" . $i . "_" . $j;
                         # En el caso de que sea el puesto superior izquierda no pinte nada
                         if ($j == 0 && $i == 0) {
                             echo "<td class='empty'>⛧</td>";
@@ -209,7 +208,7 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
                             echo "<td class='letter'> $chrx </td>";
                         } else {
                             // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                            echo "<td id='$id' data-x=$i data-y=$j data-touched='false' photo='none' class='selectCells'></td>";
+                            echo "<td class='selectCells' data-x=$i data-y=$j data-touched='false' photo='none'></td>";
                         }
                     }
                     echo "</tr>";
@@ -217,9 +216,9 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
                 ?>
             </table>
         </div>
+
         <div class ="rightContainer">
-            
-        <!-- Contador -->
+            <!-- Contador -->
             <div id="time">
                 <div id="chrono"></div>
             </div>
@@ -231,14 +230,15 @@ function placeShip(&$ship, $size, $type, &$board) { // Cambia $ships a $ship
             <!-- Message Log -->
             <div id="containerMessage">
                 <div id="message"></div>
-            </div>
-            
-        
+            </div>        
         </div>
+
     </div>
+
     <form class="endForm" id="endForm" action="win.php" method="post">
         <input type="hidden" id="endgameHidden" name="score">
         <input class="buttonEnd" type="submit" onclick="endgamePoints()" value="End Game PHP">
     </form>
+
 </body>
 </html>

@@ -9,7 +9,7 @@
     <script src="game.js"></script>
 </head>
 
-<body id="index" class="landingPageBody">
+<body id="index">
       <noscript>
         <div class="noscript-overlay">
             <div class="noscript-warning">
