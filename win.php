@@ -40,24 +40,29 @@ endif;
 
 echo '<p class="winScoreTitle">Puntuació: ',$_SESSION["score"],'</p>';
 echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
-$playerName = $_POST["playerName"];
+
+//VARIABLE DE PRUEBA NOMBRE USUARIO
+$_SESSION['playerName'] = "xavi";
+$playerName = $_SESSION["playerName"];
+
 $date = date('Y-m-d h:i:s', time());
 $array = [$playerName, $_SESSION["score"], $date];
 
 //si tenemos playerName válido, registramos record en el fichero y dejamos de mostrar el form para evitar múltiples registros
-if($playerName != NULL && strlen($playerName) >= 3):
+/*if($playerName != NULL && strlen($playerName) >= 3){
     $file = fopen('ranking.txt', "a");
     $processedLine = implode(',',$array);
     $processedLine .= "\n";
     fwrite($file,$processedLine);
     fclose($file);
-else: echo '
-<form action="win.php" method="post" onsubmit="return easterEgg(event)">
-    <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30">
-    <input type="submit" class="winRegisterButton" value="Registra">
+ }*/
+ echo '
+<form action="win.php" method="post" onsubmit="easterEgg(event)">
+    <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" value="',$playerName,'">
+    <input type="button" class="winRegisterButton" value="Registra">
 </form>   
 ';
-endif;
+
 ?>
         <div class="winCenterButtons">
             <a href="index.php" class="winHomeBtnLink">
