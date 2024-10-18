@@ -13,15 +13,19 @@
         <source src="sounds/ee.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
+    <audio id="sonidoEE2">
+        <source src="sounds/ee2.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
     <div class="winBox">
         <p class="winVictoryMsg">Has guanyat!</p>
 <?php
 date_default_timezone_set('Europe/Madrid');
 session_start();
 //si el POST viene de game.php, mantener la variable en una sesión, pero si el POST viene de win.php no machacar la variable con un NULL
-if($_POST["score"] != NULL):
+if(isset($_POST["score"])){
     $_SESSION["score"] = $_POST["score"];
-endif;
+};
 
 echo '<p class="winScoreTitle">Puntuació: ',$_SESSION["score"],'</p>';
 echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
@@ -38,7 +42,7 @@ if($playerName != NULL && strlen($playerName) >= 3):
     fclose($file);
 else: echo '
 <form action="win.php" method="post" onsubmit="return easterEgg(event)">
-    <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30">
+    <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" required>
     <input type="submit" class="winRegisterButton" value="Registra">
 </form>   
 ';
