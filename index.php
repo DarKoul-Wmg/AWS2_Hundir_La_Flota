@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troba la petxina</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="game.js"></script>
 </head>
 
 <body id="index" class="landingPageBody">
@@ -51,7 +52,12 @@
             }
         </style>
     </noscript>
-
+    
+    <audio id="sonidoAccion">
+        <source src="sounds/action.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+    
     <div class="landingPageBox">
         <p class="landingPageTitle">Troba la petxina</p>
         <p class="landingPageDescription">

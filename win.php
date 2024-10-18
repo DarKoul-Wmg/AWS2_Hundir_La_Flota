@@ -6,9 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troba la petxina</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="game.js"></script>
 </head>
 
 <body id="win">
+    <!-- Aud  -->
+    <audio id="sonidoAccion">
+        <source src="sounds/action.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+<!-- Sonidos para easter egg-->
     <audio id="sonidoEE">
         <source src="sounds/ee.mp3" type="audio/mpeg">
         Sonido no habilitado
@@ -17,11 +24,12 @@
         <source src="sounds/ee2.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
+
     <div class="winBox">
         <p class="winVictoryMsg">Has guanyat!</p>
 <?php
-date_default_timezone_set('Europe/Madrid');
 session_start();
+date_default_timezone_set('Europe/Madrid');
 //si el POST viene de game.php, mantener la variable en una sesión, pero si el POST viene de win.php no machacar la variable con un NULL
 if($_POST["score"] != NULL):
     $_SESSION["score"] = $_POST["score"];
