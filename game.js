@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
    let sonidoAcierto = document.getElementById('sonidoAcierto');
 
 
-  // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
+    // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
     let botones = document.querySelectorAll('button');
 
     // Añade un evento 'click' a cada botón para reproducir el sonido
@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let cellState  = "water";
         let groupIsDiscovered = false;
 
-
         for(const shell of dicShells){
             for(const coordinate of shell.coordinates){
                 // se tienen que comparar cada una de las coordenadas, sino compara la dirección de memoria del objeto
@@ -126,8 +125,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // si es agua
-
-        //resta puntos
+        //resta puntos y sonido
         sonidoAgua.play();
         pointsSubstract();
 

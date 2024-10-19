@@ -30,20 +30,21 @@
 <?php
 session_start();
 date_default_timezone_set('Europe/Madrid');
+
 //si el POST viene de game.php, mantener la variable en una sesión, pero si el POST viene de win.php no machacar la variable con un NULL
 
 if(isset($_POST["score"])){
-    $_SESSION["score"] = $_POST["score"];
-} else{
-    $_SESSION["score"] = 0;
+    echo ' entran:'.$_POST["score"];
+}else{
+    echo 'entra nada';
 }
 
                     //condicion                     valorTrue    valorFalse             
-$playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "";
-    
+$playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "";  //recupermas nombre de variable de session
+$score = isset($_POST["score"]) ? $_POST["score"] : 0;  //recuperamos score
 $date = date('Y-m-d h:i:s', time());
 
-echo '<p class="winScoreTitle">Puntuació: ',$_SESSION["score"],'</p>';
+echo '<p class="winScoreTitle">Puntuació: ',$_POST["score"],'</p>';
 echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
 
 // Si se ha enviado el formulario, guardar en el archivo y redirigir a ranking
@@ -51,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
     $playerName = $_POST["playerName"]; // obtener el playerName del formulario
     
     if (strlen($playerName) >= 3 && strlen($playerName) <= 30){
-        $array = [$playerName, $_SESSION["score"], $date]; // datos para insertar en txt
+        $array = [$playerName, $score, $date]; // datos para insertar en txt
         
         // Guardar en el archivo
         $file = fopen('ranking.txt', "a");
@@ -67,8 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
 }
 
 echo '
-<form  action="" method="post" onsubmit="easterEgg(event)">
+<form  action="win.php" method="post" onsubmit="easterEgg(event)">
     <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" value ="',$playerName,'" required>
+    <input type="hidden" name="score" value="',$score,'">
     <button type="submit" class="winRegisterButton">Registra</button>
 </form>   
 ';
