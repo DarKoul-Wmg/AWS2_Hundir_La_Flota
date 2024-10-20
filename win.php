@@ -25,36 +25,62 @@
         Sonido no habilitado
     </audio>
 
+
+    <img src="/images/medusaWin.png" alt="medusa kawaii" class="imagenSalto">
+    <img src="/images/estrellaWin.png" alt="estrella kawaii" class="imagenGiro">
+
+<!-- Div principal-->
     <div class="winBox">
         <p class="winVictoryMsg">Has guanyat!</p>
 <?php
 session_start();
 date_default_timezone_set('Europe/Madrid');
-//si el POST viene de game.php, mantener la variable en una sesión, pero si el POST viene de win.php no machacar la variable con un NULL
-if($_POST["score"] != NULL):
-    $_SESSION["score"] = $_POST["score"];
-endif;
 
-echo '<p class="winScoreTitle">Puntuació: ',$_SESSION["score"],'</p>';
-echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
-$playerName = $_POST["playerName"];
+                    //condicion                     valorTrue    valorFalse             
+$playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "";  //recupermas nombre de variable de session
+
+$score = isset($_POST["score"]) ? $_POST["score"] : 0;  //recuperamos score
+
+//comprobación creada para ver si recibe o no la puntuacion 
+// if(isset($_POST["score"])){
+//     echo ' entran:'.$_POST["score"];
+// }else{
+//     echo 'entra nada';
+// }
+
 $date = date('Y-m-d h:i:s', time());
-$array = [$playerName, $_SESSION["score"], $date];
 
-//si tenemos playerName válido, registramos record en el fichero y dejamos de mostrar el form para evitar múltiples registros
-if($playerName != NULL && strlen($playerName) >= 3):
-    $file = fopen('ranking.txt', "a");
-    $processedLine = implode(',',$array);
-    $processedLine .= "\n";
-    fwrite($file,$processedLine);
-    fclose($file);
-else: echo '
-<form action="win.php" method="post" onsubmit="return easterEgg(event)">
-    <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" required>
-    <input type="submit" class="winRegisterButton" value="Registra">
+echo '<p class="winScoreTitle">Puntuació: ',$_POST["score"],'</p>';
+echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
+
+// Si se ha enviado el formulario, guardar en el archivo y redirigir a ranking
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
+    $playerName = $_POST["playerName"]; // obtener el playerName del formulario
+    
+    if (strlen($playerName) >= 3 && strlen($playerName) <= 30){
+        $array = [$playerName, $score, $date]; // datos para insertar en txt
+        
+        // Guardar en el archivo
+        $file = fopen('ranking.txt', "a");
+        $processedLine = implode(',', $array) . "\n"; 
+        fwrite($file, $processedLine); 
+        fclose($file); 
+
+        // Redirigir a ranking.php
+        header("Location: ranking.php");
+        exit; // Terminar el script
+    }
+    
+}
+
+echo '
+<form  action="win.php" method="post" onsubmit="easterEgg(event)">
+    <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" value ="',$playerName,'" required>
+    <input type="hidden" name="score" value="',$score,'">
+    <button type="submit" class="winRegisterButton">Registra</button>
 </form>   
 ';
-endif;
+
 ?>
         <div class="winCenterButtons">
             <a href="index.php" class="winHomeBtnLink">
@@ -65,6 +91,9 @@ endif;
             </a>
         </div>
     </div>
+
+    <img src="/images/conchaWin.png" alt="concha kawaii" class="imagenGiro">
+    <img src="/images/pulpoWin.png" alt="pulpo kawaii" class="imagenSalto">
 
     <script>
         function easterEgg(event) {
@@ -100,7 +129,8 @@ endif;
                 document.querySelector('form').submit();
                 return true; // Si no es el nombre especial, envía el formulario normalmente
             }
-        }    
+        }
+
         //scrpit simple que impide la entrada de comas en el documento, necesario porque el archivo de ranking separa los valores por comas
         document.addEventListener('keydown', e => {
             if (e.key === ',') {
