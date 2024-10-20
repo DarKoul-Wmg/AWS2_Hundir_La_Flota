@@ -419,13 +419,14 @@ body#ranking .pagination a:hover:not(.active) {
 }
 
 body#win {
-    min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
+    min-height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
-    
-    background-image: url('images/backgroundGame.jpeg'); /* Ruta de tu imagen */
-    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    display: flex;
+    align-items: center;
+    background-image: url('images/backgroundGame.jpeg');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat; 
     background-color: rgba(15, 44, 73, 0.811);
 }
 
@@ -438,7 +439,37 @@ body#win .winBox {
     color: #fcd4a7;
     width: 75vh;
 
+    /*Propiedads para transicion*/
+    opacity: 0; /*invisiblew*/
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra inicial */
+    animation: aparition 3s ease-in-out forwards; /* Aparece en 3 segundos */
+
 }
+
+body#win img{
+    max-width: 150px;
+    max-height: 150px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+    /*efectos de las imagenes*/
+    body#win .imagenSalto{
+        transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
+    }
+    body#win .imagenSalto:hover{
+        transform: translateY(-100px) translateY(10px);  /* Mueve la imagen hacia arriba 10 píxeles */
+        cursor: grab;
+    }
+
+    body#win .imagenGiro{
+        transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
+    }
+    body#win .imagenGiro:hover{
+        transform: translateY(-10px) rotate(360deg); /* Salta 10px y rota 15 grados */
+        cursor:grabbing;
+    }
+
+
 
 body#win .winVictoryMsg{
     font: 4.0em "Fira Sans", sans-serif;
@@ -504,7 +535,16 @@ body#win input[type=text] {
 	color: #E91E63;
 }
 
-/*Estilos genéricos para todas las paginas*/
-td:hover {
-    cursor: crosshair;
+/*Animaciones*/
+
+/* Definimos la animación */
+@keyframes aparition {
+    0% {
+        opacity: 0; /* Comienza invisible */
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra */
+    }
+    100% {
+        opacity: 1; /* Termina completamente visible */
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Sombra visible */
+    }
 }

@@ -25,23 +25,29 @@
         Sonido no habilitado
     </audio>
 
+
+    <img src="/images/medusaWin.png" alt="medusa kawaii" class="imagenSalto">
+    <img src="/images/estrellaWin.png" alt="estrella kawaii" class="imagenGiro">
+
+<!-- Div principal-->
     <div class="winBox">
         <p class="winVictoryMsg">Has guanyat!</p>
 <?php
 session_start();
 date_default_timezone_set('Europe/Madrid');
 
-//si el POST viene de game.php, mantener la variable en una sesión, pero si el POST viene de win.php no machacar la variable con un NULL
-
-if(isset($_POST["score"])){
-    echo ' entran:'.$_POST["score"];
-}else{
-    echo 'entra nada';
-}
-
                     //condicion                     valorTrue    valorFalse             
 $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "";  //recupermas nombre de variable de session
+
 $score = isset($_POST["score"]) ? $_POST["score"] : 0;  //recuperamos score
+
+//comprobación creada para ver si recibe o no la puntuacion 
+// if(isset($_POST["score"])){
+//     echo ' entran:'.$_POST["score"];
+// }else{
+//     echo 'entra nada';
+// }
+
 $date = date('Y-m-d h:i:s', time());
 
 echo '<p class="winScoreTitle">Puntuació: ',$_POST["score"],'</p>';
@@ -85,6 +91,9 @@ echo '
             </a>
         </div>
     </div>
+
+    <img src="/images/conchaWin.png" alt="concha kawaii" class="imagenGiro">
+    <img src="/images/pulpoWin.png" alt="pulpo kawaii" class="imagenSalto">
 
     <script>
         function easterEgg(event) {

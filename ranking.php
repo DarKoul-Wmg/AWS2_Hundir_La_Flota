@@ -38,6 +38,7 @@ $file = fopen($filePath, "r");
       </thead>';
 while($line = fgets($file)){ 
   $linecount++;
+  
   // Verifica si "page" está definido en la URL
   $startLine = (isset($_GET["page"]) ? ($_GET["page"] - 1) * 25 + 1 : 1);
   $endLine = $startLine + 24;
@@ -46,7 +47,7 @@ while($line = fgets($file)){
 
     $values = explode(',',$line);
     
-    //control de errores para Windows (warnings)
+    //control de errores para evitar (warnings)
     if (count($values) >= 3) {
       echo '
       <tr>
