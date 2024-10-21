@@ -75,7 +75,7 @@
     </noscript>
 
     <?php
-
+        session_start();
         // crear dos tableros 10x10 - por defecto sin conchas
         $boardUser = array_fill(1, 10, array_fill(1, 10, false));
         $boardIA = array_fill(1, 10, array_fill(1, 10, false));
@@ -260,6 +260,13 @@
         
 
         <div class ="rightContainer">
+
+            <!-- nombre -->
+            <?php
+                $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "HOKA";  // Recuperar nombre de variable de sesión
+                echo '<p class="userName">',$playerName,'</p>';
+            ?>
+
             <!-- Contador -->
             <div id="time">
                 <div id="chrono"></div>

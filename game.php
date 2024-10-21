@@ -73,6 +73,7 @@
     </noscript>
 
     <?php
+    session_start();
     // Crear el tablero de 10x10 (índices 1 a 10), aqui se registra el estado de las celdas del tablero
     $board = array_fill(1, 10, array_fill(1, 10, false));
 
@@ -218,6 +219,13 @@
         
 
         <div class ="rightContainer">
+
+            <!-- nombre -->
+            <?php
+                $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "HOKA";  // Recuperar nombre de variable de sesión
+                echo '<p class="userName">',$playerName,'</p>';
+            ?>
+
             <!-- Contador -->
             <div id="time">
                 <div id="chrono"></div>

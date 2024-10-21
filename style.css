@@ -419,6 +419,20 @@ body#gameIA .rightContainer {
     padding: 10px;    
 }
 
+body#game p.userName,
+body#game p.userName,
+body#gameIA p.userName,
+body#gameIA p.userName{
+    display: flex;
+    font-size: 37px;
+    justify-content: center;
+    text-align: center;
+    background-color: #7a728abf;;
+    border-radius: 10px;
+    padding: 5px 10px; 
+}
+
+
 body#game #time,
 body#game #points,
 body#gameIA #time,
