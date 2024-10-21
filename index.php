@@ -9,8 +9,9 @@
     <script src="game.js"></script>
 </head>
 
-<body id="index" class="landingPageBody">
-    <noscript>
+
+<body id="index">
+      <noscript>
         <div class="noscript-overlay">
             <div class="noscript-warning">
                 <p>JavaScript está deshabilitado en tu navegador. Activa JavaScript para poder jugar.</p>
