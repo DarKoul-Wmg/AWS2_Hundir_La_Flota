@@ -328,6 +328,86 @@ body#index input[type=text]::placeholder {
 	color: #9e7b52;
 }
 
+body#index .landingPageOptionsButton{
+    margin-top: 40px;
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+}
+
+body#index .optionImg{
+    max-width: 40px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+body#index .landingPageOptions{
+    display: none;
+}
+
+body#index .landingPageLabel{
+    font: 1.8em "Fira Sans", sans-serif;
+    color: #fcd4a7; 
+    vertical-align: middle;
+}
+
+body#index .landingPageCheckboxWrapper{
+    margin-top: 30px;
+
+}
+
+body#index input[type="checkbox"].landingPageCheckbox{
+    vertical-align: middle;
+    float: right;
+    font-size: 1.4em;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    width: 3.5em;
+    height: 1.5em;
+    background: #ddd;
+    border-radius: 3em;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+  
+  body#index input[type="checkbox"].landingPageCheckbox:checked{
+    background: #434b71;
+  }
+
+  
+  body#index input[type="checkbox"].landingPageCheckbox:after{
+    position: absolute;
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background: #fcd4a7;
+    -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
+            box-shadow: 0 0 .25em rgba(0,0,0,.3);
+    -webkit-transform: scale(.7);
+            transform: scale(.7);
+    left: 0;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+
+  body#index input[type="checkbox"].landingPageCheckbox:disabled:after{
+    background: #bebebe;
+  }
+  
+  body#index input[type="checkbox"].landingPageCheckbox:checked:after{
+    left: calc(100% - 1.5em);
+  }
+
+
+
 body#ranking .exit {
     font-size: 2rem;
     padding: 10px;

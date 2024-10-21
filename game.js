@@ -43,8 +43,11 @@ document.addEventListener("DOMContentLoaded", function() {
          discoverCell(event,dicShells);
      }); 
  }
-
-    chronometer();
+    //llamar al cronómetro si existe el elemento en la página
+    const clock = document.getElementById('chrono');
+    if(clock){
+        chronometer();
+    }
     
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
     function compareCoordinates(coord1, coord2) {
@@ -254,12 +257,6 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(shell);
         }
     }
-
-    function calculatePointsByTime(){
-        timerPoints = 100000*((9/Math.pow(100,(totalSeconds/300)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
-        //el ritmo de la formula se puede modificar cambiando los valores 100 y 300; ahora mismo en 150 segundos el multiplicador es alrededor de 2, y en 300 segundos es cercano a 1
-        roundedPoints = Math.round(timerPoints); //redondeamos porque a nadie le gusta ver decimales en la puntuación
-      }
       
       function pointsAdd(){
         if(lastHit === true){streak++};
@@ -288,8 +285,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return totalPoints;
       }
       
-      
-      function chronometer() {
+      function chronometer(){
         seconds++;
         totalSeconds++;
         if (seconds > 59){seconds = 0; minutes++;}; //cuando los segundos llegan a superar 59, ponerlos a 0 y sumar un minuto
@@ -302,6 +298,12 @@ document.addEventListener("DOMContentLoaded", function() {
         countUp = setTimeout(chronometer, 1000); //chronometer se llama a sí misma pasados 1000ms, o lo que es lo mismo, una vez por segundo
         //setTimeout devuelve un ID que se puede guardar para usarlo luego con clearTimeout y detener el bucle
       }
+
+      function calculatePointsByTime(){
+        timerPoints = 100000*((9/Math.pow(100,(totalSeconds/300)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
+        //el ritmo de la formula se puede modificar cambiando los valores 100 y 300; ahora mismo en 150 segundos el multiplicador es alrededor de 2, y en 300 segundos es cercano a 1
+        roundedPoints = Math.round(timerPoints); //redondeamos porque a nadie le gusta ver decimales en la puntuación
+      }
       
       function stopChronometer() {
         clearTimeout(countUp); //clearTimeout detiene el setTimeout cuyo ID le pases por parametro 
@@ -312,7 +314,18 @@ document.addEventListener("DOMContentLoaded", function() {
           return i;
       }   
 
-
+      //landingPage, hacer clic en botón opciones para mostrar/esconder div
+      const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
+      let showOptions = true;
+      landingPageOptBtn.addEventListener("click", function() {
+        if (showOptions){
+          document.getElementById("landingPageOptions").style.display = "block";
+          showOptions = false;
+        } else {
+            document.getElementById("landingPageOptions").style.display = "none";
+            showOptions = true;
+        }
+      });
 });
 
 

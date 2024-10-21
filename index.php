@@ -52,12 +52,12 @@
             }
         </style>
     </noscript>
-    
+
     <audio id="sonidoAccion">
         <source src="sounds/action.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
-    
+
     <div class="landingPageBox">
         <p class="landingPageTitle">Troba la petxina</p>
         <p class="landingPageDescription">
@@ -107,8 +107,47 @@
     };
 
 ?>
+        <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img
+                src="images/options.png" class="optionImg"></button>
+        <div class="landingPageOptions" id="landingPageOptions">
+            <div class="landingPageCheckboxWrapper">
+                <label for="limmitedAmmoCheckbox" class="landingPageLabel">Munició limitada</label>
+                <input type="checkbox" id="limmitedAmmoCheckbox" class="landingPageCheckbox">
+            </div>
+            <div class="landingPageCheckboxWrapper">
+                <label for="ironcladShipsCheckbox" class="landingPageLabel">Vaixells acoirassats</label>
+                <input type="checkbox" id="ironcladShipsCheckbox" class="landingPageCheckbox" disabled>
+            </div>
+            <div class="landingPageCheckboxWrapper">
+                <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
+                <input type="checkbox" id="specialAttacksCheckbox" class="landingPageCheckbox" disabled>
+            </div>
+        </div>
+        <!--
+        en la especificación no pone nada de que el menú de opciones tenga un botón de Guardar, así que tal vez sea mejor guardar las opciones en JS
+        -->
+        <script>
+            function init() {
+                var checkbox = document.getElementById("limmitedAmmoCheckbox");
+                //comprobar valor de la variable en la cookie de sesión
+                //cambiar checkbox en la página
+                if (sessionStorage.ammoCheckbox == 'true') {
+                    checkbox.checked = true; 
+                } else {
+                    checkbox.checked = false;
+                }
+                checkbox.addEventListener("change", save); //llamar a save() cuando la checkbox cambia de estado
+            }
 
-    </div>
+            //guardar estado de la checkbox en una cookie
+            function save() {
+                var ammoCheckboxVal = document.getElementById("limmitedAmmoCheckbox").checked;
+                sessionStorage.setItem('ammoCheckbox', ammoCheckboxVal);
+            }
+
+            //ejecutar script después de cargar el DOM
+            window.addEventListener("DOMContentLoaded", init);
+        </script>
 </body>
 
 </html>
