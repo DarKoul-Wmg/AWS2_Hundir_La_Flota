@@ -172,7 +172,7 @@ body#index input[type="checkbox"].landingPageCheckbox:checked:after{
 }
 
 
-/*----------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------*/
 
 /* body de las dos pantallas */
 body#game,
@@ -494,7 +494,7 @@ body#gameIA #message {
 }
 
 
-/*----------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------*/
 
 
 body#win {
@@ -591,6 +591,8 @@ body#win .winBox {
     padding: 20px;
     border-radius: 15px;
 }
+
+/*----------------------------------------------------------------------------------------------*/
 
 body#index .landingPageDescription{
     text-align: center;
@@ -755,6 +757,7 @@ body#index input[type="checkbox"].landingPageCheckbox{
     left: calc(100% - 1.5em);
   }
 
+  /*----------------------------------------------------------------------------------------------*/
 
 body#ranking .exit {
     font-size: 2rem;
@@ -857,6 +860,7 @@ body#ranking .pagination a:hover:not(.active) {
     background-color: #fcd4a7;
 }
 
+/*----------------------------------------------------------------------------------------------*/  
 body#win {
     min-height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
@@ -974,6 +978,124 @@ body#win input[type=text] {
 	color: #E91E63;
 }
 
+/*----------------------------------------------------------------------------------------------*/
+
+body#lose {
+    min-height: 100vh;/*toda la pantalla */
+    overflow: hidden; /* Evita el scroll */
+    display: flex;
+    align-items: center;
+    background-image: url('images/backgroundLose.jpeg');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-color: rgba(15, 44, 73, 0.811);
+}
+
+body#lose .loseBox {
+    background-color: #232f5f8c;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+    width: 75vh;
+
+    /*Propiedads para transicion*/
+    opacity: 0; /*invisiblew*/
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra inicial */
+    animation: aparition 3s ease-in-out forwards; /* Aparece en 3 segundos */
+
+}
+
+body#lose img{
+    max-width: 150px;
+    max-height: 150px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+    /*efectos de las imagenes*/
+    body#lose .imagenSalto{
+        transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
+    }
+    body#lose .imagenSalto:hover{
+        transform: translateY(100px) translateY(-10px);  /* Mueve la imagen hacia arriba 10 píxeles */
+        cursor: grab;
+    }
+
+    body#lose .imagenGiro{
+        transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
+    }
+    body#lose .imagenGiro:hover{
+        transform: translateY(10px) rotate(-360deg); /* Salta 10px y rota 15 grados */
+        cursor:grabbing;
+    }
+
+
+
+body#lose .loseMsg{
+    font: 4.0em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+
+body#lose .loseNewGameButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#lose .loseHomeBtnLink{
+    margin-right: 80px;
+}
+
+body#lose .loseRankingButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#lose .loseRegisterButton{
+    font: 2em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+body#lose .loseScoreTitle{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+body#lose .loseScoreDesc{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+
+body#lose .loseCenterButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+    padding-bottom: 40px;
+}
+
+body#lose input[type=text] {
+    font: 2em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #E91E63;
+}
 /*Animaciones*/
 
 /* Definimos la animación */
