@@ -66,11 +66,10 @@ body#index .landingPageCenterButtons{
 
 /*----------------------------------------------------------*/
 
-
+/* body de las dos pantallas */
 body#game,
 body#gameIA{
     display: flex;
-    justify-content: center;
     align-items: center;
     margin-top: 2em;
     min-height: 100vh;
@@ -81,92 +80,73 @@ body#gameIA{
     background-repeat: no-repeat;
 }
 
+/* background de cada pantalla*/
 body#game{
     background-image: url('images/backgroundGame3.png');
 }
-
-/*
 body#gameIA{
     background-image: url('images/backgroundGame2.png');
 }
-*/
-/*Estructura principal */
+
+/*Estructura principal de las dos pantallas*/
 body#game .main,
 body#gameIA .main{
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 100%;
-    justify-content: space-between; /* Espaciar los elementos */
+    justify-content: space-between;
 }
 
-/*Izquierda*/
-body#game .leftContainer{
-    width: 25%;
-    margin-left: 4em;
-}
 
-body#gameIA .leftContainer {
-    width: 33%;
-    margin-left: 4em;
-}
+/* ------ TABLAS ------*/
 
+/* Estructura de las DOS tablas USER de las dos pantallas*/
+body#game table,
 body#gameIA table{
     border: 4px solid rgb(0, 0, 0); 
     border-collapse: collapse;
     background-color: rgba(111, 111, 111, 0.337);
 }
 
+/* Estructura de cada celda de las dos pantallas*/
+body#game table td,
 body#gameIA table td{
-    width: 3vw;
-    height: 3vw;
     border: 2px solid rgb(255, 255, 255);
     border-style: dashed;
-    border-collapse: collapse
+    border-collapse: collapse;
 }
 
-body#gameIA .tableIA{
-    width: 20%;
+/* Estructura de la tabla del USER de las dos pantallas*/
+body#game table#tableUser,
+body#gameIA table#tableUser{
+    margin-right: 5%;
 }
 
-body#game .exit,
-body#gameIA .exit {
-    font-size: 2rem;
-    padding: 10px;
-    background-color: #251934a7;
-    color: white;
-    border: none;
-    cursor: pointer;
-    width: 90px;
-    border-radius: 50px;
+/* Estructura de la tabla IA en la pantalla IA*/
+body#gameIA table#tableIA{
+    margin-left: 20%;
+    margin-right: 10%;
+    margin-top: 34%;
 }
 
-body#gameIA .exit {
-    margin: 20px;
+/* Estructura del tamaño de las celdas en la tabla del USER de las dos pantallas*/
+body#game table#tableUser td,
+body#gameIA table#tableUser td{
+    width: 3vw;
+    height: 3vw;
+}
+
+/* Estructura del tamaño de las celdas en la tabla de la IA en la pantalla IA*/
+body#gameIA table#tableIA td{
+    width: 2vW;
+    height: 1.5vw;
+    padding: 0.1vw;
 }
 
 
 /*Centro*/
-body#game .centerContainer,
-body#gameIA .centerContainer {
-    width: 40%;
-    margin: 10px;
-    flex-grow: 1;
-}
 
-body#game table{
-    border: 4px solid rgb(0, 0, 0); 
-    border-collapse: collapse;
-    background-color: rgba(111, 111, 111, 0.337);
-}
-
-body#game table td{
-    width: 3vw;
-    height: 3vw;
-    border: 2px solid rgb(255, 255, 255);
-    border-style: dashed;
-    border-collapse: collapse
-}
 
 body#game table td.number,
 body#game table td.letter,
@@ -182,8 +162,11 @@ body#gameIA table td.empty{
 
 body#game table td:hover,
 body#gameIA table td:hover{
-    cursor: crosshair;
+    cursor: url('images/cursorPala.png'), auto;
 }
+
+
+/* Clases para las fotos*/
 
 body#game td[data-photo="nautilus"],
 body#gameIA td[data-photo="nautilus"]{
@@ -273,6 +256,41 @@ body#gameIA td[data-photo="sand"]{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
+}
+
+body#gameIA table#tableIA td.selectCellsIA {
+    background-size: 30px 30px;
+}
+
+
+
+/* Izquierda */
+
+body#game .leftContainer{
+    width: 25%;
+    margin-left: 4em;
+}
+
+body#gameIA .leftContainer {
+    width: 33%;
+    margin-left: 4em;
+}
+
+
+body#game .exit,
+body#gameIA .exit {
+    font-size: 2rem;
+    padding: 10px;
+    background-color: #251934a7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 90px;
+    border-radius: 50px;
+}
+
+body#gameIA .exit {
+    margin: 20px;
 }
 
 body#game .endForm,

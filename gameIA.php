@@ -177,7 +177,7 @@
         $shipsUser = generateShips($boardUser);
         $shipsIA = generateShips($boardIA);
 
-         // pasar a js el diccionario de conchas
+        // pasar a js el diccionario de conchas
         echo    "<script>
                     var dicShellsUser = " . json_encode($shipsUser) . ";
                     var dicShellsIA = " . json_encode($shipsIA) . ";
@@ -190,7 +190,6 @@
 
             <!-- botón hacia atrás -->
             <a href="index.php" ><button id ="btnAccion" class="exit">&larrhk;</button></a>
-
             
             <!-- tablero de la ia -->
             <table id="tableIA">
@@ -216,7 +215,7 @@
                                 echo "<td class='letter'> $chrx </td>";
                             } else {
                                 // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                                echo "<td class='selectCells' data-x=$i data-y=$j data-touched='false' photo='none'></td>";
+                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
                             }
                         }
                         echo "</tr>";
@@ -224,42 +223,41 @@
                 ?>
 
             </table>
-            
 
         </div>
         
-        <div class ="centerContainer">
-            <!-- tablero del usuario-->
-            <table id="tableUser">
-                <?php
-                $filas = 11;
-                $columnas = 11;
-                for ($i = 0; $i < $filas; $i++) {
-                    echo "<tr>";
-                    for ($j = 0; $j < $columnas; $j++) {
-                        # Crear un ID único para cada celda
-                        # En el caso de que sea el puesto superior izquierda no pinte nada
-                        if ($j == 0 && $i == 0) {
-                            echo "<td class='empty'>⛧</td>";
+        
+        <!-- tablero del usuario-->
+        <table id="tableUser">
+            <?php
+            $filas = 11;
+            $columnas = 11;
+            for ($i = 0; $i < $filas; $i++) {
+                echo "<tr>";
+                for ($j = 0; $j < $columnas; $j++) {
+                    # Crear un ID único para cada celda
+                    # En el caso de que sea el puesto superior izquierda no pinte nada
+                    if ($j == 0 && $i == 0) {
+                        echo "<td class='empty'>⛧</td>";
 
-                        # primera columna
-                        } elseif ($j == 0 && $i >= 1) {
-                            echo "<td class='number'> $i </td>";
-                        
-                        # primera columna
-                        } elseif ($j >= 1 && $i == 0) {
-                            $chrx = chr(64 + $j);
-                            echo "<td class='letter'> $chrx </td>";
-                        } else {
-                            // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                            echo "<td class='selectCells' data-x=$i data-y=$j data-touched='false' photo='none'></td>";
-                        }
+                    # primera columna
+                    } elseif ($j == 0 && $i >= 1) {
+                        echo "<td class='number'> $i </td>";
+                    
+                    # primera columna
+                    } elseif ($j >= 1 && $i == 0) {
+                        $chrx = chr(64 + $j);
+                        echo "<td class='letter'> $chrx </td>";
+                    } else {
+                        // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
+                        echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
                     }
-                    echo "</tr>";
                 }
-                ?>
-            </table>
-        </div>
+                echo "</tr>";
+            }
+            ?>
+        </table>
+        
 
         <div class ="rightContainer">
             <!-- Contador -->
@@ -284,7 +282,6 @@
         
 
     </div>
-
 
 </body>
 
