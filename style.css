@@ -427,7 +427,8 @@ body#gameIA p.userName{
     font-size: 37px;
     justify-content: center;
     text-align: center;
-    background-color: #7a728abf;;
+    background-color: #7a728abf;
+    color: whitesmoke;
     border-radius: 10px;
     padding: 5px 10px; 
 }
