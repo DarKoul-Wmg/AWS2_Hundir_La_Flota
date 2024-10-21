@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
         fclose($file); 
 
         // Redirigir a ranking.php
-        header("Location: ranking.php");
+        header("Location: ranking.php?page=1");
         exit; // Terminar el script
     }
     
