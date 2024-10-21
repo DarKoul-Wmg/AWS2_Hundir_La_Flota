@@ -75,7 +75,7 @@
                 <a href="game.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton">Tutorial</button>
                 </a>
-                <a href="game.php" class="landingPageStartLinkBtn">
+                <a href="gameIA.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton">Vs CPU</button>
                 </a>
                 <a href="ranking.php?page=1">
@@ -95,7 +95,7 @@
                 <a href="game.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton" disabled>Tutorial</button>
                 </a>
-                <a href="game.php" class="landingPageStartLinkBtn">
+                <a href="gameIA.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton" disabled>Vs CPU</button>
                 </a>
                 <a href="ranking.php?page=1">
