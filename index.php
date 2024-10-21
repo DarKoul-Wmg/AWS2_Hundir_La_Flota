@@ -9,9 +9,8 @@
     <script src="game.js"></script>
 </head>
 
-
 <body id="index">
-      <noscript>
+    <noscript>
         <div class="noscript-overlay">
             <div class="noscript-warning">
                 <p>JavaScript está deshabilitado en tu navegador. Activa JavaScript para poder jugar.</p>
@@ -76,7 +75,7 @@
                 <a href="game.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton">Tutorial</button>
                 </a>
-                <a href="gameIA.php" class="landingPageStartLinkBtn">
+                <a href="game.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton">Vs CPU</button>
                 </a>
                 <a href="ranking.php?page=1">
@@ -96,7 +95,7 @@
                 <a href="game.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton" disabled>Tutorial</button>
                 </a>
-                <a href="gameIA.php" class="landingPageStartLinkBtn">
+                <a href="game.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton" disabled>Vs CPU</button>
                 </a>
                 <a href="ranking.php?page=1">
