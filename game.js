@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-document.addEventListener("DOMContentLoaded", function () {
-  //Sonidos
-
-  // Asignar los audios a variables
-  let sonidoAccion = document.getElementById("sonidoAccion");
-  let sonidoAgua = document.getElementById("sonidoAgua");
-  let sonidoAcierto = document.getElementById("sonidoAcierto");
-
-  // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
-  let botones = document.querySelectorAll("button");
-
-  // Añade un evento 'click' a cada botón para reproducir el sonido
-  botones.forEach(function (boton) {
-    boton.addEventListener("click", function () {
-      sonidoAccion.play();
-=======
 document.addEventListener("DOMContentLoaded", function() {
 
     // Asignar los audios a variables
@@ -30,41 +13,8 @@ document.addEventListener("DOMContentLoaded", function() {
         boton.addEventListener('click', function() {
             sonidoAccion.play();
         });
->>>>>>> dev
     });
-  });
 
-<<<<<<< HEAD
-  var timerPoints = 0; //puntos por tiempo
-  var actionPoints = 0; //puntos por aciertos/fallos
-  var roundedPoints = 0; //puntos por tiempo sin decimales
-  var lastHit = false; //comprobar rachas
-  var streak = 0; //racha actual
-  var maxStreak = 1; //racha maxima de la partida
-  var seconds = 0; //segundos del cronometro
-  var totalSeconds = 0; //segundos totales de partida, para calcular puntos
-  var minutes = 0; //minutos del cronometro
-  var countUp = 0; //ID del cronometro
-
-  let messageTimeout = null;
-
-  // click
-  const cells = document.getElementsByClassName("selectCells");
-
-  // turnos: TRUE => Jugador, FALSE => CPU
-  var gameMode = 1; // Especificar tipo de juego; numérico para añadir más tipos de juego en el futuro
-                    // gameMode 0 => Tutorial
-                    // gameMode 1 => VS CPU
-  var turns = true;
-
-  //solo permitimos al jugador hacer clics si es su turno
-  if (turns) {
-    for (let cell of cells) {
-      // creamos una función anónima en la que le pasamos los parámetros que queremos
-      cell.addEventListener("click", function (event) {
-        discoverCell(event, dicShells);
-      });
-=======
     // variables de tiempo
     var timerPoints = 0; //puntos por tiempo
     var actionPoints = 0; //puntos por aciertos/fallos
@@ -80,16 +30,36 @@ document.addEventListener("DOMContentLoaded", function() {
     // variable de mensaje css
     let messageTimeout = null;
 
-    // variable de las celdas que puedes darle click
-    const cells = document.getElementsByClassName("selectCellsUser");
-    
-    // evento click a cada celda
-    for(let cell of cells){
-        // creamos una función anónima en la que le pasamos los parámetros que queremos
-        cell.addEventListener("click",function(event){ 
-            discoverCell(event,dicShellsUser);
-        }); 
+   // variable de las celdas que puedes darle click
+   const cells = document.getElementsByClassName("selectCellsUser");
+
+  // turnos: TRUE => Jugador, FALSE => CPU
+  var gameMode = 1; // Especificar tipo de juego; numérico para añadir más tipos de juego en el futuro
+                    // gameMode 0 => Tutorial
+                    // gameMode 1 => VS CPU
+  var turns = true;
+
+  //solo permitimos al jugador hacer clics si es su turno
+  if (turns) {
+    for (let cell of cells) {
+      // creamos una función anónima en la que le pasamos los parámetros que queremos
+      cell.addEventListener("click", function (event) {
+        discoverCell(event, dicShells);
+      });
     }
+    turns = false;
+  }
+
+  //turno CPU
+  if (!turns){
+    if (gameMode == 1){
+        var cell = cells[Math.floor(Math.random()*cells.length)]; 
+        console.log("test");    
+        discoverCell(cell.click(), dicShellsCPU);
+    }
+    turns = true;
+  }
+
 
     // mostrar todas las imagenes en tu tablero
     const cellsTableIA = document.getElementsByClassName("selectCellsIA");
@@ -131,28 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
     function compareCoordinates(coord1, coord2) {
         return coord1[0] === coord2[0] && coord1[1] === coord2[1];
->>>>>>> dev
     }
-    turns = false;
-  }
-
-  //turno CPU
-  if (!turns){
-    if (gameMode == 1){
-        var cell = cells[Math.floor(Math.random()*cells.length)]; 
-        console.log("test");    
-        discoverCell(cell.click(), dicShellsCPU);
-    }
-    turns = true;
-  }
-
-
-  chronometer();
-
-  // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
-  function compareCoordinates(coord1, coord2) {
-    return coord1[0] === coord2[0] && coord1[1] === coord2[1];
-  }
 
   // comprueba si se ha destapado todo el grupo de conchas
   function isGrupShellDiscovered(shell) {
@@ -164,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function() {
           found = true;
           break;
         }
-<<<<<<< HEAD
       }
 
       // si no ha encontrado la coordenada en touchedCoordinates
@@ -172,47 +120,57 @@ document.addEventListener("DOMContentLoaded", function() {
         return false;
       }
     }
-=======
 
-        return true;
+    return true;
+  }
+
+  // comprueba si se han destapado todos los grupos de conchas
+  function isWin(dicShells) {
+    for (const shell of dicShells) {
+      if (!isGrupShellDiscovered(shell)) {
+        return false;
+      }
     }
-    
-    // comprueba si la celda tocada es aigua o qué
-    function checkClickedCell(dicShells,coordinateClickedCell){
 
-        // valores auxiliares
-        let touch = false;
-        let cellState  = "water";
-        let groupIsDiscovered = false;
+    return true;
+  }
 
-        for(const shell of dicShells){
-            for(const coordinate of shell.coordinates){
-                // se tienen que comparar cada una de las coordenadas, sino compara la dirección de memoria del objeto
-                if (compareCoordinates(coordinate,coordinateClickedCell)){ // si es una concha
-                    touch = true;
-                    cellState = "shell";
+  // comprueba si la celda tocada es aigua o qué
+  function checkClickedCell(dicShells, coordinateClickedCell) {
+    // valores auxiliares
+    let touch = false;
+    let cellState = "water";
+    let groupIsDiscovered = false;
 
-                    //Sonido de acierto
-                    sonidoAcierto.play();
+    for (const shell of dicShells) {
+      for (const coordinate of shell.coordinates) {
+        // se tienen que comparar cada una de las coordenadas, sino compara la dirección de memoria del objeto
+        if (compareCoordinates(coordinate, coordinateClickedCell)) {
+          // si es una concha
+          touch = true;
+          cellState = "shell";
 
-                    // añadimos esta coordenada a las de touched
-                    shell.touchedCoordinates.push(coordinateClickedCell);
-                    console.log("coordenada añadida")
+          //Sonido de acierto
+          sonidoAcierto.play();
 
-                    // comprobar si todo el grupo ha sido descubierto
-                    groupIsDiscovered = isGrupShellDiscovered(shell);
+          // añadimos esta coordenada a las de touched
+          shell.touchedCoordinates.push(coordinateClickedCell);
+          console.log("coordenada añadida");
 
-                    if(groupIsDiscovered){
-                        cellState="groupShell";
-                    }
+          // comprobar si todo el grupo ha sido descubierto
+          groupIsDiscovered = isGrupShellDiscovered(shell);
 
-                    //si has acertado, añade puntos
-                    pointsAdd();
+          if (groupIsDiscovered) {
+            cellState = "groupShell";
+          }
 
-                    return [touch,cellState,groupIsDiscovered];
-                }
-            }
+          //si has acertado, añade puntos
+          pointsAdd();
+
+          return [touch, cellState, groupIsDiscovered];
         }
+      }
+    }
 
         // si es agua
         //resta puntos y sonido
@@ -224,126 +182,128 @@ document.addEventListener("DOMContentLoaded", function() {
         
     }
 
-    // mostrar la imagen en la celda
-    function setImageInCell(dicShells,coordinateClickedCell,e){
-        const cell = e.target;
+  // mostrar la imagen en la celda
+  function setImageInCell(dicShells, coordinateClickedCell, e) {
+    const cell = e.target;
 
-        let isShell = false;
+    let isShell = false;
 
-        for(const shell of dicShells){
-            for(const coordinate of shell.coordinates){
-
-                if (compareCoordinates(coordinate,coordinateClickedCell)){
-
-                    const tipeShell = shell.shellType;
-                    console.log(tipeShell);
-                    cell.setAttribute('data-photo', tipeShell);
-                    isShell = true;
-                }
-            }
+    for (const shell of dicShells) {
+      for (const coordinate of shell.coordinates) {
+        if (compareCoordinates(coordinate, coordinateClickedCell)) {
+          const tipeShell = shell.shellType;
+          console.log(tipeShell);
+          cell.setAttribute("data-photo", tipeShell);
+          isShell = true;
         }
-
-        if(!isShell){
-            cell.setAttribute('data-photo', 'sand');
-        }
-
+      }
     }
 
-    // printea el mensaje
-    function printMessageOnClick(cellState){
-
-        // diccionario de mensajes
-        const messageClickCells = {
-            water : "Informació<br/><br/>Aigua",
-            shell : "Informació<br/><br/>Tocat",
-            groupShell : "Informació<br/><br/>Tocal i enfonsat",
-            win : "Èxit<br/><br/>Has guanyat!"
-        };
-
-         // Mostrar el string en el div con id="resultado" | <div id="message"></div>
-        const messageElement = document.getElementById("message"); // se guarda el elemento
-        messageElement.innerHTML = messageClickCells[cellState];
-
-        if(cellState=='win'){
-            messageElement.style.border = "3px solid green";
-            messageElement.style.borderLeft = "5px solid green";
-            messageElement.style.color = "rgb(4, 155, 4)";
-            messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
-
-
-        }
-        else{
-            messageElement.style.border = "3px solid blue";
-            messageElement.style.borderLeft = "5px solid blue";
-            messageElement.style.color = "rgb(20, 20, 249)"
-            messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
-        }
-
-        // Limpiar el timeout anterior si existe
-        if (messageTimeout !== null) {
-            clearTimeout(messageTimeout);
-        }
-
-        // Establecer un nuevo timeout para ocultar el mensaje
-        messageTimeout = setTimeout(function() {
-            messageElement.innerHTML = "";
-            messageElement.style.border = "none";
-            messageElement.style.backgroundColor = "transparent";
-        }, 4000);
+    if (!isShell) {
+      cell.setAttribute("data-photo", "sand");
     }
+  }
+
+  // printea el mensaje
+  function printMessageOnClick(cellState) {
+    // diccionario de mensajes
+    const messageClickCells = {
+      water: "Informació<br/><br/>Aigua",
+      shell: "Informació<br/><br/>Tocat",
+      groupShell: "Informació<br/><br/>Tocal i enfonsat",
+      win: "Èxit<br/><br/>Has guanyat!",
+    };
+
+    // Mostrar el string en el div con id="resultado" | <div id="message"></div>
+    const messageElement = document.getElementById("message"); // se guarda el elemento
+    messageElement.innerHTML = messageClickCells[cellState];
+
+    if (cellState == "win") {
+      messageElement.style.border = "3px solid green";
+      messageElement.style.borderLeft = "5px solid green";
+      messageElement.style.color = "rgb(4, 155, 4)";
+      messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
+    } else {
+      messageElement.style.border = "3px solid blue";
+      messageElement.style.borderLeft = "5px solid blue";
+      messageElement.style.color = "rgb(20, 20, 249)";
+      messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
+    }
+
+    // Limpiar el timeout anterior si existe
+    if (messageTimeout !== null) {
+      clearTimeout(messageTimeout);
+    }
+
+    // Establecer un nuevo timeout para ocultar el mensaje
+    messageTimeout = setTimeout(function () {
+      messageElement.innerHTML = "";
+      messageElement.style.border = "none";
+      messageElement.style.backgroundColor = "transparent";
+    }, 4000);
+  }
 
     // función click - descrubrir la celda - LA PRINCIPAL
     function discoverCell(e,dicShells){
         const cell = e.target;
 
-        let x = parseInt(cell.getAttribute('data-x'));
-        let y = parseInt(cell.getAttribute('data-y'));
-        const cellIsTouched = cell.getAttribute('data-touched');
-        const coordinateCellClicked = [x,y];
-        
-        console.log(coordinateCellClicked);
+    let x = parseInt(cell.getAttribute("data-x"));
+    let y = parseInt(cell.getAttribute("data-y"));
+    const cellIsTouched = cell.getAttribute("data-touched");
+    const coordinateCellClicked = [x, y];
 
-        // si no se ha tocado aún
-        if(cellIsTouched === 'false'){
+    console.log(coordinateCellClicked);
 
-            //cell.classList.add(nameOfClass);
+    // si no se ha tocado aún
+    if (cellIsTouched === "false") {
+      //cell.classList.add(nameOfClass);
 
-            const [touch, cellState,groupIsDiscovered] = checkClickedCell(dicShells,coordinateCellClicked);
+      const [touch, cellState, groupIsDiscovered] = checkClickedCell(
+        dicShells,
+        coordinateCellClicked
+      );
 
-            // cambiar el estado de la celda para que no vuelvas a girarla
-            cell.setAttribute('data-touched', 'true');
+      // cambiar el estado de la celda para que no vuelvas a girarla
+      cell.setAttribute("data-touched", "true");
 
-            // mostrar la imagen de la celda
-            setImageInCell(dicShells,coordinateCellClicked,e);
+      // mostrar la imagen de la celda
+      setImageInCell(dicShells, coordinateCellClicked, e);
 
-            // mostrar el mensaje
-            printMessageOnClick(cellState);
+      // mostrar el mensaje
+      printMessageOnClick(cellState);
 
-            // comprueba si has ganado la partida
-            if(groupIsDiscovered){
-                if(isWin(dicShells)){
-                    //Sonido win
-                    sonidoWin.play();
-                    printMessageOnClick('win');
+      // comprueba si has ganado la partida
+      if (groupIsDiscovered) {
+        if (isWin(dicShells)) {
+          //Sonido win
+          sonidoWin.play();
+          printMessageOnClick("win");
 
-                    //calcular puntos del final
-                    endgamePoints();
+          //calcular puntos del final
+          endgamePoints();
 
-                    // después de 2 segundo te vas a win.php
-                    setTimeout(function() {
-                        document.getElementById("endForm").submit();
-                        //window.location.href = "win.php";
-                    }, 6000);
-                }
-            }
-
-            console.log("touch es "+touch+ "\n y cellState es "+cellState+" y el grupo está descubierto? "+groupIsDiscovered);
+          // después de 2 segundo te vas a win.php
+          setTimeout(function () {
+            document.getElementById("endForm").submit();
+            //window.location.href = "win.php";
+          }, 6000);
         }
+      }
 
-        for(const shell of dicShells){
-            console.log(shell);
-        }
+      console.log(
+        "touch es " +
+          touch +
+          "\n y cellState es " +
+          cellState +
+          " y el grupo está descubierto? " +
+          groupIsDiscovered
+      );
     }
+
+    for (const shell of dicShells) {
+      console.log(shell);
+    }
+  }
 
 
     // función calcular puntos
@@ -422,263 +382,5 @@ document.addEventListener("DOMContentLoaded", function() {
           showOptions = true;
       }
     });
->>>>>>> dev
 
-    return true;
-  }
-
-  // comprueba si se han destapado todos los grupos de conchas
-  function isWin(dicShells) {
-    for (const shell of dicShells) {
-      if (!isGrupShellDiscovered(shell)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  // comprueba si la celda tocada es aigua o qué
-  function checkClickedCell(dicShells, coordinateClickedCell) {
-    // valores auxiliares
-    let touch = false;
-    let cellState = "water";
-    let groupIsDiscovered = false;
-
-    for (const shell of dicShells) {
-      for (const coordinate of shell.coordinates) {
-        // se tienen que comparar cada una de las coordenadas, sino compara la dirección de memoria del objeto
-        if (compareCoordinates(coordinate, coordinateClickedCell)) {
-          // si es una concha
-          touch = true;
-          cellState = "shell";
-
-          //Sonido de acierto
-          sonidoAcierto.play();
-
-          // añadimos esta coordenada a las de touched
-          shell.touchedCoordinates.push(coordinateClickedCell);
-          console.log("coordenada añadida");
-
-          // comprobar si todo el grupo ha sido descubierto
-          groupIsDiscovered = isGrupShellDiscovered(shell);
-
-          if (groupIsDiscovered) {
-            cellState = "groupShell";
-          }
-
-          //si has acertado, añade puntos
-          pointsAdd();
-
-          return [touch, cellState, groupIsDiscovered];
-        }
-      }
-    }
-
-    // si es agua
-    //resta puntos y sonido
-    sonidoAgua.play();
-    pointsSubstract();
-
-    return [touch, cellState, groupIsDiscovered];
-  }
-
-  // mostrar la imagen en la celda
-  function setImageInCell(dicShells, coordinateClickedCell, e) {
-    const cell = e.target;
-
-    let isShell = false;
-
-    for (const shell of dicShells) {
-      for (const coordinate of shell.coordinates) {
-        if (compareCoordinates(coordinate, coordinateClickedCell)) {
-          const tipeShell = shell.shellType;
-          console.log(tipeShell);
-          cell.setAttribute("data-photo", tipeShell);
-          isShell = true;
-        }
-      }
-    }
-
-    if (!isShell) {
-      cell.setAttribute("data-photo", "sand");
-    }
-  }
-
-  // printea el mensaje
-  function printMessageOnClick(cellState) {
-    // diccionario de mensajes
-    const messageClickCells = {
-      water: "Informació<br/><br/>Aigua",
-      shell: "Informació<br/><br/>Tocat",
-      groupShell: "Informació<br/><br/>Tocal i enfonsat",
-      win: "Èxit<br/><br/>Has guanyat!",
-    };
-
-    // Mostrar el string en el div con id="resultado" | <div id="message"></div>
-    const messageElement = document.getElementById("message"); // se guarda el elemento
-    messageElement.innerHTML = messageClickCells[cellState];
-
-    if (cellState == "win") {
-      messageElement.style.border = "3px solid green";
-      messageElement.style.borderLeft = "5px solid green";
-      messageElement.style.color = "rgb(4, 155, 4)";
-      messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
-    } else {
-      messageElement.style.border = "3px solid blue";
-      messageElement.style.borderLeft = "5px solid blue";
-      messageElement.style.color = "rgb(20, 20, 249)";
-      messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
-    }
-
-    // Limpiar el timeout anterior si existe
-    if (messageTimeout !== null) {
-      clearTimeout(messageTimeout);
-    }
-
-    // Establecer un nuevo timeout para ocultar el mensaje
-    messageTimeout = setTimeout(function () {
-      messageElement.innerHTML = "";
-      messageElement.style.border = "none";
-      messageElement.style.backgroundColor = "transparent";
-    }, 4000);
-  }
-
-  // función click
-  function discoverCell(e, dicShells) {
-
-    if(gameMode==0){
-
-    }
-    const cell = e.target;
-
-    let x = parseInt(cell.getAttribute("data-x"));
-    let y = parseInt(cell.getAttribute("data-y"));
-    const cellIsTouched = cell.getAttribute("data-touched");
-    const coordinateCellClicked = [x, y];
-
-    console.log(coordinateCellClicked);
-
-    // si no se ha tocado aún
-    if (cellIsTouched === "false") {
-      //cell.classList.add(nameOfClass);
-
-      const [touch, cellState, groupIsDiscovered] = checkClickedCell(
-        dicShells,
-        coordinateCellClicked
-      );
-
-      // cambiar el estado de la celda para que no vuelvas a girarla
-      cell.setAttribute("data-touched", "true");
-
-      // mostrar la imagen de la celda
-      setImageInCell(dicShells, coordinateCellClicked, e);
-
-      // mostrar el mensaje
-      printMessageOnClick(cellState);
-
-      // comprueba si has ganado la partida
-      if (groupIsDiscovered) {
-        if (isWin(dicShells)) {
-          //Sonido win
-          sonidoWin.play();
-          printMessageOnClick("win");
-
-          //calcular puntos del final
-          endgamePoints();
-
-          // después de 2 segundo te vas a win.php
-          setTimeout(function () {
-            document.getElementById("endForm").submit();
-            //window.location.href = "win.php";
-          }, 6000);
-        }
-      }
-
-      console.log(
-        "touch es " +
-          touch +
-          "\n y cellState es " +
-          cellState +
-          " y el grupo está descubierto? " +
-          groupIsDiscovered
-      );
-    }
-
-    for (const shell of dicShells) {
-      console.log(shell);
-    }
-  }
-
-  function calculatePointsByTime() {
-    timerPoints = 100000 * (9 / Math.pow(100, totalSeconds / 300) + 1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1
-    //el ritmo de la formula se puede modificar cambiando los valores 100 y 300; ahora mismo en 150 segundos el multiplicador es alrededor de 2, y en 300 segundos es cercano a 1
-    roundedPoints = Math.round(timerPoints); //redondeamos porque a nadie le gusta ver decimales en la puntuación
-  }
-
-  function pointsAdd() {
-    if (lastHit === true) {
-      streak++;
-    }
-    lastHit = true;
-    actionPoints = actionPoints + 5000;
-    //document.getElementById('shipScore').innerHTML =  actionPoints;
-    document.getElementById("totalScore").innerHTML =
-      roundedPoints + actionPoints;
-  }
-
-  function pointsSubstract() {
-    lastHit = false;
-    if (streak > maxStreak) {
-      maxStreak = streak;
-    } //guardar racha maxima para aplicarla al final de la partida
-    if (streak > 0) {
-      actionPoints = actionPoints * streak;
-    } //al finalizar racha existente, multiplicar puntos de barcos por racha y reiniciar la racha a 0
-    streak = 0;
-    actionPoints = actionPoints - 250;
-    //document.getElementById('shipScore').innerHTML =  actionPoints;
-    document.getElementById("totalScore").innerHTML =
-      roundedPoints + actionPoints;
-  }
-
-  function endgamePoints() {
-    stopChronometer(); //paramos el reloj
-    if (streak == 0) {
-      streak = 1;
-    } //vamos a multiplicar la racha actual así que debemos evitar el 0
-    let totalPoints = (roundedPoints + actionPoints * streak) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida
-    document.getElementById("totalScore").innerHTML = totalPoints;
-    document.getElementById("endgameHidden").value = totalPoints;
-    return totalPoints;
-  }
-
-  function chronometer() {
-    seconds++;
-    totalSeconds++;
-    if (seconds > 59) {
-      seconds = 0;
-      minutes++;
-    } //cuando los segundos llegan a superar 59, ponerlos a 0 y sumar un minuto
-    seconds = formatTime(seconds);
-    minutes = formatTime(minutes);
-    calculatePointsByTime();
-    document.getElementById("chrono").innerHTML = minutes + ":" + seconds; //printear cronometro
-    //document.getElementById('score').innerHTML =  roundedPoints;
-    document.getElementById("totalScore").innerHTML =
-      roundedPoints + actionPoints;
-    countUp = setTimeout(chronometer, 1000); //chronometer se llama a sí misma pasados 1000ms, o lo que es lo mismo, una vez por segundo
-    //setTimeout devuelve un ID que se puede guardar para usarlo luego con clearTimeout y detener el bucle
-  }
-
-  function stopChronometer() {
-    clearTimeout(countUp); //clearTimeout detiene el setTimeout cuyo ID le pases por parametro
-  }
-
-  function formatTime(i) {
-    if (i < 10 && typeof i != "string") {
-      i = "0" + i;
-    } // añade un 0 delante en forma de string en los dígitos simples, ademas contempla que la variable no sea string: importante para que no se añada un 0 adicional en cada llamada
-    return i;
-  }
 });
