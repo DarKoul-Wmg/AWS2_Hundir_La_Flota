@@ -33,8 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const cells = document.getElementsByClassName("selectCells");
 
   // turnos: TRUE => Jugador, FALSE => CPU
+  var gameMode = 1; // Especificar tipo de juego; numérico para añadir más tipos de juego en el futuro
+                    // gameMode 0 => Tutorial
+                    // gameMode 1 => VS CPU
   var turns = true;
 
+  //solo permitimos al jugador hacer clics si es su turno
   if (turns) {
     for (let cell of cells) {
       // creamos una función anónima en la que le pasamos los parámetros que queremos
@@ -42,7 +46,20 @@ document.addEventListener("DOMContentLoaded", function () {
         discoverCell(event, dicShells);
       });
     }
+    turns = false;
   }
+
+  //turno CPU
+  if (!turns){
+    if (gameMode == 1){
+        var cell = cells[Math.floor(Math.random()*cells.length)]; 
+        console.log("test");    
+        discoverCell(cell.click(), dicShellsCPU);
+    }
+    turns = true;
+  }
+
+
   chronometer();
 
   // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
@@ -190,6 +207,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // función click
   function discoverCell(e, dicShells) {
+
+    if(gameMode==0){
+
+    }
     const cell = e.target;
 
     let x = parseInt(cell.getAttribute("data-x"));
