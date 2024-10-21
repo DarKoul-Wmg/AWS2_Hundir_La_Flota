@@ -11,7 +11,7 @@
 
 
 
-<body id="ranking" class="rankingBody">
+<body id="ranking">
 <a href="index.php">
   <button class="exit">&larrhk;</button>
 </a> 
