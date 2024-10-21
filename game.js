@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let sonidoAccion = document.getElementById('sonidoAccion');
     let sonidoAgua = document.getElementById('sonidoAgua');
     let sonidoAcierto = document.getElementById('sonidoAcierto');
-
+  
     // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
     let botones = document.querySelectorAll('button');
 
@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
         for(const shell of dicShellsIA){
             for(const coordinate of shell.coordinates){
 
+
                 if (compareCoordinates(coordinate,coordinateCellClicked)){
 
                     const tipeShell = shell.shellType;
@@ -70,7 +71,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
 
-    chronometer();
+    //llamar al cronómetro si existe el elemento en la página
+    const clock = document.getElementById('chrono');
+    if(clock){
+        chronometer();
+    }
+
     
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
     function compareCoordinates(coord1, coord2) {
@@ -121,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let cellState  = "water";
         let groupIsDiscovered = false;
 
-
         for(const shell of dicShells){
             for(const coordinate of shell.coordinates){
                 // se tienen que comparar cada una de las coordenadas, sino compara la dirección de memoria del objeto
@@ -152,7 +157,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // si es agua
-        //resta puntos
+        //resta puntos y sonido
+
         sonidoAgua.play();
         pointsSubstract();
 
@@ -280,6 +286,7 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(shell);
         }
     }
+
 
     // función calcular puntos
     function calculatePointsByTime(){

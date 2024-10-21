@@ -387,20 +387,21 @@ body#win {
 
 body#win .winBox {
     background-color: #232f5f8c;
-    border-collapse: collapse;
-    border-radius: 12px;
-    margin: auto;
+    max-width: 40vw;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+body#index .landingPageDescription{
     text-align: center;
     color: #fcd4a7;
     width: 75vh;
 }
 
-body#win .winVictoryMsg{
-    font: 4.0em "Fira Sans", sans-serif;
-    font-weight: bold;
-}
 
-body#win .winNewGameButton{
+body#index .landingPageNewGameButton,
+body#index .landingPageRankingButton,
+body#index .landingPageRegisterButton{
     font: 2.4em "Fira Sans", sans-serif;
     background-color: #434b71; 
     color: #fcd4a7; 
@@ -409,36 +410,36 @@ body#win .winNewGameButton{
     padding: 10px;
 }
 
-body#win .winHomeBtnLink{
-    margin-right: 80px;
+body#index .landingPageNewGameButton:hover,
+body#index .landingPageRankingButton:hover,
+body#index .landingPageRegisterButton:hover{
+    background-color: #5b6597; 
 }
 
-body#win .winRankingButton{
+body#index .landingPageStartLinkBtn{
+    margin-right: 5vh;
+}
+
+
+
+body#index .landingPageNewGameButton:disabled
     font: 2.4em "Fira Sans", sans-serif;
-    background-color: #434b71; 
-    color: #fcd4a7; 
+    background-color: #636675; 
+    color: #362f26; 
     border-radius: 40px; 
+    border: 0;
     border-color: #fcc486;
     padding: 10px;
 }
 
-body#win .winRegisterButton{
-    font: 2em "Fira Sans", sans-serif;
-    background-color: #434b71; 
-    color: #fcd4a7; 
-    border-radius: 40px; 
-    border-color: #fcc486;
-    padding: 10px;
-}
-body#win .winScoreTitle{
-    font: 3em "Fira Sans", sans-serif;
+
+body#index .landingPageCenterButtons{
+    padding-top: 4vh;
+    display: flex;
+    justify-content: center;
 }
 
-body#win .winScoreDesc{
-    font: 3em "Fira Sans", sans-serif;
-}
-
-body#win .winCenterButtons{
+body#index .landingPageCenterTextbox{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -458,8 +459,101 @@ body#win input[type=text] {
 	color: #E91E63;
 }
 
+body#index input[type=text] {
+    font: 1.6em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #E91E63;
+}
 
-/*----------------------------------------------------------*/
+body#index input[type=text]::placeholder {
+    text-align: center;
+    font: 0.8em "Fira Sans", sans-serif;
+	color: #9e7b52;
+}
+
+body#index .landingPageOptionsButton{
+    margin-top: 40px;
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+}
+
+body#index .optionImg{
+    max-width: 40px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+body#index .landingPageOptions{
+    display: none;
+}
+
+body#index .landingPageLabel{
+    font: 1.8em "Fira Sans", sans-serif;
+    color: #fcd4a7; 
+    vertical-align: middle;
+}
+
+body#index .landingPageCheckboxWrapper{
+    margin-top: 30px;
+
+}
+
+body#index input[type="checkbox"].landingPageCheckbox{
+    vertical-align: middle;
+    float: right;
+    font-size: 1.4em;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    width: 3.5em;
+    height: 1.5em;
+    background: #ddd;
+    border-radius: 3em;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+  
+  body#index input[type="checkbox"].landingPageCheckbox:checked{
+    background: #434b71;
+  }
+
+  
+  body#index input[type="checkbox"].landingPageCheckbox:after{
+    position: absolute;
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background: #fcd4a7;
+    -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
+            box-shadow: 0 0 .25em rgba(0,0,0,.3);
+    -webkit-transform: scale(.7);
+            transform: scale(.7);
+    left: 0;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+
+  body#index input[type="checkbox"].landingPageCheckbox:disabled:after{
+    background: #bebebe;
+  }
+  
+  body#index input[type="checkbox"].landingPageCheckbox:checked:after{
+    left: calc(100% - 1.5em);
+  }
 
 
 body#ranking .exit {
@@ -561,4 +655,135 @@ body#ranking .pagination a:not(.active) {
 
 body#ranking .pagination a:hover:not(.active) {
     background-color: #fcd4a7;
+}
+
+body#win {
+    min-height: 100vh;/*toda la pantalla */
+    overflow: hidden; /* Evita el scroll */
+    display: flex;
+    align-items: center;
+    background-image: url('images/backgroundGame.jpeg');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-color: rgba(15, 44, 73, 0.811);
+}
+
+body#win .winBox {
+    background-color: #232f5f8c;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+    width: 75vh;
+
+    /*Propiedads para transicion*/
+    opacity: 0; /*invisiblew*/
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra inicial */
+    animation: aparition 3s ease-in-out forwards; /* Aparece en 3 segundos */
+
+}
+
+body#win img{
+    max-width: 150px;
+    max-height: 150px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+    /*efectos de las imagenes*/
+    body#win .imagenSalto{
+        transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
+    }
+    body#win .imagenSalto:hover{
+        transform: translateY(-100px) translateY(10px);  /* Mueve la imagen hacia arriba 10 píxeles */
+        cursor: grab;
+    }
+
+    body#win .imagenGiro{
+        transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
+    }
+    body#win .imagenGiro:hover{
+        transform: translateY(-10px) rotate(360deg); /* Salta 10px y rota 15 grados */
+        cursor:grabbing;
+    }
+
+
+
+body#win .winVictoryMsg{
+    font: 4.0em "Fira Sans", sans-serif;
+    font-weight: bold;
+}
+
+body#win .winNewGameButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#win .winHomeBtnLink{
+    margin-right: 80px;
+}
+
+body#win .winRankingButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#win .winRegisterButton{
+    font: 2em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+body#win .winScoreTitle{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+body#win .winScoreDesc{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+
+body#win .winCenterButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+    padding-bottom: 40px;
+}
+
+body#win input[type=text] {
+    font: 2em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #E91E63;
+}
+
+/*Animaciones*/
+
+/* Definimos la animación */
+@keyframes aparition {
+    0% {
+        opacity: 0; /* Comienza invisible */
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra */
+    }
+    100% {
+        opacity: 1; /* Termina completamente visible */
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Sombra visible */
+    }
 }
