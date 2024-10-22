@@ -41,23 +41,74 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
     // evento click a cada celda
-    if(turn){ //solo dejar hacer clic en tu turno
-        for(let cell of cells){
-            // creamos una función anónima en la que le pasamos los parámetros que queremos          
-                cell.addEventListener("click",function(event){ 
-                    discoverCell(event,dicShellsUser);                   
-                });  
-            console.log(turn);
-            turnCPU();
-            }  
+    for(let cell of cells){
+        // creamos una función para poder pasar el parámetro event         
+            cell.addEventListener("click",eventHandler);        
+    };  
+            
+    //cambiada función anónima para poder referenciarla en el removeEventListener
+    function eventHandler(event) { 
+        if(turn){       
+            if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
+                turn = false;
+                setTimeout(() => turnCPU(event, dicShellsIA), 3000);
+            }           
+        }
     }
 
-    function turnCPU(){
-        turn = false;
-        console.log(turn);
-        setTimeout(8000);
+    // función que devuelve el evento click a las celdas para que el jugador vuelva a tener turno; se llama al final del turno de la CPU
+    function returnTurnToPlayer(){
+        for(let cell of cells){
+            if((cell.getAttribute('data-photo'))==='none'){ //solo devoler el evento a las celdas vacías, importante para no perder turnos en celdas ya clicadas
+                cell.addEventListener("click",eventHandler);  
+            }
+            turn = true;     
+        }; 
     }
-        
+
+    // diccionario que lleva la lista de movimientos posibles para la CPU
+    var cpuLeftCells = [];
+
+    for (let x = 1; x < 11; x++) {
+        for (let y = 1; y < 11; y++) {
+            cpuLeftCells.push({
+                x: x,
+                y: y
+            })
+        }     
+    }
+
+    function turnCPU(e, dicShellsIA) {
+        if (!turn) {
+            for (let cell of cells) {
+                //quitamos el evento click de las celdas hasta que le vuelva a tocar al jugador         
+                cell.removeEventListener("click", eventHandler);
+            };
+            let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
+            let coordinateInCPUTable;
+            for (let cell of cellsTableIA) {
+                let x = parseInt(cell.getAttribute('data-x'));
+                let y = parseInt(cell.getAttribute('data-y'));
+                const currentCell = [x, y];
+                let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+                if (compareCoordinates(currentCell, aux)) {
+                    cell.setAttribute('data-photo', ''); //marcar la celda escogida, faltan estilos
+                    coordinateInCPUTable = currentCell;
+                };
+            }
+            cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes
+            console.log(dicShellsIA);
+
+            const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
+            printMessageOnClick(cellState);
+            if (touch) {
+                setTimeout(() => turnCPU(e, dicShellsIA), 3000); //Repetir turno CPU a los 3 segundos
+            } else {
+                setTimeout(returnTurnToPlayer, 3000); //devolver turno al jugador a los 3 segundos
+            };
+        }
+    }
+    
 
     // mostrar todas las imagenes en tu tablero
     const cellsTableIA = document.getElementsByClassName("selectCellsIA");
@@ -167,7 +218,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
 
                     //si has acertado, añade puntos
-                    pointsAdd();
+                    if(turn){
+                        pointsAdd();
+                    }
 
                     return [touch,cellState,groupIsDiscovered];
                 }
@@ -298,6 +351,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             console.log("touch es "+touch+ "\n y cellState es "+cellState+" y el grupo está descubierto? "+groupIsDiscovered);
+            return cellState; //necesito un return para saber si el jugador acierta y su turno sigue
         }
 
         for(const shell of dicShells){
@@ -308,8 +362,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // función calcular puntos
     function calculatePointsByTime(){
-        timerPoints = 100000*((9/Math.pow(100,(totalSeconds/300)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
+        timerPoints = 100000*((9/Math.pow(1000,(totalSeconds/4000)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
         //el ritmo de la formula se puede modificar cambiando los valores 100 y 300; ahora mismo en 150 segundos el multiplicador es alrededor de 2, y en 300 segundos es cercano a 1
+        //para ver la curva sobre el tiempo se puede usar WolframAlpha: plot 100000*9/1000^(x/4000)+1, x=0 to 900
+        //curva de pérdida de puntos cambiada a más relajada; más o menos baja a la mitad a los 300 segundos y a los 900 segundos está cerca de los 200000 puntos
         roundedPoints = Math.round(timerPoints); //redondeamos porque a nadie le gusta ver decimales en la puntuación
     }
     
