@@ -41,6 +41,8 @@ $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "";  //
 
 $score = isset($_POST["score"]) ? $_POST["score"] : 0;  //recuperamos score
 
+$_SESSION["score"] = $score; //pasar a variable de sesion
+
 //comprobación creada para ver si recibe o no la puntuacion 
 // if(isset($_POST["score"])){
 //     echo ' entran:'.$_POST["score"];
