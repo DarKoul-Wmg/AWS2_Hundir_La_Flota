@@ -24,7 +24,12 @@
         <source src="sounds/ee2.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
-
+    <audio id="sonidoLose">
+        <source src="sounds/lose2.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+    <!-- Capa de overlay para que el background pille el filtro B/N  -->
+    <div class="overlay"></div>
 
     <img src="/images/pulpoLose.png" alt="medusa kawaii" class="imagenSalto">
     <img src="/images/conchaLose.png" alt="estrella kawaii" class="imagenGiro">
@@ -89,6 +94,13 @@ echo '
     <img src="/images/medusaLose.png" alt="pulpo kawaii" class="imagenSalto">
 
     <script>
+        //Script para reproducir el sonido nada mas entrar en la pagina
+        function loseSound(){  
+            var audio = document.getElementById("sonidoLose");
+            console.log("Sonido de derrota");
+            audio.play();
+        }
+
         function easterEgg(event) {
             event.preventDefault(); // Evita el envío inmediato del formulario
 
@@ -122,6 +134,11 @@ echo '
                 document.querySelector('form').submit();
                 return true; // Si no es el nombre especial, envía el formulario normalmente
             }
+        }
+
+        //Script para que cargue el sonido una vez cargue el DOM
+        window.onload = function(){
+            loseSound();
         }
 
         //scrpit simple que impide la entrada de comas en el documento, necesario porque el archivo de ranking separa los valores por comas
