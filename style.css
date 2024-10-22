@@ -866,7 +866,7 @@ body#win {
     overflow: hidden; /* Evita el scroll */
     display: flex;
     align-items: center;
-    background-image: url('images/backgroundGame.jpeg');
+    background-image: url('images/backgroundWin.jpeg');
     background-size: cover; /*imagen al tamaño del contenedor */
     background-position: center; 
     background-repeat: no-repeat; 
