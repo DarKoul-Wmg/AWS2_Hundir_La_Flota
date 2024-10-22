@@ -10,6 +10,22 @@
 </head>
 
 <body id="win">
+    <!-- FORBIDDEN 403 SI NO VIENE DE GAME.PHP-->
+<?php 
+session_start();
+    // HTTP_REFERER es el encabezado de la pagina (url)
+    // verificacion: Si la llamada no viene de game.php o win.php, salta un forbbiden
+    if(!isset($_SERVER["HTTP_REFERER"]) || (strpos($_SERVER["HTTP_REFERER"],"game.php")=== false &&
+                                            strpos($_SERVER["HTTP_REFERER"],"win.php")=== false)){
+        header('HTTP/1.1 403 Forbidden');
+        echo "<div class ='forbidden'>
+            <h1>403 Forbidden</h1>
+            <h2>Acces no autoritzat, accedeix desde game.php</h2>
+          </div>"; // Muestra un mensaje
+    exit; // Termina el script
+    }
+?>
+
     <!-- Aud  -->
     <audio id="sonidoAccion">
         <source src="sounds/action.mp3" type="audio/mpeg">
@@ -33,7 +49,6 @@
     <div class="winBox">
         <p class="winVictoryMsg">Has guanyat!</p>
 <?php
-session_start();
 date_default_timezone_set('Europe/Madrid');
 
                     //condicion                     valorTrue    valorFalse             

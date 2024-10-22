@@ -862,9 +862,10 @@ body#ranking .pagination a:hover:not(.active) {
 
 /*----------------------------------------------------------------------------------------------*/  
 body#win {
-    min-height: 100vh;/*toda la pantalla */
+    height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
     display: flex;
+    justify-content: center;
     align-items: center;
     background-image: url('images/backgroundWin.jpeg');
     background-size: cover; /*imagen al tamaño del contenedor */
@@ -1114,6 +1115,43 @@ body#lose input[type=text] {
 	color: #ad1a2e;
     text-shadow: 0 8px 15px rgba(213, 206, 206, 0.7);
 }
+
+/*EWstilos para el forbbiden*/
+
+.forbidden{
+    display:grid;
+    place-items: center;
+    height: 80%;/*evita que se vea win.php*/
+    width: 80%;/*evita que se vea win.php*/
+    top:0;
+    left: 0;
+
+    background-color: #3C3A3E; /* Color de fondo */
+    background-image: url('images/forbidden.jpeg');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+.forbidden h1 {
+    font-size: 2.5em; /* Tamaño del título */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
+    border-radius: 5px;
+    color: #993341;
+}
+
+.forbidden h2 {
+    font-size: 1.5em; /* Tamaño del subtítulo */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
+    border-radius: 5px;
+    color: #39284E;
+}
+
+
+
+
 /*Animaciones*/
 
 /* Definimos la animación */
