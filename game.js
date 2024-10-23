@@ -31,9 +31,13 @@ document.addEventListener("DOMContentLoaded", function() {
     let messageTimeout = null;
 
     
-    // variable de munición
+    // variables de munición
     let userMunition = 40;
     let iaMunition = 40;
+
+    const contenedorMunicion = document.getElementById('contenedorMunicion');
+    const limitedMunition = contenedorMunicion.getAttribute('data-limitedMunition');
+    console.log(limitedMunition);
 
     // variable de las celdas que puedes darle click
     const cells = document.getElementsByClassName("selectCellsUser");
@@ -69,7 +73,12 @@ document.addEventListener("DOMContentLoaded", function() {
             discoverCell(event, dicShellsUser);
         } 
         if (gameMode == 1){
-            if(turn){    
+            if(turn){   
+                
+                // municion user
+                console.log("Restar al user");
+
+                
                 if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
                     turn = false;
                     //estilos que marcan el turno de la CPU
@@ -153,6 +162,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
+            // municion cpu
+
             if (touch) {
                 setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
                 //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
@@ -169,7 +180,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // mostrar todas las imagenes en tu tablero
     const cellsTableIA = document.getElementsByClassName("selectCellsIA");
-
     for(let cell of cellsTableIA){
     
         let x = parseInt(cell.getAttribute('data-x'));
@@ -202,7 +212,6 @@ document.addEventListener("DOMContentLoaded", function() {
     if(clock){
         chronometer();
     }
-
     
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
     function compareCoordinates(coord1, coord2) {
@@ -422,7 +431,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-
     // función calcular puntos
     function calculatePointsByTime(){
         timerPoints = 100000*((9/Math.pow(1000,(totalSeconds/4000)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
@@ -461,13 +469,15 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('endgameHidden').value =  totalPoints;
         return totalPoints;
     }
+
+    // función de perder puntos
     function loseEndgamePoints(){
         stopChronometer(); //paramos el reloj
         let totalPoints = roundedPoints + actionPoints;
         document.getElementById('totalScore').innerHTML =  totalPoints;
         document.getElementById('loseEndgameHidden').value =  totalPoints;
         return totalPoints;
-        }
+    }
     
     // función del cronómetro
     function chronometer() {
@@ -494,9 +504,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (i < 10 && typeof i != "string") {i = "0" + i};  // añade un 0 delante en forma de string en los dígitos simples, ademas contempla que la variable no sea string: importante para que no se añada un 0 adicional en cada llamada
         return i;
     }
-
-
-    
 
 });
 
