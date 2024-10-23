@@ -957,6 +957,7 @@ body#win .winRegisterButton{
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px;
+    margin-top: 10px;
 }
 body#win .winScoreTitle{
     font: 3em "Fira Sans", sans-serif;
@@ -1085,6 +1086,7 @@ body#lose .loseRegisterButton{
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px;
+    margin-top: 10px;
 }
 body#lose .loseScoreTitle{
     font: 3em "Fira Sans", sans-serif;
@@ -1119,7 +1121,7 @@ body#lose input[type=text] {
 /*EWstilos para el forbbiden*/
 
 .forbidden{
-    display:grid;
+    display: grid;
     place-items: center;
     height: 80%;/*evita que se vea win.php*/
     width: 80%;/*evita que se vea win.php*/
@@ -1127,28 +1129,7 @@ body#lose input[type=text] {
     background-size: cover; /*imagen al tamaño del contenedor */
     background-position: center; 
     background-repeat: no-repeat;
-    z-index: 999; /* Asegura que esté sobre otros elementos */
-    opacity: 1; /* Asegura que se vea claro */
-    backdrop-filter: none; /* Intenta anular el efecto de escala de grises */
-    filter: none !important; /* Fuerza la eliminación del filtro si se hereda */
 }
-
-body#lose .forbidden {
-    display: grid;
-    place-items: center;
-    height: 80%; /* Evita que se vea win.php */
-    width: 80%; /* Evita que se vea win.php */
-    background-image: url('images/forbiddenEdit.png');
-    background-size: cover; /* Imagen al tamaño del contenedor */
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 999; /* Asegura que esté sobre otros elementos */
-    opacity: 1; /* Asegura que se vea claro */
-    
-    /* Ajuste para invertir el filtro */
-    filter: grayscale(0%) !important; /* Reinvierte el filtro de escala de grises */
-}
-
 
 .forbidden h1 {
     font-size: 2.5em; /* Tamaño del título */

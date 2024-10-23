@@ -149,12 +149,13 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             if (touch) {
-                setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
-                //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
+                // setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU a los 2 segundos
+                setTimeout(() => turnCPU(e, dicShellsIA), 2000);
+                
 
             } else {
-                setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
-                //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
+                //setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
+                setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU al miñisegundo
                 // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
 
             };
@@ -447,7 +448,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function endgamePoints(){
         stopChronometer(); //paramos el reloj
         if(streak==0){streak = 1}; //vamos a multiplicar la racha actual así que debemos evitar el 0
-        let totalPoints = 500000+(roundedPoints + (actionPoints * streak)) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida 
+        let totalPoints = 200000+(roundedPoints + (actionPoints * streak)) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida 
         document.getElementById('totalScore').innerHTML =  totalPoints;
         document.getElementById('endgameHidden').value =  totalPoints;
         return totalPoints;
@@ -485,9 +486,5 @@ document.addEventListener("DOMContentLoaded", function() {
         if (i < 10 && typeof i != "string") {i = "0" + i};  // añade un 0 delante en forma de string en los dígitos simples, ademas contempla que la variable no sea string: importante para que no se añada un 0 adicional en cada llamada
         return i;
     }
-
-
-    
-
 });
 

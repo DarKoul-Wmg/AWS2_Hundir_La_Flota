@@ -15,11 +15,12 @@ session_start();
     // HTTP_REFERER es el encabezado de la pagina (url)
     // verificacion: Si la llamada no viene de game.php o win.php, salta un forbbiden
     if(!isset($_SERVER["HTTP_REFERER"]) || (strpos($_SERVER["HTTP_REFERER"],"game.php")=== false &&
+                                            strpos($_SERVER["HTTP_REFERER"],"gameIA.php")=== false &&
                                             strpos($_SERVER["HTTP_REFERER"],"lose.php")=== false)){
         header('HTTP/1.1 403 Forbidden');
         echo "<div class ='forbidden'>
             <h1>403 Forbidden</h1>
-            <h2>Acces no autoritzat, accedeix desde game.php</h2>
+            <h2>Acces no autoritzat a lose.php, accedeix desde game.php</h2>
           </div>\n</body>\n</html>"; // Muestra un mensaje
     exit; // Termina el script
     }
