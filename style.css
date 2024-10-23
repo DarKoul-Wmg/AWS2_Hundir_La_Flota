@@ -870,9 +870,10 @@ body#ranking .pagination a:hover:not(.active) {
 
 /*----------------------------------------------------------------------------------------------*/  
 body#win {
-    min-height: 100vh;/*toda la pantalla */
+    height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
     display: flex;
+    justify-content: center;
     align-items: center;
     background-image: url('images/backgroundWin.jpeg');
     background-size: cover; /*imagen al tamaño del contenedor */
@@ -990,17 +991,18 @@ body#win input[type=text] {
 
 body#lose {
     margin: 0;
-    min-height: 100vh;/*toda la pantalla */
+    height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
     display: flex;
     align-items: center;
+    justify-content: center;
     background-image: url('images/backgroundLose.jpeg');
     background-size: cover; /*imagen al tamaño del contenedor */
     background-position: center; 
     background-repeat: no-repeat; 
     background-color: rgba(15, 44, 73, 0.811);
     filter: grayscale(100%); /* B/N */
-    animation: gameOverEffect 10s ease-in-out forwards; /* Color normal (quitra B y N)*/
+    animation: gameOverEffect 4s ease-in-out forwards; /* Color normal (quitra B y N)*/
 }
 
 body#lose .overlay {
@@ -1060,12 +1062,12 @@ body#lose img{
 body#lose .loseMsg{
     font: 4.0em "Fira Sans", sans-serif;
     font-weight: bold;
-    color:#993341;
+    color:#B298DC;
 }
 
-body#lose .loseNewGameButton{
+body#lose .loseNewGameButton, .loseRankingButton{
     font: 2.4em "Fira Sans", sans-serif;
-    background-color: #3C3A3E; 
+    background-color: #6F2DBD; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
@@ -1076,18 +1078,9 @@ body#lose .loseHomeBtnLink{
     margin-right: 80px;
 }
 
-body#lose .loseRankingButton{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #3C3A3E; 
-    color: #fcd4a7; 
-    border-radius: 40px; 
-    border-color: #fcc486;
-    padding: 10px;
-}
-
 body#lose .loseRegisterButton{
     font: 2em "Fira Sans", sans-serif;
-    background-color: #3C3A3E; 
+    background-color: #6F2DBD; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
@@ -1122,6 +1115,57 @@ body#lose input[type=text] {
 	color: #ad1a2e;
     text-shadow: 0 8px 15px rgba(213, 206, 206, 0.7);
 }
+
+/*EWstilos para el forbbiden*/
+
+.forbidden{
+    display:grid;
+    place-items: center;
+    height: 80%;/*evita que se vea win.php*/
+    width: 80%;/*evita que se vea win.php*/
+    background-image: url('images/forbiddenEdit.png');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat;
+    z-index: 999; /* Asegura que esté sobre otros elementos */
+    opacity: 1; /* Asegura que se vea claro */
+    backdrop-filter: none; /* Intenta anular el efecto de escala de grises */
+    filter: none !important; /* Fuerza la eliminación del filtro si se hereda */
+}
+
+body#lose .forbidden {
+    display: grid;
+    place-items: center;
+    height: 80%; /* Evita que se vea win.php */
+    width: 80%; /* Evita que se vea win.php */
+    background-image: url('images/forbiddenEdit.png');
+    background-size: cover; /* Imagen al tamaño del contenedor */
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 999; /* Asegura que esté sobre otros elementos */
+    opacity: 1; /* Asegura que se vea claro */
+    
+    /* Ajuste para invertir el filtro */
+    filter: grayscale(0%) !important; /* Reinvierte el filtro de escala de grises */
+}
+
+
+.forbidden h1 {
+    font-size: 2.5em; /* Tamaño del título */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
+    border-radius: 5px;
+    color: #993341;
+}
+
+.forbidden h2 {
+    font-size: 1.5em; /* Tamaño del subtítulo */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
+    border-radius: 5px;
+    color: #39284E;
+}
+
 /*Animaciones*/
 
 /* Definimos la animación */
