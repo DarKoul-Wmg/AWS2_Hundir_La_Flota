@@ -270,7 +270,7 @@ body#gameIA table td.empty{
 
 body#game table td:hover,
 body#gameIA table td:hover{
-    cursor: url('images/cursorPala.png'), auto;
+    cursor: url('images/cursor1.cur'), auto;
 }
 
 
