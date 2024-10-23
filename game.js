@@ -32,12 +32,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     
     // variables de munición
-    let userMunition = 40;
-    let iaMunition = 40;
-
     const contenedorMunicion = document.getElementById('contenedorMunicion');
     const limitedMunition = contenedorMunicion.getAttribute('data-limitedMunition');
-    console.log(limitedMunition);
+    const isLimitedMunition = limitedMunition === 'true'; // Convertir el valor de string a booleano
+
+    // variables de control de si se han acabado la munición
+    let isMunitionUserSpent = false;
+    let isMunitionIaSpent = false;
 
     // variable de las celdas que puedes darle click
     const cells = document.getElementsByClassName("selectCellsUser");
@@ -67,6 +68,33 @@ document.addEventListener("DOMContentLoaded", function() {
             cell.addEventListener("click",eventHandler);        
     };  
             
+
+    // función que devuelve cuánta munición tenemos puesta que se muestra en el html
+    function getCurrentMunition(turn) {
+
+        if (turn){
+            return parseInt(document.getElementById('userMunition').innerHTML);
+        }
+        return parseInt(document.getElementById('iaMunition').innerHTML);
+
+    }
+
+
+    // función que comprueba si se te acaba la munición
+    function checkMunition(){
+
+        // comprueba la del usuario
+        if (getCurrentMunition(true) == 0){
+            printMessageOnClick('userNotMun');
+            isMunitionUserSpent = true;
+        }
+        // comprueba la de la máquina
+        if (getCurrentMunition(false) == 0){
+            printMessageOnClick('iaNotMun');
+            isMunitionIaSpent = true;
+        }
+    }
+
     //cambiada función anónima para poder referenciarla en el removeEventListener
     function eventHandler(event) {
         if (gameMode == 0) {
@@ -75,18 +103,29 @@ document.addEventListener("DOMContentLoaded", function() {
         if (gameMode == 1){
             if(turn){   
                 
-                // municion user
-                console.log("Restar al user");
+                // munición user
+                if(isLimitedMunition){
+                    let updatedMunitionValue = getCurrentMunition(turn);
+                    updatedMunitionValue--;
+                    document.getElementById('userMunition').innerHTML = updatedMunitionValue;
+
+                    checkMunition();
+
+                }
 
                 
                 if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
-                    turn = false;
-                    //estilos que marcan el turno de la CPU
-                    document.getElementById("tableUser").classList.add("tableDisabler");
-                    document.getElementById("tableUser").classList.remove("tableEnabler");
-                    document.getElementById("tableIA").classList.add("tableEnabler");           
-                    document.getElementById("tableIA").classList.remove("tableDisabler");
-                    setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+
+                    // si la ia TIENE munición
+                    if(!isMunitionIaSpent){
+                        turn = false;
+                        //estilos que marcan el turno de la CPU
+                        document.getElementById("tableUser").classList.add("tableDisabler");
+                        document.getElementById("tableUser").classList.remove("tableEnabler");
+                        document.getElementById("tableIA").classList.add("tableEnabler");           
+                        document.getElementById("tableIA").classList.remove("tableDisabler");
+                        setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                    }
                 }           
             }
         }
@@ -162,18 +201,28 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-            // municion cpu
+            // munición cpu
+            if(isLimitedMunition){
+                let updatedMunitionValue = getCurrentMunition(turn);
+                updatedMunitionValue--;
+                document.getElementById('iaMunition').innerHTML = updatedMunitionValue;
+
+                checkMunition();
+            }
 
             if (touch) {
                 setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
                 //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
 
             } else {
-                setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
-                //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
-                // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
 
-            };
+                 // si el user TIENE munición
+                 if(!isMunitionUserSpent){
+                    setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
+                    //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
+                    // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
+                 }
+            }
         }
     }
     
@@ -338,7 +387,9 @@ document.addEventListener("DOMContentLoaded", function() {
             water : "Informació<br/><br/>Aigua",
             shell : "Informació<br/><br/>Tocat",
             groupShell : "Informació<br/><br/>Tocal i enfonsat",
-            win : "Èxit<br/><br/>Has guanyat!"
+            win : "Èxit<br/><br/>Has guanyat!",
+            userNotMun : "Informació<br/><br/>Ja no tens més munició",
+            iaNotMun : "Informació<br/><br/>L'ia ja no té més munició",
         };
 
          // Mostrar el string en el div con id="resultado" | <div id="message"></div>
@@ -350,9 +401,15 @@ document.addEventListener("DOMContentLoaded", function() {
             messageElement.style.borderLeft = "5px solid green";
             messageElement.style.color = "rgb(4, 155, 4)";
             messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
-
-
         }
+
+        else if(cellState=='userNotMun' || cellState=='iaNotMun'){
+            messageElement.style.border = "3px solid yellow";
+            messageElement.style.borderLeft = "5px solid yellow";
+            messageElement.style.color = "rgb(231, 211, 63)";
+            messageElement.style.backgroundColor = "rgba(147, 147, 147, 0.614)";
+        }
+
         else{
             messageElement.style.border = "3px solid blue";
             messageElement.style.borderLeft = "5px solid blue";
@@ -398,11 +455,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setImageInCell(dicShells,coordinateCellClicked,e);
 
             // mostrar el mensaje
-            printMessageOnClick(cellState);
-
-            // restar munición al usuario
-            userMunition = userMunition -1;
-            console.log(userMunition);
+            printMessageOnClick(cellState);         
 
             // comprueba si has ganado la partida
             if(groupIsDiscovered){

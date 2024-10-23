@@ -211,13 +211,14 @@
                 $visibilityStyle = $limmitedAmmo ? 'visible' : 'hidden';
                 $limitedAmmoStr = $limmitedAmmo ? 'true' : 'false';
                 
+                // hardcodear munición
                 echo '
-                    <div id="contenedorMunicion" data-limitedMunition=' . $limitedAmmoStr . ' style="visibility: ' . $visibilityStyle . ';"> 
+                    <div id="contenedorMunicion" data-limitedMunition="' . $limitedAmmoStr . '" style="visibility: ' . $visibilityStyle . ';">
                         <div id="contenidoHidMunicion">
                             <h3> Munición disponible </h3>
                             <div class="linea">
                                 <p>User:</p> 
-                                <p id="userMunition">40</p> 
+                                <p id="userMunition">1</p> 
                                 <p> /40</p>
                             </div>
                             <div class="linea">
