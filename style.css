@@ -193,7 +193,7 @@ body#game{
     background-image: url('images/backgroundGame3.png');
 }
 body#gameIA{
-    background-image: url('images/backgroundGame2.png');
+    background-image: url('images/backgroundGameIA.jpeg');
 }
 
 /*Estructura principal de las dos pantallas*/
@@ -358,9 +358,15 @@ body#gameIA td[data-photo="estrella"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
-body#game td[data-photo="sand"],
-body#gameIA td[data-photo="sand"]{
+body#game td[data-photo="sand"]{
     background-image: url('images/sand.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+body#gameIA td[data-photo="sand"]{
+    background-image: url('images/sand2.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
@@ -376,8 +382,7 @@ body#gameIA .tableDisabler {
 
 body#gameIA .tableEnabler {
     opacity: 1;
-    
-    box-shadow: 0 0 10px 5px #ffcf4c;
+    box-shadow: 0 0 10px 5px #B9FAF8;
 }
 
 /* Izquierda */

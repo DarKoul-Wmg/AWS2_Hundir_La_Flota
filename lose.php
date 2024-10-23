@@ -46,8 +46,8 @@ session_start();
     <!-- Capa de overlay para que el background pille el filtro B/N  -->
     <div class="overlay"></div>
 
-    <img src="/images/pulpoLose.png" alt="medusa kawaii" class="imagenSalto">
-    <img src="/images/conchaLose.png" alt="estrella kawaii" class="imagenGiro">
+    <img src="/images/pulpoLose.png" alt="medusa dead" class="imagenSalto">
+    <img src="/images/conchaLose.png" alt="estrella dead" class="imagenGiro">
 
 <!-- Div principal-->
     <div class="loseBox">
@@ -104,8 +104,8 @@ echo '
         </div>
     </div>
 
-    <img src="/images/estrellaLose.png" alt="concha kawaii" class="imagenGiro">
-    <img src="/images/medusaLose.png" alt="pulpo kawaii" class="imagenSalto">
+    <img src="/images/estrellaLose.png" alt="concha dead" class="imagenGiro">
+    <img src="/images/medusaLose.png" alt="pulpo dead" class="imagenSalto">
 
     <script>
         //Script para reproducir el sonido nada mas entrar en la pagina

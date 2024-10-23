@@ -20,7 +20,7 @@
     </audio>
 
     <audio id="sonidoAgua">
-        <source src="sounds/water3.mp3" type="audio/mpeg">
+        <source src="sounds/water2.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
 
