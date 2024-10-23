@@ -419,12 +419,10 @@ body#gameIA #contenedorMunicion{
     
 }
 
-
 body#game #contenedorMunicion h3,
 body#gameIA #contenedorMunicion h3{
     font-size: 28px;
 }
-
 
 body#game #contenedorMunicion p,
 body#gameIA #contenedorMunicion p{
