@@ -235,7 +235,7 @@ body#gameIA table#tableUser{
 body#gameIA table#tableIA{
     margin-left: 20%;
     margin-right: 10%;
-    margin-top: 34%;
+    margin-top: 8%;
 }
 
 /* Estructura del tamaño de las celdas en la tabla del USER de las dos pantallas*/
@@ -398,7 +398,36 @@ body#gameIA .exit {
 }
 
 body#gameIA .exit {
-    margin: 20px;
+    margin: -9px;
+}
+
+body#game #contenedorMunicion,
+body#gameIA #contenedorMunicion{
+    padding: 1px 0px 1px 13px;
+    margin-left: 20%;
+    margin-right: 10%;
+    background-color: #251934a7;
+    color: whitesmoke;
+    
+}
+
+
+body#game #contenedorMunicion h3,
+body#gameIA #contenedorMunicion h3{
+    font-size: 28px;
+}
+
+
+body#game #contenedorMunicion p,
+body#gameIA #contenedorMunicion p{
+    font-size: 25px;
+    display: inline-block;
+    margin: 0; 
+}
+
+body#game #contenedorMunicion .linea,
+body#gameIA #contenedorMunicion .linea{
+    margin-bottom: 10px;
 }
 
 body#game .endForm,

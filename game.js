@@ -30,6 +30,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // variable de mensaje css
     let messageTimeout = null;
 
+    
+    // variable de munición
+    let userMunition = 40;
+    let iaMunition = 40;
+
     // variable de las celdas que puedes darle click
     const cells = document.getElementsByClassName("selectCellsUser");
     
@@ -260,6 +265,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // mostrar el mensaje
             printMessageOnClick(cellState);
+
+            // restar munición al usuario
+            userMunition = userMunition -1;
+            console.log(userMunition);
 
             // comprueba si has ganado la partida
             if(groupIsDiscovered){
