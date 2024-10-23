@@ -149,12 +149,12 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             if (touch) {
-                setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
-                //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
+                //setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
+                setTimeout(() => turnCPU(e, dicShellsIA), 1); 
 
             } else {
-                setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
-                //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
+                //setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
+                setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
                 // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
 
             };
