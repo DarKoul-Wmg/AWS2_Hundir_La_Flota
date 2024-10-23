@@ -370,7 +370,15 @@ body#gameIA table#tableIA td.selectCellsIA {
     background-size: 30px 30px;
 }
 
+body#gameIA .tableDisabler {
+    opacity: .5;
+}
 
+body#gameIA .tableEnabler {
+    opacity: 1;
+    
+    box-shadow: 0 0 10px 5px #ffcf4c;
+}
 
 /* Izquierda */
 
