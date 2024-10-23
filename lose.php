@@ -57,7 +57,7 @@ date_default_timezone_set('Europe/Madrid');
                     //condicion                     valorTrue    valorFalse             
 $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "";  //recupermas nombre de variable de session
 
-$score = $_SESSION['score'];  //recuperamos score
+$score = $_POST['score'];  //recuperamos score
 
 $date = date('Y-m-d h:i:s', time());
 

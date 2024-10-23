@@ -33,6 +33,10 @@
         <source src="sounds/win.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
+    <audio id="sonidoCpuWin">
+        <source src="sounds/cpuwin.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
     
     <noscript>
         <div class="noscript-overlay">
@@ -261,6 +265,7 @@
 
         <div class ="rightContainer">
 
+
             <!-- nombre -->
             <?php
                 $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "HOKA";  // Recuperar nombre de variable de sesión
@@ -284,10 +289,12 @@
 
         <form class="endForm" id="endForm" action="win.php" method="post">
             <input type="hidden" id="endgameHidden" name="score">
-            <input class="buttonEnd" type="submit" onclick="endgamePoints()" value="End Game PHP">
+            <!--<input class="buttonEnd" type="submit" onclick="endgamePoints()" value="End Game PHP">-->
         </form>
-        
-
+        <form class="endForm" id="loseEndForm" action="lose.php" method="post">
+            <input type="hidden" id="loseEndgameHidden" name="score">
+        </form>
+    
     </div>
 
 </body>
