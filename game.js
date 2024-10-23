@@ -39,10 +39,19 @@ document.addEventListener("DOMContentLoaded", function() {
                         // gameMode 1 => VS CPU
     var turn = true;    // turnos: TRUE => Jugador, FALSE => CPU
 
-    //dar estilos iniciales a las tablas para representar el turno
-    document.getElementById("tableIA").classList.add("tableDisabler"); 
-    document.getElementById("tableUser").classList.add("tableEnabler"); 
+    if (window.location.href == "http://localhost:8080/game.php"){
+        gameMode = 0;
+    }
+    if (window.location.href == "http://localhost:8080/gameIA.php"){
+        gameMode = 1;
+    }
     
+    if (gameMode == 1){
+        //dar estilos iniciales a las tablas para representar el turno
+        document.getElementById("tableIA").classList.add("tableDisabler"); 
+        document.getElementById("tableUser").classList.add("tableEnabler"); 
+    }
+  
     // evento click a cada celda
     for(let cell of cells){
         // creamos una función para poder pasar el parámetro event         
@@ -50,17 +59,22 @@ document.addEventListener("DOMContentLoaded", function() {
     };  
             
     //cambiada función anónima para poder referenciarla en el removeEventListener
-    function eventHandler(event) { 
-        if(turn){    
-            if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
-                turn = false;
-                //estilos que marcan el turno de la CPU
-                document.getElementById("tableUser").classList.add("tableDisabler");
-                document.getElementById("tableUser").classList.remove("tableEnabler");
-                document.getElementById("tableIA").classList.add("tableEnabler");           
-                document.getElementById("tableIA").classList.remove("tableDisabler");
-                setTimeout(() => turnCPU(event, dicShellsIA), 3000);
-            }           
+    function eventHandler(event) {
+        if (gameMode == 0) {
+            discoverCell(event, dicShellsUser);
+        } 
+        if (gameMode == 1){
+            if(turn){    
+                if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
+                    turn = false;
+                    //estilos que marcan el turno de la CPU
+                    document.getElementById("tableUser").classList.add("tableDisabler");
+                    document.getElementById("tableUser").classList.remove("tableEnabler");
+                    document.getElementById("tableIA").classList.add("tableEnabler");           
+                    document.getElementById("tableIA").classList.remove("tableDisabler");
+                    setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                }           
+            }
         }
     }
 
@@ -108,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const currentCell = [x, y];
                 let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
                 if (compareCoordinates(currentCell, aux)) {
-                    cell.setAttribute('data-photo', ''); //marcar la celda escogida, faltan estilos
+                    cell.style.backgroundColor= "green"; //marcar la celda escogida, faltan estilos
                     coordinateInCPUTable = currentCell;
                 };
             }
@@ -117,10 +131,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
             printMessageOnClick(cellState);
+            if(groupIsDiscovered){
+                if(isWin(dicShellsIA)){
+                    //Sonido win
+                    sonidoCpuWin.play();
+                    printMessageOnClick('win');
+
+                    //calcular puntos del final
+                    loseEndgamePoints();
+
+                    // después de 2 segundo te vas a win.php
+                    setTimeout(function() {
+                        document.getElementById("loseEndForm").submit();
+                        //window.location.href = "lose.php";
+                    }, 4000);
+                }
+            }
+
             if (touch) {
-                setTimeout(() => turnCPU(e, dicShellsIA), 3000); //Repetir turno CPU a los 3 segundos
+                setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
+                //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
+
             } else {
-                setTimeout(returnTurnToPlayer, 3000); //devolver turno al jugador a los 3 segundos
+                setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
+                //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
+                // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
+
             };
         }
     }
@@ -389,52 +425,59 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // función añadir puntos
     function pointsAdd(){
-    if(lastHit === true){streak++};
-    lastHit = true;
-    actionPoints = actionPoints + 5000;
-    //document.getElementById('shipScore').innerHTML =  actionPoints;
-    document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
+        if(lastHit === true){streak++};
+        lastHit = true;
+        actionPoints = actionPoints + 5000;
+        //document.getElementById('shipScore').innerHTML =  actionPoints;
+        document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
     }
     
     // función quitar puntos
     function pointsSubstract(){
-    lastHit = false;
-    if(streak>maxStreak){maxStreak=streak}; //guardar racha maxima para aplicarla al final de la partida
-    if(streak>0){actionPoints = actionPoints * streak}; //al finalizar racha existente, multiplicar puntos de barcos por racha y reiniciar la racha a 0
-    streak = 0;
-    actionPoints = actionPoints - 250;
-    //document.getElementById('shipScore').innerHTML =  actionPoints;
-    document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
+        lastHit = false;
+        if(streak>maxStreak){maxStreak=streak}; //guardar racha maxima para aplicarla al final de la partida
+        if(streak>0){actionPoints = actionPoints * streak}; //al finalizar racha existente, multiplicar puntos de barcos por racha y reiniciar la racha a 0
+        streak = 0;
+        actionPoints = actionPoints - 250;
+        //document.getElementById('shipScore').innerHTML =  actionPoints;
+        document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
     }
     
     // función de guardar los puntos final
     function endgamePoints(){
-    stopChronometer(); //paramos el reloj
-    if(streak==0){streak = 1}; //vamos a multiplicar la racha actual así que debemos evitar el 0
-    let totalPoints = 500000+(roundedPoints + (actionPoints * streak)) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida 
-    document.getElementById('totalScore').innerHTML =  totalPoints;
-    document.getElementById('endgameHidden').value =  totalPoints;
-    return totalPoints;
+        stopChronometer(); //paramos el reloj
+        if(streak==0){streak = 1}; //vamos a multiplicar la racha actual así que debemos evitar el 0
+        let totalPoints = 500000+(roundedPoints + (actionPoints * streak)) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida 
+        document.getElementById('totalScore').innerHTML =  totalPoints;
+        document.getElementById('endgameHidden').value =  totalPoints;
+        return totalPoints;
     }
+    function loseEndgamePoints(){
+        stopChronometer(); //paramos el reloj
+        let totalPoints = roundedPoints + actionPoints;
+        document.getElementById('totalScore').innerHTML =  totalPoints;
+        document.getElementById('loseEndgameHidden').value =  totalPoints;
+        return totalPoints;
+        }
     
     // función del cronómetro
     function chronometer() {
-    seconds++;
-    totalSeconds++;
-    if (seconds > 59){seconds = 0; minutes++;}; //cuando los segundos llegan a superar 59, ponerlos a 0 y sumar un minuto
-    seconds = formatTime(seconds);
-    minutes = formatTime(minutes);
-    calculatePointsByTime();
-    document.getElementById('chrono').innerHTML =  minutes + ":" + seconds; //printear cronometro
-    //document.getElementById('score').innerHTML =  roundedPoints; 
-    document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
-    countUp = setTimeout(chronometer, 1000); //chronometer se llama a sí misma pasados 1000ms, o lo que es lo mismo, una vez por segundo
-    //setTimeout devuelve un ID que se puede guardar para usarlo luego con clearTimeout y detener el bucle
+        seconds++;
+        totalSeconds++;
+        if (seconds > 59){seconds = 0; minutes++;}; //cuando los segundos llegan a superar 59, ponerlos a 0 y sumar un minuto
+        seconds = formatTime(seconds);
+        minutes = formatTime(minutes);
+        calculatePointsByTime();
+        document.getElementById('chrono').innerHTML =  minutes + ":" + seconds; //printear cronometro
+        //document.getElementById('score').innerHTML =  roundedPoints; 
+        document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
+        countUp = setTimeout(chronometer, 1000); //chronometer se llama a sí misma pasados 1000ms, o lo que es lo mismo, una vez por segundo
+        //setTimeout devuelve un ID que se puede guardar para usarlo luego con clearTimeout y detener el bucle
     }
     
     // función de parar el cronómetro
     function stopChronometer() {
-    clearTimeout(countUp); //clearTimeout detiene el setTimeout cuyo ID le pases por parametro 
+        clearTimeout(countUp); //clearTimeout detiene el setTimeout cuyo ID le pases por parametro 
     }
     
     // dar formato al reloj
