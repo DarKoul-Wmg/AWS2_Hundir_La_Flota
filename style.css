@@ -172,7 +172,7 @@ body#index input[type="checkbox"].landingPageCheckbox:checked:after{
 }
 
 
-/*----------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------*/
 
 /* body de las dos pantallas */
 body#game,
@@ -370,7 +370,15 @@ body#gameIA table#tableIA td.selectCellsIA {
     background-size: 30px 30px;
 }
 
+body#gameIA .tableDisabler {
+    opacity: .5;
+}
 
+body#gameIA .tableEnabler {
+    opacity: 1;
+    
+    box-shadow: 0 0 10px 5px #ffcf4c;
+}
 
 /* Izquierda */
 
@@ -523,7 +531,7 @@ body#gameIA #message {
 }
 
 
-/*----------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------*/
 
 
 body#win {
@@ -620,6 +628,8 @@ body#win .winBox {
     padding: 20px;
     border-radius: 15px;
 }
+
+/*----------------------------------------------------------------------------------------------*/
 
 body#index .landingPageDescription{
     text-align: center;
@@ -784,6 +794,7 @@ body#index input[type="checkbox"].landingPageCheckbox{
     left: calc(100% - 1.5em);
   }
 
+  /*----------------------------------------------------------------------------------------------*/
 
 body#ranking .exit {
     font-size: 2rem;
@@ -886,12 +897,13 @@ body#ranking .pagination a:hover:not(.active) {
     background-color: #fcd4a7;
 }
 
+/*----------------------------------------------------------------------------------------------*/  
 body#win {
     min-height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
     display: flex;
     align-items: center;
-    background-image: url('images/backgroundGame.jpeg');
+    background-image: url('images/backgroundWin.jpeg');
     background-size: cover; /*imagen al tamaño del contenedor */
     background-position: center; 
     background-repeat: no-repeat; 
@@ -1003,16 +1015,188 @@ body#win input[type=text] {
 	color: #E91E63;
 }
 
+/*----------------------------------------------------------------------------------------------*/
+
+body#lose {
+    margin: 0;
+    min-height: 100vh;/*toda la pantalla */
+    overflow: hidden; /* Evita el scroll */
+    display: flex;
+    align-items: center;
+    background-image: url('images/backgroundLose.jpeg');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-color: rgba(15, 44, 73, 0.811);
+    filter: grayscale(100%); /* B/N */
+    animation: gameOverEffect 10s ease-in-out forwards; /* Color normal (quitra B y N)*/
+}
+
+body#lose .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: overlayOut 10s ease-in-out forwards; /*Animacion suave del blanco y negro (forwards es para que no vuelva a verse en B/N)*/
+    z-index: 21;
+    background-color :#1f1e20cf ;
+
+    pointer-events: none; /* Permite interactuar con los elementos que hya debajo*/
+}
+
+body#lose .loseBox {
+    background-color: #3c3a3ec0;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+    width: 75vh;
+
+    /*Propiedads para transicion*/
+    opacity: 0; /*invisiblew*/
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra inicial */
+    animation: aparition 3s ease-in-out forwards; /* Aparece en 3 segundos */
+
+}
+
+body#lose img{
+    max-width: 150px;
+    max-height: 150px;
+    margin-right: 50px;
+    margin-left: 50px;
+    z-index: 20;}
+    /*efectos de las imagenes*/
+    body#lose .imagenSalto{
+        transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
+    }
+    body#lose .imagenSalto:hover{
+        transform: translateY(100px) translateY(-10px);  /* Mueve la imagen hacia arriba 10 píxeles */
+        cursor: grab;
+    }
+
+    body#lose .imagenGiro{
+        transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
+    }
+    body#lose .imagenGiro:hover{
+        animation: spin 1s ease-in-out; /* Activa la animación al hacer hover */
+        cursor:grabbing;
+    }
+
+
+
+body#lose .loseMsg{
+    font: 4.0em "Fira Sans", sans-serif;
+    font-weight: bold;
+    color:#993341;
+}
+
+body#lose .loseNewGameButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #3C3A3E; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#lose .loseHomeBtnLink{
+    margin-right: 80px;
+}
+
+body#lose .loseRankingButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #3C3A3E; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#lose .loseRegisterButton{
+    font: 2em "Fira Sans", sans-serif;
+    background-color: #3C3A3E; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+body#lose .loseScoreTitle{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+body#lose .loseScoreDesc{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+
+body#lose .loseCenterButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+    padding-bottom: 40px;
+}
+
+body#lose input[type=text] {
+    font: 2em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #ad1a2e;
+    text-shadow: 0 8px 15px rgba(213, 206, 206, 0.7);
+}
 /*Animaciones*/
 
 /* Definimos la animación */
 @keyframes aparition {
     0% {
-        opacity: 0; /* Comienza invisible */
+        opacity: 0; /*invisible*/
         box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra */
+        
     }
     100% {
-        opacity: 1; /* Termina completamente visible */
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Sombra visible */
+        opacity: 1; /*visible*/
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Sombra*/
+    }
+}
+
+@keyframes overlayOut{ /* Quita el overlay*/
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+      
+    }
+}
+
+@keyframes gameOverEffect{
+    0% {
+        filter: grayscale(100%);
+    }
+    100% {
+        filter: grayscale(0%);
+      
+    }
+}
+
+@keyframes spin {
+    0%, 100% {
+        transform: scaleX(1);
+    }
+    25% {
+        transform: scaleX(-1);
+    }
+    50% {
+        transform: scaleX(1); 
+    }
+    75% {
+        transform: scaleX(-1); 
     }
 }

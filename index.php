@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troba la petxina</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <script src="game.js"></script>
 </head>
 
 <body id="index">
@@ -159,22 +158,22 @@
                 sessionStorage.setItem('ammoCheckbox', ammoCheckboxVal);
             }
 
+                // función del botón checkBoxes landingPage
+                //landingPage, hacer clic en botón opciones para mostrar/esconder div
+                const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
+                let showOptions = true;
+                landingPageOptBtn.addEventListener("click", function() {
+                if (showOptions){
+                    document.getElementById("landingPageOptions").style.display = "block";
+                    showOptions = false;
+                } else {
+                    document.getElementById("landingPageOptions").style.display = "none";
+                    showOptions = true;
+                }
+                });
+
             //ejecutar script después de cargar el DOM
             window.addEventListener("DOMContentLoaded", init);
-
-            // función del botón checkBoxes landingPage
-            //landingPage, hacer clic en botón opciones para mostrar/esconder div
-            const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
-            let showOptions = true;
-            landingPageOptBtn.addEventListener("click", function() {
-            if (showOptions){
-                document.getElementById("landingPageOptions").style.display = "block";
-                showOptions = false;
-            } else {
-                document.getElementById("landingPageOptions").style.display = "none";
-                showOptions = true;
-            }
-            });
 
         </script>
 </body>
