@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         // gameMode 1 => VS CPU
     var turn = true;    // turnos: TRUE => Jugador, FALSE => CPU
 
+    //dar estilos iniciales a las tablas para representar el turno
+    document.getElementById("tableIA").classList.add("tableDisabler"); 
+    document.getElementById("tableUser").classList.add("tableEnabler"); 
     
     // evento click a cada celda
     for(let cell of cells){
@@ -48,9 +51,14 @@ document.addEventListener("DOMContentLoaded", function() {
             
     //cambiada función anónima para poder referenciarla en el removeEventListener
     function eventHandler(event) { 
-        if(turn){       
+        if(turn){    
             if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
                 turn = false;
+                //estilos que marcan el turno de la CPU
+                document.getElementById("tableUser").classList.add("tableDisabler");
+                document.getElementById("tableUser").classList.remove("tableEnabler");
+                document.getElementById("tableIA").classList.add("tableEnabler");           
+                document.getElementById("tableIA").classList.remove("tableDisabler");
                 setTimeout(() => turnCPU(event, dicShellsIA), 3000);
             }           
         }
@@ -58,12 +66,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // función que devuelve el evento click a las celdas para que el jugador vuelva a tener turno; se llama al final del turno de la CPU
     function returnTurnToPlayer(){
+        //estilos que marcan el turno del usuario
+        document.getElementById("tableUser").classList.remove("tableDisabler");
+        document.getElementById("tableUser").classList.add("tableEnabler"); 
+        document.getElementById("tableIA").classList.add("tableDisabler"); 
+        document.getElementById("tableIA").classList.remove("tableEnabler");
+
+        
         for(let cell of cells){
             if((cell.getAttribute('data-photo'))==='none'){ //solo devoler el evento a las celdas vacías, importante para no perder turnos en celdas ya clicadas
                 cell.addEventListener("click",eventHandler);  
             }
-            turn = true;     
+               
         }; 
+        turn = true; 
     }
 
     // diccionario que lleva la lista de movimientos posibles para la CPU
@@ -231,7 +247,9 @@ document.addEventListener("DOMContentLoaded", function() {
         //resta puntos y sonido
 
         sonidoAgua.play();
-        pointsSubstract();
+        if(turn){
+            pointsSubstract();
+        }
 
         return [touch,cellState,groupIsDiscovered];
         
@@ -393,7 +411,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function endgamePoints(){
     stopChronometer(); //paramos el reloj
     if(streak==0){streak = 1}; //vamos a multiplicar la racha actual así que debemos evitar el 0
-    let totalPoints = (roundedPoints + (actionPoints * streak)) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida 
+    let totalPoints = 500000+(roundedPoints + (actionPoints * streak)) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida 
     document.getElementById('totalScore').innerHTML =  totalPoints;
     document.getElementById('endgameHidden').value =  totalPoints;
     return totalPoints;
