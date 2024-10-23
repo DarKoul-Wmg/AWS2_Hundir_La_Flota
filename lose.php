@@ -20,7 +20,7 @@ session_start();
         echo "<div class ='forbidden'>
             <h1>403 Forbidden</h1>
             <h2>Acces no autoritzat, accedeix desde game.php</h2>
-          </div>"; // Muestra un mensaje
+          </div>\n</body>\n</html>"; // Muestra un mensaje
     exit; // Termina el script
     }
 ?>
