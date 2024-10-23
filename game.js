@@ -106,18 +106,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 // munición user
                 if(isLimitedMunition){
                     let updatedMunitionValue = getCurrentMunition(turn);
-                    updatedMunitionValue--;
-                    document.getElementById('userMunition').innerHTML = updatedMunitionValue;
 
+                    if (updatedMunitionValue>0){
+                        updatedMunitionValue--;
+                        document.getElementById('userMunition').innerHTML = updatedMunitionValue;
+                    }
                     checkMunition();
 
                 }
 
-                
-                if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
-
-                    // si la ia TIENE munición
-                    if(!isMunitionIaSpent){
+                // si TIENE munición el user
+                if(!isMunitionUserSpent){
+                    if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
                         turn = false;
                         //estilos que marcan el turno de la CPU
                         document.getElementById("tableUser").classList.add("tableDisabler");
@@ -125,8 +125,18 @@ document.addEventListener("DOMContentLoaded", function() {
                         document.getElementById("tableIA").classList.add("tableEnabler");           
                         document.getElementById("tableIA").classList.remove("tableDisabler");
                         setTimeout(() => turnCPU(event, dicShellsIA), 2000);
-                    }
-                }           
+                    } 
+                }
+
+                // si NO tiene munición el user
+                printMessageOnClick('userNotMun');
+                
+                turn = false;
+                document.getElementById("tableUser").classList.add("tableDisabler");
+                document.getElementById("tableUser").classList.remove("tableEnabler");
+                document.getElementById("tableIA").classList.add("tableEnabler");           
+                document.getElementById("tableIA").classList.remove("tableDisabler");
+                setTimeout(() => turnCPU(event, dicShellsIA), 2000);
             }
         }
     }
@@ -167,62 +177,71 @@ document.addEventListener("DOMContentLoaded", function() {
                 //quitamos el evento click de las celdas hasta que le vuelva a tocar al jugador         
                 cell.removeEventListener("click", eventHandler);
             };
-            let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
-            let coordinateInCPUTable;
-            for (let cell of cellsTableIA) {
-                let x = parseInt(cell.getAttribute('data-x'));
-                let y = parseInt(cell.getAttribute('data-y'));
-                const currentCell = [x, y];
-                let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
-                if (compareCoordinates(currentCell, aux)) {
-                    cell.style.backgroundColor= "green"; //marcar la celda escogida, faltan estilos
-                    coordinateInCPUTable = currentCell;
-                };
-            }
-            cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes
-            console.log(dicShellsIA);
 
-            const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
-            printMessageOnClick(cellState);
-            if(groupIsDiscovered){
-                if(isWin(dicShellsIA)){
-                    //Sonido win
-                    sonidoCpuWin.play();
-                    printMessageOnClick('win');
 
-                    //calcular puntos del final
-                    loseEndgamePoints();
-
-                    // después de 2 segundo te vas a win.php
-                    setTimeout(function() {
-                        document.getElementById("loseEndForm").submit();
-                        //window.location.href = "lose.php";
-                    }, 4000);
-                }
-            }
-
-            // munición cpu
+            // comprobar si la ia tiene munición
             if(isLimitedMunition){
                 let updatedMunitionValue = getCurrentMunition(turn);
-                updatedMunitionValue--;
-                document.getElementById('iaMunition').innerHTML = updatedMunitionValue;
 
+                if(updatedMunitionValue>0){
+                    updatedMunitionValue--;
+                    document.getElementById('iaMunition').innerHTML = updatedMunitionValue;
+                }
                 checkMunition();
             }
 
-            if (touch) {
-                setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
-                //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
+            // si TIENE munición la ia
+            if(!isMunitionIaSpent){
 
-            } else {
+                let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
+                let coordinateInCPUTable;
+                for (let cell of cellsTableIA) {
+                    let x = parseInt(cell.getAttribute('data-x'));
+                    let y = parseInt(cell.getAttribute('data-y'));
+                    const currentCell = [x, y];
+                    let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+                    if (compareCoordinates(currentCell, aux)) {
+                        cell.style.backgroundColor= "green"; //marcar la celda escogida, faltan estilos
+                        coordinateInCPUTable = currentCell;
+                    };
+                }
+                cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes
+                console.log(dicShellsIA);
 
-                 // si el user TIENE munición
-                 if(!isMunitionUserSpent){
+                const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
+                printMessageOnClick(cellState);
+                if(groupIsDiscovered){
+                    if(isWin(dicShellsIA)){
+                        //Sonido win
+                        sonidoCpuWin.play();
+                        printMessageOnClick('win');
+
+                        //calcular puntos del final
+                        loseEndgamePoints();
+
+                        // después de 2 segundo te vas a win.php
+                        setTimeout(function() {
+                            document.getElementById("loseEndForm").submit();
+                            //window.location.href = "lose.php";
+                        }, 4000);
+                    }
+                }
+                
+
+                if (touch) {
+                    setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
+                    //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
+
+                } else {
                     setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
                     //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
                     // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
-                 }
+                }
             }
+
+            // si NO tiene munición la ia
+            printMessageOnClick('iaNotMun');
+            setTimeout(returnTurnToPlayer, 2000);
         }
     }
     
