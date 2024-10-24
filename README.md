@@ -52,6 +52,16 @@ Para ejecutar el juego en tu máquina local, sigue estos pasos:
    ```bash
    git clone https://github.com/DarKoul-Wmg/AWS2_Hundir_La_Flota.git
 
+2. Abrir en consola y entrar en el directorio del repositorio y ejecutar el siguiente comando para inicia run servidor al vuelo:
+   ```bash
+   php -S 0:8080
+
+3. En el caso de que no funcione, ya que es un atajo, ejecuta el siguiente comando:
+   ```bash
+   php -S 0.0.0.0:8080
+
+Ahora ya podrás jugar a "[Trova la petxina](http://localhost:8080/indexphp)" y difrutar del juego.
+
 ## Tecnologías usadas
 
 - HTML5
