@@ -77,6 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
+    // MUNICIÓN --
+
     // función que devuelve cuánta munición tenemos puesta que se muestra en el html
     function getCurrentMunition(turn) {
 
@@ -86,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return parseInt(document.getElementById('iaMunition').innerHTML);
 
     }
-
 
     // función que comprueba si se te acaba la munición
     function checkMunition() {
@@ -194,6 +195,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    // TURNOS --
+
+
     //cambiada función anónima para poder referenciarla en el removeEventListener
     function eventHandler(event) {
         event.target.removeEventListener("click",eventHandler);
@@ -288,8 +292,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //array que lleva la cuenta de las coordenadas tocadas por la CPU
     var cpuTouchedCells = [];
-
-
     for (let x = 1; x < 11; x++) {
         for (let y = 1; y < 11; y++) {
             cpuLeftCells.push({
@@ -421,6 +423,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+
+    // LOGICA DE TOCAR --
+
     // Marcar la celda como tocada
     function markCellAsTouched([x, y]) {
         for (let cell of cellsTableIA) {
@@ -535,12 +540,6 @@ document.addEventListener("DOMContentLoaded", function () {
             cell.setAttribute('data-photo', 'sand');
         }
 
-    }
-
-    //llamar al cronómetro si existe el elemento en la página
-    const clock = document.getElementById('chrono');
-    if (clock) {
-        chronometer();
     }
 
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
@@ -776,6 +775,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+
+
+    // PUNTUACIÓN --
+
     // función calcular puntos
     function calculatePointsByTime() {
         timerPoints = 100000 * ((9 / Math.pow(1000, (totalSeconds / 4000))) + 1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
@@ -830,6 +833,15 @@ document.addEventListener("DOMContentLoaded", function () {
         return totalPoints;
     }
 
+
+
+    // CRONOMETRO --
+
+    //llamar al cronómetro si existe el elemento en la página
+    const clock = document.getElementById('chrono');
+    if (clock) {
+        chronometer();
+    }
 
     // función del cronómetro
     function chronometer() {
