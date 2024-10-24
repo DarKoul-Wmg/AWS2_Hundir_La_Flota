@@ -85,13 +85,103 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // comprueba la del usuario
         if (getCurrentMunition(true) == 0){
-            printMessageOnClick('userNotMun');
             isMunitionUserSpent = true;
         }
         // comprueba la de la máquina
         if (getCurrentMunition(false) == 0){
-            printMessageOnClick('iaNotMun');
             isMunitionIaSpent = true;
+        }
+    }
+
+    function checkGameOverByMunition(){
+
+        // compruebo, por si acaso, si se han acabado las municiones
+        checkMunition();
+
+        if(isMunitionUserSpent && isMunitionIaSpent){
+
+            // función auxiliar
+            function sumDiscovered(dic){
+
+                let totalGroup = 0;
+                let totalShells = 0;
+
+                for(const shell of dic){
+                    if(isGrupShellDiscovered(shell)){
+                        totalGroup ++;
+                    }
+                    
+                    for (const coordinate of shell.coordinates) {
+            
+                        for (const touchedCoordinate of shell.touchedCoordinates) {
+            
+                            if (compareCoordinates(coordinate, touchedCoordinate)) {
+                                totalShells ++;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return {totalGroup,totalShells};
+            }
+
+            let resultUser = sumDiscovered(dicShellsUser);
+            let resultIa = sumDiscovered(dicShellsIA);
+
+            // mira quién ha ganado
+            let userWin = false;
+
+            if(resultUser.totalGroup>resultIa.totalGroup){
+                userWin = true;
+            }
+            else if(resultIa.totalGroup>resultUser.totalGroup){
+                userWin = false;
+            }
+            else{
+                if(resultUser.totalShells>resultIa.totalShells){
+                    userWin = true;
+                }
+                else if(resultIa.totalShells>resultUser.totalShells){
+                    userWin = false;
+                }
+                else{
+                    userWin = false;
+                }
+            }
+
+
+            // acaba la partida
+            if(userWin){
+                //Sonido win
+                sonidoWin.play();
+                printMessageOnClick('win');
+
+                //calcular puntos del final
+                endgamePoints();
+
+                // después de 2 segundo te vas a win.php
+                setTimeout(function() {
+                    document.getElementById("endForm").submit();
+                    //window.location.href = "win.php";
+                }, 6000);
+            }
+
+            else if(!userWin){
+                //Sonido win
+                sonidoCpuWin.play();
+                printMessageOnClick('win');
+
+                //calcular puntos del final
+                loseEndgamePoints();
+
+                // después de 2 segundo te vas a win.php
+                setTimeout(function() {
+                    document.getElementById("loseEndForm").submit();
+                    //window.location.href = "lose.php";
+                }, 4000);
+            }
+
         }
     }
 
@@ -111,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         updatedMunitionValue--;
                         document.getElementById('userMunition').innerHTML = updatedMunitionValue;
                     }
-                    checkMunition();
+                    checkGameOverByMunition();
 
                 }
 
@@ -128,15 +218,19 @@ document.addEventListener("DOMContentLoaded", function() {
                     } 
                 }
 
-                // si NO tiene munición el user
-                printMessageOnClick('userNotMun');
-                
-                turn = false;
-                document.getElementById("tableUser").classList.add("tableDisabler");
-                document.getElementById("tableUser").classList.remove("tableEnabler");
-                document.getElementById("tableIA").classList.add("tableEnabler");           
-                document.getElementById("tableIA").classList.remove("tableDisabler");
-                setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                else if(isMunitionUserSpent){
+                    // si NO tiene munición el user
+                    printMessageOnClick('userNotMun');
+                    console.log("mensaje de que no tiene munición el user ")
+                    
+                    turn = false;
+                    document.getElementById("tableUser").classList.add("tableDisabler");
+                    document.getElementById("tableUser").classList.remove("tableEnabler");
+                    document.getElementById("tableIA").classList.add("tableEnabler");           
+                    document.getElementById("tableIA").classList.remove("tableDisabler");
+                    setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                }
+               
             }
         }
     }
@@ -187,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     updatedMunitionValue--;
                     document.getElementById('iaMunition').innerHTML = updatedMunitionValue;
                 }
-                checkMunition();
+                checkGameOverByMunition();
             }
 
             // si TIENE munición la ia
@@ -240,8 +334,11 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             // si NO tiene munición la ia
-            printMessageOnClick('iaNotMun');
-            setTimeout(returnTurnToPlayer, 2000);
+            else if(isMunitionIaSpent){
+                printMessageOnClick('iaNotMun');
+                console.log("mensaje de que la ia no tiene munición")
+                setTimeout(returnTurnToPlayer, 500);
+            }
         }
     }
     

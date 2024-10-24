@@ -223,7 +223,7 @@
                             </div>
                             <div class="linea">
                                 <p>IA:</p> 
-                                <p id="iaMunition">40</p> 
+                                <p id="iaMunition">5</p> 
                                 <p> /40</p>
                             </div>
                         </div>
