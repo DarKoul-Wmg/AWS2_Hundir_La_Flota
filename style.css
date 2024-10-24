@@ -1,3 +1,4 @@
+/*----------------------------------- INDEX ---------------------------------*/
 body#index{
     background-image: url("images/backgroundLandingPage.png");
     background-position: top;
@@ -172,7 +173,7 @@ body#index input[type="checkbox"].landingPageCheckbox:checked:after{
 }
 
 
-/*----------------------------------------------------------------------------------------------*/
+/*----------------------------------- GAME / GAME IA ---------------------------------*/
 
 /* body de las dos pantallas */
 body#game,
@@ -533,271 +534,7 @@ body#gameIA #message {
     transition: border 0.5s;
 }
 
-
-/*----------------------------------------------------------------------------------------------*/
-
-
-body#win {
-    min-height: 100vh;body#index .landingPageOptionsButton{
-        margin-top: 40px;
-        font: 2.4em "Fira Sans", sans-serif;
-        background-color: #434b71; 
-        color: #fcd4a7; 
-        border-radius: 40px; 
-        border-color: #fcc486;
-    }
-    
-    body#index .optionImg{
-        max-width: 40px;
-        padding: 5px;
-        display: flex;
-        justify-content: center;
-    }
-    
-    body#index .landingPageOptions{
-        display: none;
-    }
-    
-    body#index .landingPageLabel{
-        font: 1.8em "Fira Sans", sans-serif;
-        color: #fcd4a7; 
-        vertical-align: middle;
-    }
-    
-    body#index .landingPageCheckboxWrapper{
-        margin-top: 30px;
-    
-    }
-    
-    body#index input[type="checkbox"].landingPageCheckbox{
-        vertical-align: middle;
-        float: right;
-        font-size: 1.4em;
-        -webkit-appearance: none;
-           -moz-appearance: none;
-                appearance: none;
-        width: 3.5em;
-        height: 1.5em;
-        background: #ddd;
-        border-radius: 3em;
-        position: relative;
-        cursor: pointer;
-        outline: none;
-        -webkit-transition: all .2s ease-in-out;
-        transition: all .2s ease-in-out;
-      }
-    
-      body#index input[type="checkbox"].landingPageCheckbox:checked{
-        background: #434b71;
-      }
-    
-    
-      body#index input[type="checkbox"].landingPageCheckbox:after{
-        position: absolute;
-        content: "";
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: 50%;
-        background: #fcd4a7;
-        -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
-                box-shadow: 0 0 .25em rgba(0,0,0,.3);
-        -webkit-transform: scale(.7);
-                transform: scale(.7);
-        left: 0;
-        -webkit-transition: all .2s ease-in-out;
-        transition: all .2s ease-in-out;
-      }
-    
-      body#index input[type="checkbox"].landingPageCheckbox:disabled:after{
-        background: #bebebe;
-      }
-    
-      body#index input[type="checkbox"].landingPageCheckbox:checked:after{
-        left: calc(100% - 1.5em);
-      }
-    
-    overflow: hidden;
-    
-    background-image: url('images/backgroundGame.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(15, 44, 73, 0.811);
-}
-
-body#win .winBox {
-    background-color: #232f5f8c;
-    max-width: 40vw;
-    padding: 20px;
-    border-radius: 15px;
-}
-
-/*----------------------------------------------------------------------------------------------*/
-
-body#index .landingPageDescription{
-    text-align: center;
-    color: #fcd4a7;
-    width: 75vh;
-}
-
-
-body#index .landingPageNewGameButton,
-body#index .landingPageRankingButton,
-body#index .landingPageRegisterButton{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #434b71; 
-    color: #fcd4a7; 
-    border-radius: 40px; 
-    border-color: #fcc486;
-    padding: 10px;
-}
-
-body#index .landingPageNewGameButton:hover,
-body#index .landingPageRankingButton:hover,
-body#index .landingPageRegisterButton:hover{
-    background-color: #5b6597; 
-}
-
-body#index .landingPageStartLinkBtn{
-    margin-right: 5vh;
-}
-
-
-
-body#index .landingPageNewGameButton:disabled{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #636675; 
-    color: #362f26; 
-    border-radius: 40px; 
-    border: 0;
-    border-color: #fcc486;
-    padding: 10px;
-}
-
-
-body#index .landingPageCenterButtons{
-    padding-top: 4vh;
-    display: flex;
-    justify-content: center;
-}
-
-body#index .landingPageCenterTextbox{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 40px;
-    padding-bottom: 40px;
-}
-
-body#win input[type=text] {
-    font: 2em "Fira Sans", sans-serif;
-	appearance: none;
-	border: none;
-	outline: none;
-	border-bottom: .2em solid #fcc486;
-	background: #ffdcb4;
-	border-radius: 15px;
-	padding: .4em;
-	color: #E91E63;
-}
-
-body#index input[type=text] {
-    font: 1.6em "Fira Sans", sans-serif;
-	appearance: none;
-	border: none;
-	outline: none;
-	border-bottom: .2em solid #fcc486;
-	background: #ffdcb4;
-	border-radius: 15px;
-	padding: .4em;
-	color: #E91E63;
-}
-
-body#index input[type=text]::placeholder {
-    text-align: center;
-    font: 0.8em "Fira Sans", sans-serif;
-	color: #9e7b52;
-}
-
-body#index .landingPageOptionsButton{
-    margin-top: 40px;
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #434b71; 
-    color: #fcd4a7; 
-    border-radius: 40px; 
-    border-color: #fcc486;
-}
-
-body#index .optionImg{
-    max-width: 40px;
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-}
-
-body#index .landingPageOptions{
-    display: none;
-}
-
-body#index .landingPageLabel{
-    font: 1.8em "Fira Sans", sans-serif;
-    color: #fcd4a7; 
-    vertical-align: middle;
-}
-
-body#index .landingPageCheckboxWrapper{
-    margin-top: 30px;
-
-}
-
-body#index input[type="checkbox"].landingPageCheckbox{
-    vertical-align: middle;
-    float: right;
-    font-size: 1.4em;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-    width: 3.5em;
-    height: 1.5em;
-    background: #ddd;
-    border-radius: 3em;
-    position: relative;
-    cursor: pointer;
-    outline: none;
-    -webkit-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
-  }
-  
-  body#index input[type="checkbox"].landingPageCheckbox:checked{
-    background: #434b71;
-  }
-
-  
-  body#index input[type="checkbox"].landingPageCheckbox:after{
-    position: absolute;
-    content: "";
-    width: 1.5em;
-    height: 1.5em;
-    border-radius: 50%;
-    background: #fcd4a7;
-    -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
-            box-shadow: 0 0 .25em rgba(0,0,0,.3);
-    -webkit-transform: scale(.7);
-            transform: scale(.7);
-    left: 0;
-    -webkit-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
-  }
-
-  body#index input[type="checkbox"].landingPageCheckbox:disabled:after{
-    background: #bebebe;
-  }
-  
-  body#index input[type="checkbox"].landingPageCheckbox:checked:after{
-    left: calc(100% - 1.5em);
-  }
-
-  /*----------------------------------------------------------------------------------------------*/
+  /*----------------------------------------------- RANKING -----------------------------------------------*/
 
 body#ranking .exit {
     font-size: 2rem;
@@ -900,7 +637,7 @@ body#ranking .pagination a:hover:not(.active) {
     background-color: #fcd4a7;
 }
 
-/*----------------------------------------------------------------------------------------------*/  
+/*---------------------------------------- WIN ------------------------------------------------------*/  
 body#win {
     height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
@@ -936,22 +673,22 @@ body#win img{
     margin-right: 50px;
     margin-left: 50px;
 }
-    /*efectos de las imagenes*/
-    body#win .imagenSalto{
-        transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
-    }
-    body#win .imagenSalto:hover{
-        transform: translateY(-100px) translateY(10px);  /* Mueve la imagen hacia arriba 10 píxeles */
-        cursor: grab;
-    }
+/*efectos de las imagenes*/
+body#win .imagenSalto{
+    transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
+}
+body#win .imagenSalto:hover{
+    transform: translateY(-100px) translateY(10px);  /* Mueve la imagen hacia arriba 10 píxeles */
+    cursor: grab;
+}
 
-    body#win .imagenGiro{
-        transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
-    }
-    body#win .imagenGiro:hover{
-        transform: translateY(-10px) rotate(360deg); /* Salta 10px y rota 15 grados */
-        cursor:grabbing;
-    }
+body#win .imagenGiro{
+    transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
+}
+body#win .imagenGiro:hover{
+    transform: translateY(-10px) rotate(360deg); /* Salta 10px y rota 15 grados */
+    cursor:grabbing;
+}
 
 
 
@@ -1019,8 +756,7 @@ body#win input[type=text] {
 	padding: .4em;
 	color: #E91E63;
 }
-
-/*----------------------------------------------------------------------------------------------*/
+/*------------------------------------------ LOSE ----------------------------------------------------*/
 
 body#lose {
     margin: 0;
@@ -1072,23 +808,25 @@ body#lose img{
     max-height: 150px;
     margin-right: 50px;
     margin-left: 50px;
-    z-index: 20;}
-    /*efectos de las imagenes*/
-    body#lose .imagenSalto{
-        transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
-    }
-    body#lose .imagenSalto:hover{
-        transform: translateY(100px) translateY(-10px);  /* Mueve la imagen hacia arriba 10 píxeles */
-        cursor: grab;
-    }
+    z-index: 20;
+}
 
-    body#lose .imagenGiro{
-        transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
-    }
-    body#lose .imagenGiro:hover{
-        animation: spin 1s ease-in-out; /* Activa la animación al hacer hover */
-        cursor:grabbing;
-    }
+/*efectos de las imagenes*/
+body#lose .imagenSalto{
+    transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
+}
+body#lose .imagenSalto:hover{
+    transform: translateY(100px) translateY(-10px);  /* Mueve la imagen hacia arriba 10 píxeles */
+    cursor: grab;
+}
+
+body#lose .imagenGiro{
+    transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
+}
+body#lose .imagenGiro:hover{
+    animation: spin 1s ease-in-out; /* Activa la animación al hacer hover */
+    cursor:grabbing;
+}
 
 
 
@@ -1150,7 +888,7 @@ body#lose input[type=text] {
     text-shadow: 0 8px 15px rgba(213, 206, 206, 0.7);
 }
 
-/*EWstilos para el forbbiden*/
+/*---------------- EWstilos para el forbiDden ------------------------*/
 
 .forbidden{
     display: grid;
