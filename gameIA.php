@@ -230,7 +230,6 @@
 
         </div>
         
-        
         <!-- tablero del usuario-->
         <table id="tableUser">
             <?php
@@ -262,13 +261,10 @@
             ?>
         </table>
         
-
         <div class ="rightContainer">
-
-
             <!-- nombre -->
             <?php
-                $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "HOKA";  // Recuperar nombre de variable de sesión
+                $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "";  // Recuperar nombre de variable de sesión
                 echo '<p class="userName">',$playerName,'</p>';
             ?>
 
@@ -296,6 +292,21 @@
         </form>
     
     </div>
+
+    <script>
+        var playerName = "<?php echo $playerName; ?>"; 
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            if(playerName === "win") {
+                
+                document.getElementById("endForm").submit();
+
+            }else if(playerName === "lose"){
+                document.getElementById("loseEndForm").submit();
+            }
+        });
+    </script>
 
 </body>
 
