@@ -1,16 +1,16 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
     // Asignar los audios a variables
     let sonidoAccion = document.getElementById('sonidoAccion');
     let sonidoAgua = document.getElementById('sonidoAgua');
     let sonidoAcierto = document.getElementById('sonidoAcierto');
-  
+
     // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
     let botones = document.querySelectorAll('button');
 
     // Añade un evento 'click' a cada botón para reproducir el sonido
-    botones.forEach(function(boton) {
-        boton.addEventListener('click', function() {
+    botones.forEach(function (boton) {
+        boton.addEventListener('click', function () {
             sonidoAccion.play();
         });
     });
@@ -43,27 +43,27 @@ document.addEventListener("DOMContentLoaded", function() {
     // variable de las celdas que puedes darle click
     const cells = document.getElementsByClassName("selectCellsUser");
 
-   
+
     var gameMode = 1;   // Especificar tipo de juego; numérico para añadir más tipos de juego en el futuro
-                        // gameMode 0 => Tutorial
-                        // gameMode 1 => VS CPU
+    // gameMode 0 => Tutorial
+    // gameMode 1 => VS CPU
     var turn = true;    // turnos: TRUE => Jugador, FALSE => CPU
 
-    if (window.location.href == "http://localhost:8080/game.php"){
+    if (window.location.href == "http://localhost:8080/game.php") {
         gameMode = 0;
     }
-    if (window.location.href == "http://localhost:8080/gameIA.php"){
+    if (window.location.href == "http://localhost:8080/gameIA.php") {
         gameMode = 1;
     }
-    
-    if (gameMode == 1){
+
+    if (gameMode == 1) {
         //dar estilos iniciales a las tablas para representar el turno
-        document.getElementById("tableIA").classList.add("tableDisabler"); 
-        document.getElementById("tableUser").classList.add("tableEnabler"); 
+        document.getElementById("tableIA").classList.add("tableDisabler");
+        document.getElementById("tableUser").classList.add("tableEnabler");
     }
-  
+
     // evento click a cada celda
-    for(let cell of cells){
+    for (let cell of cells) {
         // creamos una función para poder pasar el parámetro event         
             cell.addEventListener("click",eventHandler);        
     };  
@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+
     //cambiada función anónima para poder referenciarla en el removeEventListener
     function eventHandler(event) {
         if (gameMode == 0) {
@@ -222,39 +223,45 @@ document.addEventListener("DOMContentLoaded", function() {
                     printMessageOnClick('userNotMun');
                     console.log("mensaje de que no tiene munición el user ")
                     
+
                     turn = false;
                     document.getElementById("tableUser").classList.add("tableDisabler");
                     document.getElementById("tableUser").classList.remove("tableEnabler");
-                    document.getElementById("tableIA").classList.add("tableEnabler");           
+                    document.getElementById("tableIA").classList.add("tableEnabler");
                     document.getElementById("tableIA").classList.remove("tableDisabler");
                     setTimeout(() => turnCPU(event, dicShellsIA), 2000);
                 }
 
                 checkGameOverByMunition();
+
             }
         }
     }
 
     // función que devuelve el evento click a las celdas para que el jugador vuelva a tener turno; se llama al final del turno de la CPU
-    function returnTurnToPlayer(){
+    function returnTurnToPlayer() {
         //estilos que marcan el turno del usuario
         document.getElementById("tableUser").classList.remove("tableDisabler");
-        document.getElementById("tableUser").classList.add("tableEnabler"); 
-        document.getElementById("tableIA").classList.add("tableDisabler"); 
+        document.getElementById("tableUser").classList.add("tableEnabler");
+        document.getElementById("tableIA").classList.add("tableDisabler");
         document.getElementById("tableIA").classList.remove("tableEnabler");
 
-        
-        for(let cell of cells){
-            if((cell.getAttribute('data-photo'))==='none'){ //solo devoler el evento a las celdas vacías, importante para no perder turnos en celdas ya clicadas
-                cell.addEventListener("click",eventHandler);  
+
+        for (let cell of cells) {
+            if ((cell.getAttribute('data-photo')) === 'none') { //solo devoler el evento a las celdas vacías, importante para no perder turnos en celdas ya clicadas
+                cell.addEventListener("click", eventHandler);
             }
-               
-        }; 
-        turn = true; 
+
+        };
+        turn = true;
     }
 
     // diccionario que lleva la lista de movimientos posibles para la CPU
     var cpuLeftCells = [];
+
+    //array que lleva la cuenta de las coordenadas tocadas por la CPU
+    var cpuTouchedCells = [];
+
 
     for (let x = 1; x < 11; x++) {
         for (let y = 1; y < 11; y++) {
@@ -262,9 +269,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 x: x,
                 y: y
             })
-        }     
+        }
     }
 
+    
     function turnCPU(e, dicShellsIA) {
         if (!turn) {
             for (let cell of cells) {
@@ -284,54 +292,93 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // si TIENE munición la ia
             if(!isMunitionIaSpent){
+              
+              //let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
+              //let coordinateInCPUTable = findNextAttack(); // Busca una celda adyacente
+              let coordinateInCPUTable;
 
-                let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
-                let coordinateInCPUTable;
-                for (let cell of cellsTableIA) {
-                    let x = parseInt(cell.getAttribute('data-x'));
-                    let y = parseInt(cell.getAttribute('data-y'));
-                    const currentCell = [x, y];
-                    let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
-                    if (compareCoordinates(currentCell, aux)) {
-                        cell.style.backgroundColor= "blue"; //marcar la celda escogidaç
-                        cell.style.border="2px solid blue";
-                        coordinateInCPUTable = currentCell;
-                    };
-                }
-                cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes
-                console.log(dicShellsIA);
-
-                const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
-                printMessageOnClick(cellState);
-                if(groupIsDiscovered){
-                    if(isWin(dicShellsIA)){
-                        //Sonido win
-                        sonidoCpuWin.play();
-                        printMessageOnClick('win');
-
-                        //calcular puntos del final
-                        loseEndgamePoints();
-
-                        // después de 2 segundo te vas a win.php
-                        setTimeout(function() {
-                            document.getElementById("loseEndForm").submit();
-                            //window.location.href = "lose.php";
-                        }, 4000);
-                    }
-                }
-                
-
-                if (touch) {
-                    setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
-                    //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
+              // Verifica si hay aciertos en cpuTouchedCells
+              var hits = cpuTouchedCells.filter(function (cell) {
+                  return checkIfHit(cell, dicShellsIA);
+              });
 
 
-                } else {
-                    setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
-                    //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
-                    // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
-                }
-            }
+              if (hits.length > 0) {
+                  // Si hay aciertos, busca celdas adyacentes
+                  coordinateInCPUTable = findNextAttackFromHits(hits);
+              }
+
+              // Si no hay celdas adyacentes, elige aleatoriamente
+              if (!coordinateInCPUTable) {
+                  let availableCells = cpuLeftCells.filter(function (cell) {
+                      return !cell.touched; // Filtra celdas que ya han sido tocadas
+                  });
+                  if (availableCells.length > 0) {
+                      let randomIndex = Math.floor(Math.random() * availableCells.length);
+                      coordinateInCPUTable = [availableCells[randomIndex].x, availableCells[randomIndex].y];
+                      availableCells[randomIndex].touched = true; // Marcar como tocada
+                      cpuTouchedCells.push(coordinateInCPUTable); // Agregar a celdas tocadas
+                  }
+              }
+
+              for (let cell of cellsTableIA) {
+                  let x = parseInt(cell.getAttribute('data-x'));
+                  let y = parseInt(cell.getAttribute('data-y'));
+                  const currentCell = [x, y];
+
+                  /*let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+
+                  if (compareCoordinates(currentCell, aux)) {
+                      cell.style.backgroundColor= "green"; //marcar la celda escogida, faltan estilos
+                      coordinateInCPUTable = currentCell;
+                  };*/
+
+                  if (compareCoordinates(currentCell, coordinateInCPUTable)) {
+                      cell.style.backgroundColor = "red"; // marcar la celda escogida
+                      cell.style.border = "red";
+                  }
+              }
+
+
+              //console.log(dicShellsIA);
+
+              // Procesar el ataque
+              const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
+              cpuTouchedCells.push(coordinateInCPUTable); // Agregar la celda tocada a la lista
+              markCellAsTouched(coordinateInCPUTable); // Marcar la celda como tocada
+
+              printMessageOnClick(cellState);
+              if (groupIsDiscovered) {
+                  if (isWin(dicShellsIA)) {
+                      //Sonido win
+                      sonidoCpuWin.play();
+                      printMessageOnClick('win');
+
+                      //calcular puntos del final
+                      loseEndgamePoints();
+
+                      // después de 2 segundo te vas a win.php
+                      setTimeout(function () {
+                          document.getElementById("loseEndForm").submit();
+                          //window.location.href = "lose.php";
+                      }, 4000);
+                  }
+              }
+
+              if (touch) {
+                  setTimeout(() => turnCPU(e, dicShellsIA), 1000); //Repetir turno CPU a los 2 segundos
+                  //setTimeout(() => turnCPU(e, dicShellsIA), 2000);
+
+
+              } else {
+                  //setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
+                  setTimeout(() => turnCPU(e, dicShellsIA), 1000); //Repetir turno CPU al miñisegundo
+                  // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
+         }
+
+
+
+
 
             // si NO tiene munición la ia
             else if(isMunitionIaSpent){
@@ -343,23 +390,109 @@ document.addEventListener("DOMContentLoaded", function() {
             checkGameOverByMunition();
         }
     }
+
+    // Marcar la celda como tocada
+    function markCellAsTouched([x, y]) {
+        for (let cell of cellsTableIA) {
+            const cellX = parseInt(cell.getAttribute('data-x'));
+            const cellY = parseInt(cell.getAttribute('data-y'));
+            if (cellX === x && cellY === y) {
+                cell.setAttribute('data-touched', 'true'); // Marca la celda como tocada
     
+                // Actualiza cpuLeftCells eliminando la celda tocada
+                for (var j = 0; j < cpuLeftCells.length; j++) {
+                    if (cpuLeftCells[j].x === x && cpuLeftCells[j].y === y) {
+                        cpuLeftCells.splice(j, 1); // Elimina la celda tocada
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    // Función para obtener las celdas adyacentes
+    function getAdjacentCells([x, y]) {
+        const adjacent = [];
+        const directions = [
+            [0, 1],   // derecha
+            [1, 0],   // abajo
+            [0, -1],  // izquierda
+            [-1, 0],  // arriba
+        ];
+
+        for (const [dx, dy] of directions) {
+            const newX = x + dx;
+            const newY = y + dy;
+            if (newX >= 1 && newX <= 10 && newY >= 1 && newY <= 10) {
+                adjacent.push([newX, newY]);
+            }
+        }
+        return adjacent;
+    }
+
+    // Función para verificar si la celda está disponible
+    function isCellAvailable([x, y]) {
+        // Comprobar si la celda ha sido tocada
+        for (const cell of cellsTableIA) {
+            const cellX = parseInt(cell.getAttribute('data-x'));
+            const cellY = parseInt(cell.getAttribute('data-y'));
+            if (cellX === x && cellY === y) {
+                return cell.getAttribute('data-touched') === 'false'; // Solo devolver true si no ha sido tocada
+            }
+        }
+        return false; // Si la celda no existe o ya ha sido tocada
+    }
+
+
+    // Nueva función para encontrar celdas adyacentes a aciertos
+    function findNextAttackFromHits(hits) {
+        const adjacentCells = new Set();
+
+        hits.forEach(function (hit) {
+            const cells = getAdjacentCells(hit);
+            cells.forEach(function (cell) {
+                if (isCellAvailable(cell)) {
+                    adjacentCells.add(JSON.stringify(cell)); // Usa un Set para evitar duplicados
+                }
+            });
+        });
+
+        if (adjacentCells.size > 0) {
+            const randomCell = Array.from(adjacentCells)[Math.floor(Math.random() * adjacentCells.size)];
+            return JSON.parse(randomCell);
+        }
+
+        return null; // Si no hay celdas adyacentes disponibles
+    }
+
+    // Verifica si la celda es un acierto
+    function checkIfHit(cell, dicShells) {
+        return dicShells.some(function (shell) {
+            return shell.touchedCoordinates.some(function (touched) {
+                return compareCoordinates(touched, cell);
+            });
+        });
+    }
+
 
     // mostrar todas las imagenes en tu tablero
     const cellsTableIA = document.getElementsByClassName("selectCellsIA");
+
     for(let cell of cellsTableIA){
     
+
         let x = parseInt(cell.getAttribute('data-x'));
         let y = parseInt(cell.getAttribute('data-y'));
-        const coordinateCellClicked = [x,y];
+        const coordinateCellClicked = [x, y];
 
         let isShell = false;
 
-        for(const shell of dicShellsIA){
-            for(const coordinate of shell.coordinates){
+        for (const shell of dicShellsIA) {
+            for (const coordinate of shell.coordinates) {
 
 
-                if (compareCoordinates(coordinate,coordinateCellClicked)){
+                if (compareCoordinates(coordinate, coordinateCellClicked)) {
 
                     const tipeShell = shell.shellType;
                     cell.setAttribute('data-photo', tipeShell);
@@ -368,7 +501,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
 
-        if(!isShell){
+        if (!isShell) {
             cell.setAttribute('data-photo', 'sand');
         }
 
@@ -376,10 +509,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //llamar al cronómetro si existe el elemento en la página
     const clock = document.getElementById('chrono');
-    if(clock){
+    if (clock) {
         chronometer();
     }
-    
+
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
     function compareCoordinates(coord1, coord2) {
         return coord1[0] === coord2[0] && coord1[1] === coord2[1];
@@ -401,7 +534,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             // si no ha encontrado la coordenada en touchedCoordinates
-            if (!found){
+            if (!found) {
                 return false;
             }
         }
@@ -410,29 +543,29 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // comprueba si se han destapado todos los grupos de conchas
-    function isWin(dicShells){
+    function isWin(dicShells) {
 
-        for(const shell of dicShells){
-            if(!isGrupShellDiscovered(shell)){
+        for (const shell of dicShells) {
+            if (!isGrupShellDiscovered(shell)) {
                 return false;
             }
         }
 
         return true;
     }
-    
+
     // comprueba si la celda tocada es aigua o qué
-    function checkClickedCell(dicShells,coordinateClickedCell){
+    function checkClickedCell(dicShells, coordinateClickedCell) {
 
         // valores auxiliares
         let touch = false;
-        let cellState  = "water";
+        let cellState = "water";
         let groupIsDiscovered = false;
 
-        for(const shell of dicShells){
-            for(const coordinate of shell.coordinates){
+        for (const shell of dicShells) {
+            for (const coordinate of shell.coordinates) {
                 // se tienen que comparar cada una de las coordenadas, sino compara la dirección de memoria del objeto
-                if (compareCoordinates(coordinate,coordinateClickedCell)){ // si es una concha
+                if (compareCoordinates(coordinate, coordinateClickedCell)) { // si es una concha
                     touch = true;
                     cellState = "shell";
 
@@ -446,16 +579,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     // comprobar si todo el grupo ha sido descubierto
                     groupIsDiscovered = isGrupShellDiscovered(shell);
 
-                    if(groupIsDiscovered){
-                        cellState="groupShell";
+                    if (groupIsDiscovered) {
+                        cellState = "groupShell";
                     }
 
                     //si has acertado, añade puntos
-                    if(turn){
+                    if (turn) {
                         pointsAdd();
                     }
 
-                    return [touch,cellState,groupIsDiscovered];
+                    return [touch, cellState, groupIsDiscovered];
                 }
             }
         }
@@ -464,24 +597,24 @@ document.addEventListener("DOMContentLoaded", function() {
         //resta puntos y sonido
 
         sonidoAgua.play();
-        if(turn){
+        if (turn) {
             pointsSubstract();
         }
 
-        return [touch,cellState,groupIsDiscovered];
-        
+        return [touch, cellState, groupIsDiscovered];
+
     }
 
     // mostrar la imagen en la celda
-    function setImageInCell(dicShells,coordinateClickedCell,e){
+    function setImageInCell(dicShells, coordinateClickedCell, e) {
         const cell = e.target;
 
         let isShell = false;
 
-        for(const shell of dicShells){
-            for(const coordinate of shell.coordinates){
+        for (const shell of dicShells) {
+            for (const coordinate of shell.coordinates) {
 
-                if (compareCoordinates(coordinate,coordinateClickedCell)){
+                if (compareCoordinates(coordinate, coordinateClickedCell)) {
 
                     const tipeShell = shell.shellType;
                     console.log(tipeShell);
@@ -491,14 +624,14 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
 
-        if(!isShell){
+        if (!isShell) {
             cell.setAttribute('data-photo', 'sand');
         }
 
     }
 
     // printea el mensaje
-    function printMessageOnClick(cellState){
+    function printMessageOnClick(cellState) {
 
         // diccionario de mensajes
         const messageClickCells = {
@@ -509,13 +642,14 @@ document.addEventListener("DOMContentLoaded", function() {
             lose : "Perill<br/><br/>Has perdut!",
             userNotMun : "Informació<br/><br/>Ja no tens més munició",
             iaNotMun : "Informació<br/><br/>L'ia ja no té més munició",
+
         };
 
-         // Mostrar el string en el div con id="resultado" | <div id="message"></div>
+        // Mostrar el string en el div con id="resultado" | <div id="message"></div>
         const messageElement = document.getElementById("message"); // se guarda el elemento
         messageElement.innerHTML = messageClickCells[cellState];
 
-        if(cellState=='win'){
+        if (cellState == 'win') {
             messageElement.style.border = "3px solid green";
             messageElement.style.borderLeft = "5px solid green";
             messageElement.style.color = "rgb(4, 155, 4)";
@@ -536,7 +670,9 @@ document.addEventListener("DOMContentLoaded", function() {
             messageElement.style.backgroundColor = "rgba(147, 147, 147, 0.614)";
         }
 
+
         else{
+
             messageElement.style.border = "3px solid blue";
             messageElement.style.borderLeft = "5px solid blue";
             messageElement.style.color = "rgb(20, 20, 249)"
@@ -549,7 +685,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // Establecer un nuevo timeout para ocultar el mensaje
-        messageTimeout = setTimeout(function() {
+        messageTimeout = setTimeout(function () {
             messageElement.innerHTML = "";
             messageElement.style.border = "none";
             messageElement.style.backgroundColor = "transparent";
@@ -557,35 +693,35 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // función click - descrubrir la celda - LA PRINCIPAL
-    function discoverCell(e,dicShells){
+    function discoverCell(e, dicShells) {
         const cell = e.target;
 
         let x = parseInt(cell.getAttribute('data-x'));
         let y = parseInt(cell.getAttribute('data-y'));
         const cellIsTouched = cell.getAttribute('data-touched');
-        const coordinateCellClicked = [x,y];
-        
+        const coordinateCellClicked = [x, y];
+
         console.log(coordinateCellClicked);
 
         // si no se ha tocado aún
-        if(cellIsTouched === 'false'){
+        if (cellIsTouched === 'false') {
 
             //cell.classList.add(nameOfClass);
 
-            const [touch, cellState,groupIsDiscovered] = checkClickedCell(dicShells,coordinateCellClicked);
+            const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShells, coordinateCellClicked);
 
             // cambiar el estado de la celda para que no vuelvas a girarla
             cell.setAttribute('data-touched', 'true');
 
             // mostrar la imagen de la celda
-            setImageInCell(dicShells,coordinateCellClicked,e);
+            setImageInCell(dicShells, coordinateCellClicked, e);
 
             // mostrar el mensaje
             printMessageOnClick(cellState);         
 
             // comprueba si has ganado la partida
-            if(groupIsDiscovered){
-                if(isWin(dicShells)){
+            if (groupIsDiscovered) {
+                if (isWin(dicShells)) {
                     //Sonido win
                     sonidoWin.play();
                     printMessageOnClick('win');
@@ -594,53 +730,53 @@ document.addEventListener("DOMContentLoaded", function() {
                     endgamePoints();
 
                     // después de 2 segundo te vas a win.php
-                    setTimeout(function() {
+                    setTimeout(function () {
                         document.getElementById("endForm").submit();
                         //window.location.href = "win.php";
                     }, 6000);
                 }
             }
 
-            console.log("touch es "+touch+ "\n y cellState es "+cellState+" y el grupo está descubierto? "+groupIsDiscovered);
+            console.log("touch es " + touch + "\n y cellState es " + cellState + " y el grupo está descubierto? " + groupIsDiscovered);
             return cellState; //necesito un return para saber si el jugador acierta y su turno sigue
         }
 
-        for(const shell of dicShells){
+        for (const shell of dicShells) {
             console.log(shell);
         }
     }
 
     // función calcular puntos
-    function calculatePointsByTime(){
-        timerPoints = 100000*((9/Math.pow(1000,(totalSeconds/4000)))+1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
+    function calculatePointsByTime() {
+        timerPoints = 100000 * ((9 / Math.pow(1000, (totalSeconds / 4000))) + 1); //formula que añade un multiplicador a un valor inicial; cuando totalSeconds=0, el multiplicador es cercano a 10, y a más avanza totalSeconds el multiplicador se va acercando a 1 
         //el ritmo de la formula se puede modificar cambiando los valores 100 y 300; ahora mismo en 150 segundos el multiplicador es alrededor de 2, y en 300 segundos es cercano a 1
         //para ver la curva sobre el tiempo se puede usar WolframAlpha: plot 100000*9/1000^(x/4000)+1, x=0 to 900
         //curva de pérdida de puntos cambiada a más relajada; más o menos baja a la mitad a los 300 segundos y a los 900 segundos está cerca de los 200000 puntos
         roundedPoints = Math.round(timerPoints); //redondeamos porque a nadie le gusta ver decimales en la puntuación
     }
-    
+
     // función añadir puntos
-    function pointsAdd(){
-        if(lastHit === true){streak++};
+    function pointsAdd() {
+        if (lastHit === true) { streak++ };
         lastHit = true;
         actionPoints = actionPoints + 5000;
         //document.getElementById('shipScore').innerHTML =  actionPoints;
-        document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
+        document.getElementById('totalScore').innerHTML = roundedPoints + actionPoints;
     }
-    
+
     // función quitar puntos
-    function pointsSubstract(){
+    function pointsSubstract() {
         lastHit = false;
-        if(streak>maxStreak){maxStreak=streak}; //guardar racha maxima para aplicarla al final de la partida
-        if(streak>0){actionPoints = actionPoints * streak}; //al finalizar racha existente, multiplicar puntos de barcos por racha y reiniciar la racha a 0
+        if (streak > maxStreak) { maxStreak = streak }; //guardar racha maxima para aplicarla al final de la partida
+        if (streak > 0) { actionPoints = actionPoints * streak }; //al finalizar racha existente, multiplicar puntos de barcos por racha y reiniciar la racha a 0
         streak = 0;
         actionPoints = actionPoints - 250;
         //document.getElementById('shipScore').innerHTML =  actionPoints;
-        document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
+        document.getElementById('totalScore').innerHTML = roundedPoints + actionPoints;
     }
-    
+
     // función de guardar los puntos final
-    function endgamePoints(){
+    function endgamePoints() {
         stopChronometer(); //paramos el reloj
         if(streak==0){streak = 1}; //vamos a multiplicar la racha actual así que debemos evitar el 0
         let totalPoints = 200000 + (roundedPoints + (actionPoints * streak)) * maxStreak; //los puntos totales son la suma de puntos de tiempo + (puntos de celdas * racha actual) y todo multiplicado por la racha máxima de la partida 
@@ -658,29 +794,30 @@ document.addEventListener("DOMContentLoaded", function() {
         return totalPoints;
     }
     
+
     // función del cronómetro
     function chronometer() {
         seconds++;
         totalSeconds++;
-        if (seconds > 59){seconds = 0; minutes++;}; //cuando los segundos llegan a superar 59, ponerlos a 0 y sumar un minuto
+        if (seconds > 59) { seconds = 0; minutes++; }; //cuando los segundos llegan a superar 59, ponerlos a 0 y sumar un minuto
         seconds = formatTime(seconds);
         minutes = formatTime(minutes);
         calculatePointsByTime();
-        document.getElementById('chrono').innerHTML =  minutes + ":" + seconds; //printear cronometro
+        document.getElementById('chrono').innerHTML = minutes + ":" + seconds; //printear cronometro
         //document.getElementById('score').innerHTML =  roundedPoints; 
-        document.getElementById('totalScore').innerHTML =  roundedPoints + actionPoints;
+        document.getElementById('totalScore').innerHTML = roundedPoints + actionPoints;
         countUp = setTimeout(chronometer, 1000); //chronometer se llama a sí misma pasados 1000ms, o lo que es lo mismo, una vez por segundo
         //setTimeout devuelve un ID que se puede guardar para usarlo luego con clearTimeout y detener el bucle
     }
-    
+
     // función de parar el cronómetro
     function stopChronometer() {
         clearTimeout(countUp); //clearTimeout detiene el setTimeout cuyo ID le pases por parametro 
     }
-    
+
     // dar formato al reloj
     function formatTime(i) {
-        if (i < 10 && typeof i != "string") {i = "0" + i};  // añade un 0 delante en forma de string en los dígitos simples, ademas contempla que la variable no sea string: importante para que no se añada un 0 adicional en cada llamada
+        if (i < 10 && typeof i != "string") { i = "0" + i };  // añade un 0 delante en forma de string en los dígitos simples, ademas contempla que la variable no sea string: importante para que no se añada un 0 adicional en cada llamada
         return i;
     }
 
