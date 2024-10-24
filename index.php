@@ -115,7 +115,7 @@
                 </a>
             </div>
             
-            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img src="images/options.png" class="optionImg"></button>
+            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img src="images/options.png" class="optionImg">Opcions</button>
 
             <div class="landingPageOptions" id="landingPageOptions">
                 <div class="landingPageCheckboxWrapper">

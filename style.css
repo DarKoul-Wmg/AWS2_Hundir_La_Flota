@@ -95,12 +95,16 @@ body#index input[type=text]::placeholder {
 }
 
 body#index .landingPageOptionsButton{
+    display: flex;
+    flex-direction: row;
     margin-top: 40px;
-    font: 2.4em "Fira Sans", sans-serif;
+    align-items: center;
+    font: 1.5em "Fira Sans", sans-serif;
     background-color: #434b71; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
+    padding-right: 15px;
 }
 
 body#index .optionImg{
