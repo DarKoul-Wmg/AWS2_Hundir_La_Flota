@@ -293,7 +293,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     const currentCell = [x, y];
                     let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
                     if (compareCoordinates(currentCell, aux)) {
-                        cell.style.backgroundColor= "green"; //marcar la celda escogida, faltan estilos
+                        cell.style.backgroundColor= "blue"; //marcar la celda escogidaç
+                        cell.style.border="2px solid blue";
                         coordinateInCPUTable = currentCell;
                     };
                 }
