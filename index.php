@@ -120,11 +120,13 @@
             <div class="landingPageOptions" id="landingPageOptions">
                 <div class="landingPageCheckboxWrapper">
                     <label for="limmitedAmmoCheckbox" class="landingPageLabel">Munició limitada</label>
-                     <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox" class="landingPageCheckbox" ' . (isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"] ? 'checked' : '') . '>
+                     <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox"
+                    class="landingPageCheckbox" ' . (isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"] ? 'checked' : '') . '>
                     </div>
                 <div class="landingPageCheckboxWrapper">
                     <label for="ironcladShipsCheckbox" class="landingPageLabel">Vaixells acoirassats</label>
-                    <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox" class="landingPageCheckbox" disabled>
+                    <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox"
+                    class="landingPageCheckbox" ' . (isset($_SESSION["ironclad"]) && $_SESSION["ironclad"] ? 'checked' : '') . '>
                 </div>
                 <div class="landingPageCheckboxWrapper">
                     <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
