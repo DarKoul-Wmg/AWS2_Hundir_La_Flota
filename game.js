@@ -30,6 +30,16 @@ document.addEventListener("DOMContentLoaded", function() {
     // variable de mensaje css
     let messageTimeout = null;
 
+    
+    // variables de munición
+    const contenedorMunicion = document.getElementById('contenedorMunicion');
+    const limitedMunition = contenedorMunicion.getAttribute('data-limitedMunition');
+    const isLimitedMunition = limitedMunition === 'true'; // Convertir el valor de string a booleano
+
+    // variables de control de si se han acabado la munición
+    let isMunitionUserSpent = false;
+    let isMunitionIaSpent = false;
+
     // variable de las celdas que puedes darle click
     const cells = document.getElementsByClassName("selectCellsUser");
 
@@ -58,22 +68,169 @@ document.addEventListener("DOMContentLoaded", function() {
             cell.addEventListener("click",eventHandler);        
     };  
             
+
+    // función que devuelve cuánta munición tenemos puesta que se muestra en el html
+    function getCurrentMunition(turn) {
+
+        if (turn){
+            return parseInt(document.getElementById('userMunition').innerHTML);
+        }
+        return parseInt(document.getElementById('iaMunition').innerHTML);
+
+    }
+
+
+    // función que comprueba si se te acaba la munición
+    function checkMunition(){
+
+        // comprueba la del usuario
+        if (getCurrentMunition(true) == 0){
+            isMunitionUserSpent = true;
+        }
+        // comprueba la de la máquina
+        if (getCurrentMunition(false) == 0){
+            isMunitionIaSpent = true;
+        }
+    }
+
+    function checkGameOverByMunition(){
+
+        // compruebo, por si acaso, si se han acabado las municiones
+        checkMunition();
+
+        if(isMunitionUserSpent && isMunitionIaSpent){
+
+            // función auxiliar
+            function sumDiscovered(dic){
+
+                let totalGroup = 0;
+                let totalShells = 0;
+
+                for(const shell of dic){
+                    if(isGrupShellDiscovered(shell)){
+                        totalGroup ++;
+                    }
+                    
+                    for (const coordinate of shell.coordinates) {
+            
+                        for (const touchedCoordinate of shell.touchedCoordinates) {
+            
+                            if (compareCoordinates(coordinate, touchedCoordinate)) {
+                                totalShells ++;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return {totalGroup,totalShells};
+            }
+
+            let resultUser = sumDiscovered(dicShellsUser);
+            let resultIa = sumDiscovered(dicShellsIA);
+
+            // mira quién ha ganado
+            let userWin = false;
+
+            if(resultUser.totalGroup>resultIa.totalGroup){
+                userWin = true;
+            }
+            else if(resultIa.totalGroup>resultUser.totalGroup){
+                userWin = false;
+            }
+            else{
+                if(resultUser.totalShells>resultIa.totalShells){
+                    userWin = true;
+                }
+                else if(resultIa.totalShells>resultUser.totalShells){
+                    userWin = false;
+                }
+                else{
+                    userWin = false;
+                }
+            }
+
+
+            // acaba la partida
+            if(userWin){
+                //Sonido win
+                sonidoWin.play();
+                printMessageOnClick('win');
+
+                //calcular puntos del final
+                endgamePoints();
+
+                // después de 2 segundo te vas a win.php
+                setTimeout(function() {
+                    document.getElementById("endForm").submit();
+                    //window.location.href = "win.php";
+                }, 6000);
+            }
+
+            else if(!userWin){
+                //Sonido win
+                sonidoCpuWin.play();
+                printMessageOnClick('lose');
+
+                //calcular puntos del final
+                loseEndgamePoints();
+
+                // después de 2 segundo te vas a win.php
+                setTimeout(function() {
+                    document.getElementById("loseEndForm").submit();
+                    //window.location.href = "lose.php";
+                }, 4000);
+            }
+
+        }
+    }
+
     //cambiada función anónima para poder referenciarla en el removeEventListener
     function eventHandler(event) {
         if (gameMode == 0) {
             discoverCell(event, dicShellsUser);
         } 
         if (gameMode == 1){
-            if(turn){    
-                if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
+            if(turn){   
+                
+                // munición user
+                if(isLimitedMunition){
+                    let updatedMunitionValue = getCurrentMunition(turn);
+
+                    if (updatedMunitionValue>0){
+                        updatedMunitionValue--;
+                        document.getElementById('userMunition').innerHTML = updatedMunitionValue;
+                    }
+
+                }
+
+                // si TIENE munición el user
+                if(!isMunitionUserSpent){
+                    if(discoverCell(event, dicShellsUser)==='water'){ //si la celda clicada es agua pasar el turno a la CPU
+                        turn = false;
+                        //estilos que marcan el turno de la CPU
+                        document.getElementById("tableUser").classList.add("tableDisabler");
+                        document.getElementById("tableUser").classList.remove("tableEnabler");
+                        document.getElementById("tableIA").classList.add("tableEnabler");           
+                        document.getElementById("tableIA").classList.remove("tableDisabler");
+                        setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                    } 
+                }
+
+                else if(isMunitionUserSpent){
+                    // si NO tiene munición el user
+                    printMessageOnClick('userNotMun');
+                    console.log("mensaje de que no tiene munición el user ")
+                    
                     turn = false;
-                    //estilos que marcan el turno de la CPU
                     document.getElementById("tableUser").classList.add("tableDisabler");
                     document.getElementById("tableUser").classList.remove("tableEnabler");
                     document.getElementById("tableIA").classList.add("tableEnabler");           
                     document.getElementById("tableIA").classList.remove("tableDisabler");
                     setTimeout(() => turnCPU(event, dicShellsIA), 2000);
-                }           
+                }
+
+                checkGameOverByMunition();
             }
         }
     }
@@ -114,58 +271,81 @@ document.addEventListener("DOMContentLoaded", function() {
                 //quitamos el evento click de las celdas hasta que le vuelva a tocar al jugador         
                 cell.removeEventListener("click", eventHandler);
             };
-            let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
-            let coordinateInCPUTable;
-            for (let cell of cellsTableIA) {
-                let x = parseInt(cell.getAttribute('data-x'));
-                let y = parseInt(cell.getAttribute('data-y'));
-                const currentCell = [x, y];
-                let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
-                if (compareCoordinates(currentCell, aux)) {
-                    cell.style.backgroundColor= "blue"; //marcar la celda escogida
-                    cell.style.border = "2px solid blue";
-                    coordinateInCPUTable = currentCell;
-                };
-            }
-            cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes
-            console.log(dicShellsIA);
 
-            const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
-            printMessageOnClick(cellState);
-            if(groupIsDiscovered){
-                if(isWin(dicShellsIA)){
-                    //Sonido win
-                    sonidoCpuWin.play();
-                    printMessageOnClick('win');
+            // comprobar si la ia tiene munición
+            if(isLimitedMunition){
+                let updatedMunitionValue = getCurrentMunition(turn);
 
-                    //calcular puntos del final
-                    loseEndgamePoints();
-
-                    // después de 2 segundo te vas a win.php
-                    setTimeout(function() {
-                        document.getElementById("loseEndForm").submit();
-                        //window.location.href = "lose.php";
-                    }, 4000);
+                if(updatedMunitionValue>0){
+                    updatedMunitionValue--;
+                    document.getElementById('iaMunition').innerHTML = updatedMunitionValue;
                 }
             }
 
-            if (touch) {
-                // setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU a los 2 segundos
-                setTimeout(() => turnCPU(e, dicShellsIA), 500);
-                
-            } else {
-                setTimeout(returnTurnToPlayer, 500); //devolver turno al jugador a los 2 segundos
-                // setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
-                // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
+            // si TIENE munición la ia
+            if(!isMunitionIaSpent){
 
-            };
+                let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
+                let coordinateInCPUTable;
+                for (let cell of cellsTableIA) {
+                    let x = parseInt(cell.getAttribute('data-x'));
+                    let y = parseInt(cell.getAttribute('data-y'));
+                    const currentCell = [x, y];
+                    let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+                    if (compareCoordinates(currentCell, aux)) {
+                        cell.style.backgroundColor= "green"; //marcar la celda escogida, faltan estilos
+                        coordinateInCPUTable = currentCell;
+                    };
+                }
+                cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes
+                console.log(dicShellsIA);
+
+                const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
+                printMessageOnClick(cellState);
+                if(groupIsDiscovered){
+                    if(isWin(dicShellsIA)){
+                        //Sonido win
+                        sonidoCpuWin.play();
+                        printMessageOnClick('win');
+
+                        //calcular puntos del final
+                        loseEndgamePoints();
+
+                        // después de 2 segundo te vas a win.php
+                        setTimeout(function() {
+                            document.getElementById("loseEndForm").submit();
+                            //window.location.href = "lose.php";
+                        }, 4000);
+                    }
+                }
+                
+
+                if (touch) {
+                    setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
+                    //setTimeout(() => turnCPU(e, dicShellsIA), 1); 
+
+
+                } else {
+                    setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
+                    //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al miñisegundo
+                    // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
+                }
+            }
+
+            // si NO tiene munición la ia
+            else if(isMunitionIaSpent){
+                printMessageOnClick('iaNotMun');
+                console.log("mensaje de que la ia no tiene munición")
+                setTimeout(returnTurnToPlayer, 500);
+            }
+
+            checkGameOverByMunition();
         }
     }
     
 
     // mostrar todas las imagenes en tu tablero
     const cellsTableIA = document.getElementsByClassName("selectCellsIA");
-
     for(let cell of cellsTableIA){
     
         let x = parseInt(cell.getAttribute('data-x'));
@@ -198,7 +378,6 @@ document.addEventListener("DOMContentLoaded", function() {
     if(clock){
         chronometer();
     }
-
     
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
     function compareCoordinates(coord1, coord2) {
@@ -325,7 +504,10 @@ document.addEventListener("DOMContentLoaded", function() {
             water : "Informació<br/><br/>Aigua",
             shell : "Informació<br/><br/>Tocat",
             groupShell : "Informació<br/><br/>Tocal i enfonsat",
-            win : "Èxit<br/><br/>Has guanyat!"
+            win : "Èxit<br/><br/>Has guanyat!",
+            lose : "Perill<br/><br/>Has perdut!",
+            userNotMun : "Informació<br/><br/>Ja no tens més munició",
+            iaNotMun : "Informació<br/><br/>L'ia ja no té més munició",
         };
 
          // Mostrar el string en el div con id="resultado" | <div id="message"></div>
@@ -337,9 +519,22 @@ document.addEventListener("DOMContentLoaded", function() {
             messageElement.style.borderLeft = "5px solid green";
             messageElement.style.color = "rgb(4, 155, 4)";
             messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
-
-
         }
+
+        else if(cellState=='userNotMun' || cellState=='iaNotMun'){
+            messageElement.style.border = "3px solid yellow";
+            messageElement.style.borderLeft = "5px solid yellow";
+            messageElement.style.color = "rgb(231, 211, 63)";
+            messageElement.style.backgroundColor = "rgba(147, 147, 147, 0.614)";
+        }
+
+        else if(cellState=='lose'){
+            messageElement.style.border = "3px solid red";
+            messageElement.style.borderLeft = "5px solid red";
+            messageElement.style.color = "rgb(241, 12, 12)";
+            messageElement.style.backgroundColor = "rgba(147, 147, 147, 0.614)";
+        }
+
         else{
             messageElement.style.border = "3px solid blue";
             messageElement.style.borderLeft = "5px solid blue";
@@ -385,7 +580,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setImageInCell(dicShells,coordinateCellClicked,e);
 
             // mostrar el mensaje
-            printMessageOnClick(cellState);
+            printMessageOnClick(cellState);         
 
             // comprueba si has ganado la partida
             if(groupIsDiscovered){
@@ -413,7 +608,6 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(shell);
         }
     }
-
 
     // función calcular puntos
     function calculatePointsByTime(){
@@ -453,13 +647,15 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('endgameHidden').value =  totalPoints;
         return totalPoints;
     }
+
+    // función de perder puntos
     function loseEndgamePoints(){
         stopChronometer(); //paramos el reloj
         let totalPoints = 200000 - roundedPoints + actionPoints;
         document.getElementById('totalScore').innerHTML =  totalPoints;
         document.getElementById('loseEndgameHidden').value =  totalPoints;
         return totalPoints;
-        }
+    }
     
     // función del cronómetro
     function chronometer() {
@@ -486,5 +682,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (i < 10 && typeof i != "string") {i = "0" + i};  // añade un 0 delante en forma de string en los dígitos simples, ademas contempla que la variable no sea string: importante para que no se añada un 0 adicional en cada llamada
         return i;
     }
+
 });
 
