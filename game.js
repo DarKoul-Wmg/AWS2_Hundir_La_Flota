@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function() {
             else if(!userWin){
                 //Sonido win
                 sonidoCpuWin.play();
-                printMessageOnClick('win');
+                printMessageOnClick('lose');
 
                 //calcular puntos del final
                 loseEndgamePoints();
@@ -505,6 +505,7 @@ document.addEventListener("DOMContentLoaded", function() {
             shell : "Informació<br/><br/>Tocat",
             groupShell : "Informació<br/><br/>Tocal i enfonsat",
             win : "Èxit<br/><br/>Has guanyat!",
+            lose : "Perill<br/><br/>Has perdut!",
             userNotMun : "Informació<br/><br/>Ja no tens més munició",
             iaNotMun : "Informació<br/><br/>L'ia ja no té més munició",
         };
@@ -524,6 +525,13 @@ document.addEventListener("DOMContentLoaded", function() {
             messageElement.style.border = "3px solid yellow";
             messageElement.style.borderLeft = "5px solid yellow";
             messageElement.style.color = "rgb(231, 211, 63)";
+            messageElement.style.backgroundColor = "rgba(147, 147, 147, 0.614)";
+        }
+
+        else if(cellState=='lose'){
+            messageElement.style.border = "3px solid red";
+            messageElement.style.borderLeft = "5px solid red";
+            messageElement.style.color = "rgb(241, 12, 12)";
             messageElement.style.backgroundColor = "rgba(147, 147, 147, 0.614)";
         }
 
