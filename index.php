@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troba la petxina</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="game.js"></script>
 </head>
 
 <body id="index">
@@ -69,6 +70,17 @@
 
     if(isset($_POST["playerName"])){ //si tenemos nombre registrado, mostrar botones de juego activos
         $_SESSION["playerName"] = $_POST["playerName"];
+
+        // valores de los checkboxes enviados desde el formulario
+        $limmitedAmmo = isset($_POST['limmitedAmmoCheckbox']) ? true : false;
+        $ironcladShips = isset($_POST['ironcladShipsCheckbox']) ? true : false;
+        $specialAttacks = isset($_POST['specialAttacksCheckbox']) ? true : false;
+
+        // Guardar valores en la sesión para pasar a php2
+        $_SESSION["limmitedAmmo"] = $limmitedAmmo;
+        $_SESSION["ironcladShips"] = $ironcladShips;
+        $_SESSION["specialAttacks"] = $specialAttacks;
+
         echo'
             <div class="landingPageCenterButtons">
                 <a href="game.php" class="landingPageStartLinkBtn">
@@ -90,6 +102,7 @@
                 <input type="text" id="playerName" name="playerName"  placeholder="Registra el teu nom per jugar" minlength="3" maxlength="30" required>
                 <input type="submit" class="landingPageRegisterButton" value="Registra">
             </div>
+
             <div class="landingPageCenterButtons">
                 <a href="game.php" class="landingPageStartLinkBtn">
                     <button type="button" class="landingPageNewGameButton" disabled>Tutorial</button>
@@ -101,27 +114,29 @@
                     <button type="button" class="landingPageRankingButton">Ranking</button>
                 </a>
             </div>
+
+            <div class="landingPageOptions" id="landingPageOptions">
+                <div class="landingPageCheckboxWrapper">
+                    <label for="limmitedAmmoCheckbox" class="landingPageLabel">Munició limitada</label>
+                     <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox" class="landingPageCheckbox" ' . (isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"] ? 'checked' : '') . '>
+                    </div>
+                <div class="landingPageCheckboxWrapper">
+                    <label for="ironcladShipsCheckbox" class="landingPageLabel">Vaixells acoirassats</label>
+                    <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox" class="landingPageCheckbox" disabled>
+                </div>
+                <div class="landingPageCheckboxWrapper">
+                    <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
+                    <input type="checkbox" id="specialAttacksCheckbox" name="specialAttacksCheckbox" class="landingPageCheckbox" disabled>
+                </div>
+            </div>
+
         </form>
         ';
     };
 
 ?>
-        <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img
-                src="images/options.png" class="optionImg"></button>
-        <div class="landingPageOptions" id="landingPageOptions">
-            <div class="landingPageCheckboxWrapper">
-                <label for="limmitedAmmoCheckbox" class="landingPageLabel">Munició limitada</label>
-                <input type="checkbox" id="limmitedAmmoCheckbox" class="landingPageCheckbox">
-            </div>
-            <div class="landingPageCheckboxWrapper">
-                <label for="ironcladShipsCheckbox" class="landingPageLabel">Vaixells acoirassats</label>
-                <input type="checkbox" id="ironcladShipsCheckbox" class="landingPageCheckbox" disabled>
-            </div>
-            <div class="landingPageCheckboxWrapper">
-                <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
-                <input type="checkbox" id="specialAttacksCheckbox" class="landingPageCheckbox" disabled>
-            </div>
-        </div>
+        <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img src="images/options.png" class="optionImg"></button>
+        
         <!--
         en la especificación no pone nada de que el menú de opciones tenga un botón de Guardar, así que tal vez sea mejor guardar las opciones en JS
         -->
@@ -144,22 +159,22 @@
                 sessionStorage.setItem('ammoCheckbox', ammoCheckboxVal);
             }
 
-                // función del botón checkBoxes landingPage
-                //landingPage, hacer clic en botón opciones para mostrar/esconder div
-                const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
-                let showOptions = true;
-                landingPageOptBtn.addEventListener("click", function() {
-                if (showOptions){
-                    document.getElementById("landingPageOptions").style.display = "block";
-                    showOptions = false;
-                } else {
-                    document.getElementById("landingPageOptions").style.display = "none";
-                    showOptions = true;
-                }
-                });
-
             //ejecutar script después de cargar el DOM
             window.addEventListener("DOMContentLoaded", init);
+
+            // función del botón checkBoxes landingPage
+            //landingPage, hacer clic en botón opciones para mostrar/esconder div
+            const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
+            let showOptions = true;
+            landingPageOptBtn.addEventListener("click", function() {
+            if (showOptions){
+                document.getElementById("landingPageOptions").style.display = "block";
+                showOptions = false;
+            } else {
+                document.getElementById("landingPageOptions").style.display = "none";
+                showOptions = true;
+            }
+            });
 
         </script>
 </body>
