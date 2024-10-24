@@ -21,7 +21,7 @@ session_start();
         header('HTTP/1.1 403 Forbidden');
         echo "<div class ='forbidden'>
             <h1>403 Forbidden</h1>
-            <h2>Acces no autoritzat a win.php, accedeix desde game.php</h2>
+            <h2>Acces no autoritzat a win.php, accedeix guanyant</h2>
            </div>\n</body>\n</html>";
     exit; // Termina el script
     }

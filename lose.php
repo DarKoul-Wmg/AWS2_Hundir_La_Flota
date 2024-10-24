@@ -20,7 +20,7 @@ session_start();
         header('HTTP/1.1 403 Forbidden');
         echo "<div class ='forbidden'>
             <h1>403 Forbidden</h1>
-            <h2>Acces no autoritzat a lose.php, accedeix desde game.php</h2>
+            <h2>Acces no autoritzat a lose.php, accedeix perdent</h2>
           </div>\n</body>\n</html>"; // Muestra un mensaje
     exit; // Termina el script
     }

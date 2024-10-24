@@ -1155,8 +1155,8 @@ body#lose input[type=text] {
 .forbidden{
     display: grid;
     place-items: center;
-    height: 80%;/*evita que se vea win.php*/
-    width: 80%;/*evita que se vea win.php*/
+    height: 100vh;
+    width: 100vh;
     background-image: url('images/forbiddenEdit.png');
     background-size: cover; /*imagen al tamaño del contenedor */
     background-position: center; 
