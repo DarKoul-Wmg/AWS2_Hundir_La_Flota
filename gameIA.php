@@ -83,10 +83,10 @@
 
         // Regoger valores de los checkboxes
         $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"];
-        //$ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
-        //$specialAttacks = isset($_SESSION["specialAttacks"]) ? $_SESSION["specialAttacks"] : false;
+        //$ironclad = isset($_SESSION["ironclad"]) && $_SESSION["ironclad"];
+        $specialAttacks = isset($_SESSION["specialAttacks"]) && $_SESSION["specialAttacks"];
 
-        //echo "<h1>Munició limitada: " . ($limmitedAmmo ? "Sí" : "No") .     "</h1>";
+        //echo "<h1>Iron clad: " . ($specialAttacks ? "Sí" : "No") .     "</h1>";
 
         // crear dos tableros 10x10 - por defecto sin conchas
         $boardUser = array_fill(1, 10, array_fill(1, 10, false));
@@ -208,12 +208,12 @@
              <?php
                 
                 // poner que se vea o no
-                $visibilityStyle = $limmitedAmmo ? 'visible' : 'hidden';
-                $limitedAmmoStr = $limmitedAmmo ? 'true' : 'false';
+                $visibilityStyleMunition = $limmitedAmmo ? 'visible' : 'hidden';
+                $limmitedAmmoStr = $limmitedAmmo ? 'true' : 'false';
                 
                 // hardcodear munición
                 echo '
-                    <div id="contenedorMunicion" data-limitedMunition="' . $limitedAmmoStr . '" style="visibility: ' . $visibilityStyle . ';">
+                    <div id="contenedorMunicion" data-limitedMunition="' . $limmitedAmmoStr . '" style="visibility: ' . $visibilityStyleMunition . ';">
                         <div id="contenidoHidMunicion">
                             <h3> Munición disponible </h3>
                             <div class="linea">
@@ -265,7 +265,18 @@
             </table>
 
         </div>
-        
+
+        <!-- información de los ataques especiales -->
+        <?php
+            // poner que se vea o no
+            $visibilityStyleSpecialAttack = $specialAttacks ? 'visible' : 'hidden';
+            echo '
+                <div id="contenedorSpecialAttack" style="visibility: ' . $visibilityStyleSpecialAttack . ';">
+                    <img src="images/palaPlaceHolder.png" alt="pala de minecraft">
+                    <img src="images/palaPlaceHolder.png" alt="pala de minecraft">
+                </div>
+            ';
+        ?>
         <!-- tablero del usuario-->
         <table id="tableUser">
             <?php
