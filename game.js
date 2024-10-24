@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     printMessageOnClick('userNotMun');
                     console.log("mensaje de que no tiene munición el user ")
                     turn = false;
-                    styleTurnPlayer();
+                    styleTurnCPU();
                     setTimeout(() => turnCPU(event, dicShellsIA), 2000);
                 }
                 checkGameOverByMunition();

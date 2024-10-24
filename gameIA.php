@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="style.css">
 	<script src="game.js"></script>
     
-    <title>Troba la petxina VS IA</title>
+    <title>Trova la petxina VS IA</title>
 </head>
 
 <body id="gameIA">

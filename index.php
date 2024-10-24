@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Troba la petxina</title>
+    <title>Trova la petxina</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="game.js"></script>
 </head>
@@ -59,9 +59,9 @@
     </audio>
 
     <div class="landingPageBox">
-        <p class="landingPageTitle">Troba la petxina</p>
+        <p class="landingPageTitle">Trova la petxina</p>
         <p class="landingPageDescription">
-            Troba totes les petxines com més aviat millor!
+            Trova totes les petxines com més aviat millor!
         </p>
 
         <?php
