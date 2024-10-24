@@ -1,81 +1,405 @@
-body#game{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2em;
-    min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
-    overflow: hidden; /* Evita el scroll */
-    
-    background-image: url('images/backgroundGame3.png'); /* Ruta de tu imagen */
-    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    background-color: rgba(15, 44, 73, 0.811);
+body#index{
+    background-image: url("images/backgroundLandingPage.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
-body#game table{
+body#index .landingPageTitle{
+    text-align: center;
+    align-items: center;
+    color: #fcd4a7;
+    max-width: 40vw;
+    font: 4.2em "Fira Sans", sans-serif;
+    margin: 30px;
+}
+
+body#index .landingPageBox{
+    margin: 35px;
+    background-color: #232f5f8c;
+    max-width: 40vw;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+body#index .landingPageDescription{
+    text-align: center;
+    align-items: center;
+    color: #fcd4a7;
+    max-width: 35vw;
+    font: 2.4em "Fira Sans", sans-serif;
+    margin: 30px;
+    padding-top: 40px;
+}
+
+body#index .landingPageNewGameButton,
+body#index .landingPageRankingButton,
+body#index .landingPageRegisterButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#index .landingPageNewGameButton:hover,
+body#index .landingPageRankingButton:hover,
+body#index .landingPageRegisterButton:hover{
+    background-color: #5b6597; 
+}
+
+body#index .landingPageStartLinkBtn{
+    margin-right: 5vh;
+}
+
+body#index .landingPageNewGameButton:disabled{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #636675; 
+    color: #362f26; 
+    border-radius: 40px; 
+    border: 0;
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#index .landingPageCenterButtons{
+    padding-top: 4vh;
+    display: flex;
+    justify-content: center;
+}
+
+body#index .landingPageCenterTextbox{
+    display: flex;
+    justify-content: center;
+}
+
+body#index input[type=text] {
+    font: 1.6em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #E91E63;
+}
+
+body#index input[type=text]::placeholder {
+    text-align: center;
+    font: 0.8em "Fira Sans", sans-serif;
+	color: #9e7b52;
+}
+
+body#index .landingPageOptionsButton{
+    margin-top: 40px;
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #434b71; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+}
+
+body#index .optionImg{
+    max-width: 40px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+body#index .landingPageOptions{
+    display: none;
+}
+
+body#index .landingPageLabel{
+    font: 1.8em "Fira Sans", sans-serif;
+    color: #fcd4a7; 
+    vertical-align: middle;
+}
+
+body#index .landingPageCheckboxWrapper{
+    margin-top: 30px;
+
+}
+
+body#index input[type="checkbox"].landingPageCheckbox{
+    vertical-align: middle;
+    float: right;
+    font-size: 1.4em;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    width: 3.5em;
+    height: 1.5em;
+    background: #ddd;
+    border-radius: 3em;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+body#index input[type="checkbox"].landingPageCheckbox:checked{
+    background: #434b71;
+}
+
+
+body#index input[type="checkbox"].landingPageCheckbox:after{
+    position: absolute;
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background: #fcd4a7;
+    -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
+            box-shadow: 0 0 .25em rgba(0,0,0,.3);
+    -webkit-transform: scale(.7);
+            transform: scale(.7);
+    left: 0;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+body#index input[type="checkbox"].landingPageCheckbox:disabled:after{
+    background: #bebebe;
+}
+  
+body#index input[type="checkbox"].landingPageCheckbox:checked:after{
+    left: calc(100% - 1.5em);
+}
+
+
+/*----------------------------------------------------------------------------------------------*/
+
+/* body de las dos pantallas */
+body#game,
+body#gameIA{
+    display: flex;
+    align-items: center;
+    margin-top: 2em;
+    min-height: 100vh;
+    overflow: hidden; 
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* background de cada pantalla*/
+body#game{
+    background-image: url('images/backgroundGame3.png');
+}
+body#gameIA{
+    background-image: url('images/backgroundGameIA.jpeg');
+}
+
+/*Estructura principal de las dos pantallas*/
+body#game .main,
+body#gameIA .main{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+
+
+/* ------ TABLAS ------*/
+
+/* Estructura de las DOS tablas USER de las dos pantallas*/
+body#game table,
+body#gameIA table{
     border: 4px solid rgb(0, 0, 0); 
     border-collapse: collapse;
     background-color: rgba(111, 111, 111, 0.337);
-
 }
 
-body#game table td{
-    width: 3vw; /* Ajusta dinámicamente el tamaño basado en el ancho de la pantalla */
-    height: 3vw;
+/* Estructura de cada celda de las dos pantallas*/
+body#game table td,
+body#gameIA table td{
     border: 2px solid rgb(255, 255, 255);
     border-style: dashed;
-    border-collapse: collapse
+    border-collapse: collapse;
 }
 
-body#game table td.number, body#game table td.letter,  body#game table td.empty{ 
+/* Estructura de la tabla del USER de las dos pantallas*/
+body#game table#tableUser,
+body#gameIA table#tableUser{
+    margin-right: 5%;
+}
+
+/* Estructura de la tabla IA en la pantalla IA*/
+body#gameIA table#tableIA{
+    margin-left: 20%;
+    margin-right: 10%;
+    margin-top: 8%;
+}
+
+/* Estructura del tamaño de las celdas en la tabla del USER de las dos pantallas*/
+body#game table#tableUser td,
+body#gameIA table#tableUser td{
+    width: 3vw;
+    height: 3vw;
+}
+
+/* Estructura del tamaño de las celdas en la tabla de la IA en la pantalla IA*/
+body#gameIA table#tableIA td{
+    width: 2vW;
+    height: 1.5vw;
+    padding: 0.1vw;
+}
+
+
+/*Centro*/
+
+
+body#game table td.number,
+body#game table td.letter,
+body#game table td.empty,
+body#gameIA table td.number,
+body#gameIA table td.letter,
+body#gameIA table td.empty{ 
     background-color: rgba(40, 40, 40, 0.419);
     text-align: center;
     font-weight: bold;
     color: rgb(255, 255, 255);
 }
 
-/* Estructura principal */
-body#game .main {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100%;
-    justify-content: space-between; /* Espaciar los elementos */
+body#game table td:hover,
+body#gameIA table td:hover{
+    cursor: url('images/cursor1.cur'), auto;
 }
 
-    /* Botón de salir alineado a la izquierda */
-body#game .leftContainer {
-    /*background-color: aquamarine;*/
-    min-width: 150px; /* Evita que se encojan demasiado */
-    max-width: 200px; /* Controla el máximo ancho */
+
+/* Clases para las fotos*/
+
+body#game td[data-photo="nautilus"],
+body#gameIA td[data-photo="nautilus"]{
+    background-image: url('images/nautiloC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="mejillon"],
+body#gameIA td[data-photo="mejillon"]{
+
+    background-image: url('images/mejillonC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="erizo"],
+body#gameIA td[data-photo="erizo"]{
+
+    background-image: url('images/erizo-de-marC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="concha"],
+body#gameIA td[data-photo="concha"]{
+    background-image: url('images/cascaraC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="caracola"],
+body#gameIA td[data-photo="caracola"]{
+    background-image: url('images/caracolaC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="caracol"],
+body#gameIA td[data-photo="caracol"]{
+    background-image: url('images/caracol-de-marC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="caparazon2"],
+body#gameIA td[data-photo="caparazon2"]{
+    background-image: url('images/caparazon2C.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="caparazon"],
+body#gameIA td[data-photo="caparazon"]{
+    background-image: url('images/caparazonC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="ermitano"],
+body#gameIA td[data-photo="ermitano"]{
+    background-image: url('images/cangrejo-ermitanoC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="estrella"],
+body#gameIA td[data-photo="estrella"]{
+    background-image: url('images/estrella-de-marC.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+body#game td[data-photo="sand"]{
+    background-image: url('images/sand.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+body#gameIA td[data-photo="sand"]{
+    background-image: url('images/sand2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+body#gameIA table#tableIA td.selectCellsIA {
+    background-size: 30px 30px;
+}
+
+body#gameIA .tableDisabler {
+    opacity: .5;
+}
+
+body#gameIA .tableEnabler {
+    opacity: 1;
+    box-shadow: 0 0 10px 5px #B9FAF8;
+}
+
+/* Izquierda */
+
+body#game .leftContainer{
+    width: 25%;
     margin-left: 4em;
 }
 
-    /* Tablero centrado */
-body#game .centerContainer {
-    flex-grow: 1; /* Para que este div ocupe el máximo espacio disponible */
-    /*background-color: rgb(193, 127, 255);*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body#gameIA .leftContainer {
+    width: 33%;
+    margin-left: 4em;
 }
 
 
-/* Div de puntuación y tiempo */
-body#game .rightContainer {
-    background-color: #251934a7;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 300px; 
-    padding: 10px;
-    
-    
-}
-
-/* Boton salir*/
-body#game .exit {
+body#game .exit,
+body#gameIA .exit {
     font-size: 2rem;
     padding: 10px;
     background-color: #251934a7;
@@ -86,8 +410,74 @@ body#game .exit {
     border-radius: 50px;
 }
 
+body#gameIA .exit {
+    margin: -9px;
+}
 
-#time, #points {
+body#game #contenedorMunicion,
+body#gameIA #contenedorMunicion{
+    padding: 1px 0px 1px 13px;
+    margin-left: 20%;
+    margin-right: 10%;
+    background-color: #251934a7;
+    color: whitesmoke;
+    
+}
+
+body#game #contenedorMunicion h3,
+body#gameIA #contenedorMunicion h3{
+    font-size: 28px;
+}
+
+body#game #contenedorMunicion p,
+body#gameIA #contenedorMunicion p{
+    font-size: 25px;
+    display: inline-block;
+    margin: 0; 
+}
+
+body#game #contenedorMunicion .linea,
+body#gameIA #contenedorMunicion .linea{
+    margin-bottom: 10px;
+}
+
+body#game .endForm,
+body#game .buttonEnd,
+body#gameIA .endForm,
+body#gameIA .buttonEnd{
+    display:none;
+}
+
+/*Derecha*/
+body#game .rightContainer,
+body#gameIA .rightContainer {
+    background-color: #251934a7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 20%; 
+    padding: 10px;    
+}
+
+body#game p.userName,
+body#game p.userName,
+body#gameIA p.userName,
+body#gameIA p.userName{
+    display: flex;
+    font-size: 37px;
+    justify-content: center;
+    text-align: center;
+    background-color: #7a728abf;
+    color: whitesmoke;
+    border-radius: 10px;
+    padding: 5px 10px; 
+}
+
+
+body#game #time,
+body#game #points,
+body#gameIA #time,
+body#gameIA #points{
     font: 1.5rem "Fira Sans", sans-serif;
     font-weight: bold;
     color: white;
@@ -96,101 +486,35 @@ body#game .exit {
     justify-content: center;
 }
 
-#chrono{
+body#game #chrono,
+body#gameIA #chrono{
     margin: auto;
 }
 
-#chrono:before {
+body#game #chrono:before,
+body#gameIA #chrono:before {
     content: "⏱️: ";  
 }
-#totalScore:before {
+
+body#game #totalScore:before,
+body#gameIA #totalScore:before {
     content: "🎯: ";
 }
-#totalScore{
+
+body#game #totalScore,
+body#gameIA #totalScore{
     margin: auto;
 }
 
-#message {
-    margin-top: 10px;
-    font-size: 1.2rem;
-}
-
-
-
-/* $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus"];*/
-
-body#game td[data-photo="nautilus"]{
-    background-image: url('images/nautiloC.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; 
-    background-color: rgba(0, 0, 0, 0.652);
-}
-body#game td[data-photo="mejillon"]{
-    background-image: url('images/mejillonC.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.652);
-}
-body#game td[data-photo="erizo"]{
-    background-image: url('images/erizo-de-marC.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.652);
-}
-body#game td[data-photo="concha"]{
-    background-image: url('images/cascaraC.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.652);
-}
-body#game td[data-photo="caracola"]{
-    background-image: url('images/caracolaC.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.652);
-}
-
-body#game td[data-photo="caracol"]{
-    background-image: url('images/caracol-de-marC.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.652);
-}
-body#game td[data-photo="caparazon2"]{
-    background-image: url('images/caparazon2C.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.652);
-}
-body#game td[data-photo="caparazon"]{
-    background-image: url('images/caparazonC.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.652);
-}
-body#game td[data-photo="ermitano"]{
-    background-image: url('images/cangrejo-ermitanoC.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0, 0, 0, 0.652);
-}
-
-body#game #containerMessage{
+body#game #containerMessage,
+body#gameIA #containerMessage{
     width: 96%;
     opacity: 0.8;
     margin: auto;
 }
 
-body#game #message {
+body#game #message,
+body#gameIA #message {
     box-sizing: border-box;
 
     width: 100%;
@@ -209,56 +533,117 @@ body#game #message {
     transition: border 0.5s;
 }
 
-body#game td[data-photo="sand"]{
-    background-image: url('images/sand.png');
+
+/*----------------------------------------------------------------------------------------------*/
+
+
+body#win {
+    min-height: 100vh;body#index .landingPageOptionsButton{
+        margin-top: 40px;
+        font: 2.4em "Fira Sans", sans-serif;
+        background-color: #434b71; 
+        color: #fcd4a7; 
+        border-radius: 40px; 
+        border-color: #fcc486;
+    }
+    
+    body#index .optionImg{
+        max-width: 40px;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+    }
+    
+    body#index .landingPageOptions{
+        display: none;
+    }
+    
+    body#index .landingPageLabel{
+        font: 1.8em "Fira Sans", sans-serif;
+        color: #fcd4a7; 
+        vertical-align: middle;
+    }
+    
+    body#index .landingPageCheckboxWrapper{
+        margin-top: 30px;
+    
+    }
+    
+    body#index input[type="checkbox"].landingPageCheckbox{
+        vertical-align: middle;
+        float: right;
+        font-size: 1.4em;
+        -webkit-appearance: none;
+           -moz-appearance: none;
+                appearance: none;
+        width: 3.5em;
+        height: 1.5em;
+        background: #ddd;
+        border-radius: 3em;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+        -webkit-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+      }
+    
+      body#index input[type="checkbox"].landingPageCheckbox:checked{
+        background: #434b71;
+      }
+    
+    
+      body#index input[type="checkbox"].landingPageCheckbox:after{
+        position: absolute;
+        content: "";
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
+        background: #fcd4a7;
+        -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
+                box-shadow: 0 0 .25em rgba(0,0,0,.3);
+        -webkit-transform: scale(.7);
+                transform: scale(.7);
+        left: 0;
+        -webkit-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+      }
+    
+      body#index input[type="checkbox"].landingPageCheckbox:disabled:after{
+        background: #bebebe;
+      }
+    
+      body#index input[type="checkbox"].landingPageCheckbox:checked:after{
+        left: calc(100% - 1.5em);
+      }
+    
+    overflow: hidden;
+    
+    background-image: url('images/backgroundGame.jpeg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat; 
-}
-
-body#game .endForm,
-body#game .buttonEnd{
-    display:none;
-}
-
-.landingPageBody {
-    background-image: url("images/backgroundLandingPage.png");
-    background-position: top;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+    background-color: rgba(15, 44, 73, 0.811);
 }
 
-body#index .landingPageTitle{
-    text-align: center;
-    align-items: center;
-    color: #fcd4a7;
-    max-width: 40vw;
-    font: 4.2em "Fira Sans", sans-serif;
-    margin: 30px;
-    
-}
-
-body#index .landingPageBox{
-    margin: 35px;
+body#win .winBox {
     background-color: #232f5f8c;
     max-width: 40vw;
-    height: 500px;
     padding: 20px;
     border-radius: 15px;
 }
 
+/*----------------------------------------------------------------------------------------------*/
+
 body#index .landingPageDescription{
     text-align: center;
-    align-items: center;
     color: #fcd4a7;
-    max-width: 35vw;
-    font: 2.4em "Fira Sans", sans-serif;
-    margin: 30px;
-    padding-top: 40px;
+    width: 75vh;
 }
 
-body#index .landingPageNewGameButton{
+
+body#index .landingPageNewGameButton,
+body#index .landingPageRankingButton,
+body#index .landingPageRegisterButton{
     font: 2.4em "Fira Sans", sans-serif;
     background-color: #434b71; 
     color: #fcd4a7; 
@@ -267,25 +652,152 @@ body#index .landingPageNewGameButton{
     padding: 10px;
 }
 
-body#index .landingPageStartBtn{
+body#index .landingPageNewGameButton:hover,
+body#index .landingPageRankingButton:hover,
+body#index .landingPageRegisterButton:hover{
+    background-color: #5b6597; 
+}
+
+body#index .landingPageStartLinkBtn{
     margin-right: 5vh;
 }
 
-body#index .landingPageRankingButton{
+
+
+body#index .landingPageNewGameButton:disabled{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #636675; 
+    color: #362f26; 
+    border-radius: 40px; 
+    border: 0;
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+
+body#index .landingPageCenterButtons{
+    padding-top: 4vh;
+    display: flex;
+    justify-content: center;
+}
+
+body#index .landingPageCenterTextbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+    padding-bottom: 40px;
+}
+
+body#win input[type=text] {
+    font: 2em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #E91E63;
+}
+
+body#index input[type=text] {
+    font: 1.6em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #E91E63;
+}
+
+body#index input[type=text]::placeholder {
+    text-align: center;
+    font: 0.8em "Fira Sans", sans-serif;
+	color: #9e7b52;
+}
+
+body#index .landingPageOptionsButton{
+    margin-top: 40px;
     font: 2.4em "Fira Sans", sans-serif;
     background-color: #434b71; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
-    padding: 10px;
 }
 
-body#index .landingPageCenterButtons{
-    max-width: 35vw;
-    padding-top: 15vh;
+body#index .optionImg{
+    max-width: 40px;
+    padding: 5px;
     display: flex;
     justify-content: center;
 }
+
+body#index .landingPageOptions{
+    display: none;
+}
+
+body#index .landingPageLabel{
+    font: 1.8em "Fira Sans", sans-serif;
+    color: #fcd4a7; 
+    vertical-align: middle;
+}
+
+body#index .landingPageCheckboxWrapper{
+    margin-top: 30px;
+
+}
+
+body#index input[type="checkbox"].landingPageCheckbox{
+    vertical-align: middle;
+    float: right;
+    font-size: 1.4em;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    width: 3.5em;
+    height: 1.5em;
+    background: #ddd;
+    border-radius: 3em;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+  
+  body#index input[type="checkbox"].landingPageCheckbox:checked{
+    background: #434b71;
+  }
+
+  
+  body#index input[type="checkbox"].landingPageCheckbox:after{
+    position: absolute;
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background: #fcd4a7;
+    -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
+            box-shadow: 0 0 .25em rgba(0,0,0,.3);
+    -webkit-transform: scale(.7);
+            transform: scale(.7);
+    left: 0;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+
+  body#index input[type="checkbox"].landingPageCheckbox:disabled:after{
+    background: #bebebe;
+  }
+  
+  body#index input[type="checkbox"].landingPageCheckbox:checked:after{
+    left: calc(100% - 1.5em);
+  }
+
+  /*----------------------------------------------------------------------------------------------*/
 
 body#ranking .exit {
     font-size: 2rem;
@@ -297,24 +809,27 @@ body#ranking .exit {
     width: 90px;
     border-radius: 50px;
 }
-.rankingBody {
+
+body#ranking {
     background-image: url("images/backgroundRanking.jpg");
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
 }
+
 body#ranking .rankingBox{
     margin:auto;
 }
+
 body#ranking .rankingTitle{
     text-align: center;
     color: #232f5f;
     font: 5.0em "Fira Sans", sans-serif;
     margin: 30px;
     font-weight: bold;
-
 }
+
 body#ranking .rankingTable{
     background-color: #232f5f8c;
     border-collapse: collapse;
@@ -335,6 +850,7 @@ body#ranking .rankingTable th:nth-child(2){
     background-color: #434b71;
     border-radius: 0;
 }
+
 body#ranking .rankingTable th:nth-child(3){
     background-color: #434b71;
     border-radius: 0 12px 0 0;
@@ -344,12 +860,15 @@ body#ranking .rankingTable th,
 body#ranking .rankingTable td {
     padding: 20px 6vw;
 }
+
 body#ranking .rankingTable tbody tr:hover {
     background-color: #436e7179;
 }
+
 body#ranking .rankingTable tbody tr:nth-of-type(even) {
     background-color: #434b71a9;
 }
+
 body#ranking .rankingTable tbody tr:hover:nth-of-type(even) {
     background-color: #436e7179;
 }
@@ -359,32 +878,39 @@ body#ranking .pagination{
     margin-bottom: 30px;
     margin-left: 45vw;
 }
+
 body#ranking .pagination a{
     padding: 14px;
     font: 1.4em "Fira Sans", sans-serif;
     font-weight: bold;
 }
+
 body#ranking .pagination a.active {
     background-color: #434b71;
     color: #fcd4a7;
     pointer-events: none;
 }
+
 body#ranking .pagination a:not(.active) {
     background-color: #fcd4a76b;
     color: #434b71;
 }
+
 body#ranking .pagination a:hover:not(.active) {
     background-color: #fcd4a7;
 }
 
+/*----------------------------------------------------------------------------------------------*/  
 body#win {
-    min-height: 100vh; /* Se asegura de que ocupe al menos toda la pantalla */
+    height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
-    
-    background-image: url('images/backgroundGame.jpeg'); /* Ruta de tu imagen */
-    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('images/backgroundWin.jpeg');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat; 
     background-color: rgba(15, 44, 73, 0.811);
 }
 
@@ -397,7 +923,37 @@ body#win .winBox {
     color: #fcd4a7;
     width: 75vh;
 
+    /*Propiedads para transicion*/
+    opacity: 0; /*invisiblew*/
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra inicial */
+    animation: aparition 3s ease-in-out forwards; /* Aparece en 3 segundos */
+
 }
+
+body#win img{
+    max-width: 150px;
+    max-height: 150px;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+    /*efectos de las imagenes*/
+    body#win .imagenSalto{
+        transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
+    }
+    body#win .imagenSalto:hover{
+        transform: translateY(-100px) translateY(10px);  /* Mueve la imagen hacia arriba 10 píxeles */
+        cursor: grab;
+    }
+
+    body#win .imagenGiro{
+        transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
+    }
+    body#win .imagenGiro:hover{
+        transform: translateY(-10px) rotate(360deg); /* Salta 10px y rota 15 grados */
+        cursor:grabbing;
+    }
+
+
 
 body#win .winVictoryMsg{
     font: 4.0em "Fira Sans", sans-serif;
@@ -433,6 +989,7 @@ body#win .winRegisterButton{
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px;
+    margin-top: 10px;
 }
 body#win .winScoreTitle{
     font: 3em "Fira Sans", sans-serif;
@@ -463,7 +1020,211 @@ body#win input[type=text] {
 	color: #E91E63;
 }
 
-/*Estilos genéricos para todas las paginas*/
-td:hover {
-    cursor: crosshair;
+/*----------------------------------------------------------------------------------------------*/
+
+body#lose {
+    margin: 0;
+    height: 100vh;/*toda la pantalla */
+    overflow: hidden; /* Evita el scroll */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('images/backgroundLose.jpeg');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-color: rgba(15, 44, 73, 0.811);
+    filter: grayscale(100%); /* B/N */
+    animation: gameOverEffect 4s ease-in-out forwards; /* Color normal (quitra B y N)*/
+}
+
+body#lose .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: overlayOut 10s ease-in-out forwards; /*Animacion suave del blanco y negro (forwards es para que no vuelva a verse en B/N)*/
+    z-index: 21;
+    background-color :#1f1e20cf ;
+
+    pointer-events: none; /* Permite interactuar con los elementos que hya debajo*/
+}
+
+body#lose .loseBox {
+    background-color: #3c3a3ec0;
+    border-collapse: collapse;
+    border-radius: 12px;
+    margin: auto;
+    text-align: center;
+    color: #fcd4a7;
+    width: 75vh;
+
+    /*Propiedads para transicion*/
+    opacity: 0; /*invisiblew*/
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra inicial */
+    animation: aparition 3s ease-in-out forwards; /* Aparece en 3 segundos */
+
+}
+
+body#lose img{
+    max-width: 150px;
+    max-height: 150px;
+    margin-right: 50px;
+    margin-left: 50px;
+    z-index: 20;}
+    /*efectos de las imagenes*/
+    body#lose .imagenSalto{
+        transition: transform 0.5s ease; /*trans suave al cambiar la imagen*/
+    }
+    body#lose .imagenSalto:hover{
+        transform: translateY(100px) translateY(-10px);  /* Mueve la imagen hacia arriba 10 píxeles */
+        cursor: grab;
+    }
+
+    body#lose .imagenGiro{
+        transition: transform 0.7s ease; /* Transición suave al cambiar el transform */
+    }
+    body#lose .imagenGiro:hover{
+        animation: spin 1s ease-in-out; /* Activa la animación al hacer hover */
+        cursor:grabbing;
+    }
+
+
+
+body#lose .loseMsg{
+    font: 4.0em "Fira Sans", sans-serif;
+    font-weight: bold;
+    color:#B298DC;
+}
+
+body#lose .loseNewGameButton, .loseRankingButton{
+    font: 2.4em "Fira Sans", sans-serif;
+    background-color: #6F2DBD; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+}
+
+body#lose .loseHomeBtnLink{
+    margin-right: 80px;
+}
+
+body#lose .loseRegisterButton{
+    font: 2em "Fira Sans", sans-serif;
+    background-color: #6F2DBD; 
+    color: #fcd4a7; 
+    border-radius: 40px; 
+    border-color: #fcc486;
+    padding: 10px;
+    margin-top: 10px;
+}
+body#lose .loseScoreTitle{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+body#lose .loseScoreDesc{
+    font: 3em "Fira Sans", sans-serif;
+}
+
+
+body#lose .loseCenterButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+    padding-bottom: 40px;
+}
+
+body#lose input[type=text] {
+    font: 2em "Fira Sans", sans-serif;
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #fcc486;
+	background: #ffdcb4;
+	border-radius: 15px;
+	padding: .4em;
+	color: #ad1a2e;
+    text-shadow: 0 8px 15px rgba(213, 206, 206, 0.7);
+}
+
+/*EWstilos para el forbbiden*/
+
+.forbidden{
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100vh;
+    background-image: url('images/forbiddenEdit.png');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
+.forbidden h1 {
+    font-size: 2.5em; /* Tamaño del título */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
+    border-radius: 5px;
+    color: #993341;
+}
+
+.forbidden h2 {
+    font-size: 1.5em; /* Tamaño del subtítulo */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
+    border-radius: 5px;
+    color: #39284E;
+}
+
+/*Animaciones*/
+
+/* Definimos la animación */
+@keyframes aparition {
+    0% {
+        opacity: 0; /*invisible*/
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Sin sombra */
+        
+    }
+    100% {
+        opacity: 1; /*visible*/
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* Sombra*/
+    }
+}
+
+@keyframes overlayOut{ /* Quita el overlay*/
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+      
+    }
+}
+
+@keyframes gameOverEffect{
+    0% {
+        filter: grayscale(100%);
+    }
+    100% {
+        filter: grayscale(0%);
+      
+    }
+}
+
+@keyframes spin {
+    0%, 100% {
+        transform: scaleX(1);
+    }
+    25% {
+        transform: scaleX(-1);
+    }
+    50% {
+        transform: scaleX(1); 
+    }
+    75% {
+        transform: scaleX(-1); 
+    }
 }
