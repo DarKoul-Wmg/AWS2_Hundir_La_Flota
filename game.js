@@ -201,7 +201,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         updatedMunitionValue--;
                         document.getElementById('userMunition').innerHTML = updatedMunitionValue;
                     }
-                    checkGameOverByMunition();
 
                 }
 
@@ -230,7 +229,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.getElementById("tableIA").classList.remove("tableDisabler");
                     setTimeout(() => turnCPU(event, dicShellsIA), 2000);
                 }
-               
+
+                checkGameOverByMunition();
             }
         }
     }
@@ -281,7 +281,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     updatedMunitionValue--;
                     document.getElementById('iaMunition').innerHTML = updatedMunitionValue;
                 }
-                checkGameOverByMunition();
             }
 
             // si TIENE munición la ia
@@ -339,6 +338,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log("mensaje de que la ia no tiene munición")
                 setTimeout(returnTurnToPlayer, 500);
             }
+
+            checkGameOverByMunition();
         }
     }
     
