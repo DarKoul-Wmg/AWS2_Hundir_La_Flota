@@ -80,6 +80,14 @@
 
     <?php
         session_start();
+
+        // Regoger valores de los checkboxes
+        $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"];
+        //$ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
+        //$specialAttacks = isset($_SESSION["specialAttacks"]) ? $_SESSION["specialAttacks"] : false;
+
+        //echo "<h1>Munició limitada: " . ($limmitedAmmo ? "Sí" : "No") .     "</h1>";
+
         // crear dos tableros 10x10 - por defecto sin conchas
         $boardUser = array_fill(1, 10, array_fill(1, 10, false));
         $boardIA = array_fill(1, 10, array_fill(1, 10, false));
@@ -195,6 +203,34 @@
             <!-- botón hacia atrás -->
             <a href="index.php" ><button id ="btnAccion" class="exit">&larrhk;</button></a>
             
+
+            <!-- información de la munición -->
+             <?php
+                
+                // poner que se vea o no
+                $visibilityStyle = $limmitedAmmo ? 'visible' : 'hidden';
+                $limitedAmmoStr = $limmitedAmmo ? 'true' : 'false';
+                
+                // hardcodear munición
+                echo '
+                    <div id="contenedorMunicion" data-limitedMunition="' . $limitedAmmoStr . '" style="visibility: ' . $visibilityStyle . ';">
+                        <div id="contenidoHidMunicion">
+                            <h3> Munición disponible </h3>
+                            <div class="linea">
+                                <p>User:</p> 
+                                <p id="userMunition">40</p> 
+                                <p> /40</p>
+                            </div>
+                            <div class="linea">
+                                <p>IA:</p> 
+                                <p id="iaMunition">40</p> 
+                                <p> /40</p>
+                            </div>
+                        </div>
+                    </div>
+                ';
+            ?>
+
             <!-- tablero de la ia -->
             <table id="tableIA">
                 <?php
@@ -230,7 +266,6 @@
 
         </div>
         
-        
         <!-- tablero del usuario-->
         <table id="tableUser">
             <?php
@@ -262,10 +297,7 @@
             ?>
         </table>
         
-
         <div class ="rightContainer">
-
-
             <!-- nombre -->
             <?php
                 $playerName = isset($_SESSION['playerName']) ? $_SESSION['playerName'] : "";  // Recuperar nombre de variable de sesión
@@ -296,6 +328,21 @@
         </form>
     
     </div>
+
+    <script>
+        var playerName = "<?php echo $playerName; ?>"; 
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            if(playerName === "win") {
+                
+                document.getElementById("endForm").submit();
+
+            }else if(playerName === "lose"){
+                document.getElementById("loseEndForm").submit();
+            }
+        });
+    </script>
 
 </body>
 

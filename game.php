@@ -74,6 +74,14 @@
 
     <?php
     session_start();
+
+    // Regoger valores de los checkboxes
+    $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) ? $_SESSION["limmitedAmmo"] : false;
+    //$ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
+    //$specialAttacks = isset($_SESSION["specialAttacks"]) ? $_SESSION["specialAttacks"] : false;
+
+    //echo "<h1>Munició limitada: " . ($limmitedAmmo ? "Sí" : "No") . "</h1>";
+
     // Crear el tablero de 10x10 (índices 1 a 10), aqui se registra el estado de las celdas del tablero
     $board = array_fill(1, 10, array_fill(1, 10, false));
 
