@@ -10,6 +10,21 @@
 </head>
 
 <body id="lose">
+<?php 
+session_start();
+    // HTTP_REFERER es el encabezado de la pagina (url)
+    // verificacion: Si la llamada no viene de game.php o win.php, salta un forbbiden
+    if(!isset($_SERVER["HTTP_REFERER"]) || (strpos($_SERVER["HTTP_REFERER"],"game.php")=== false &&
+                                            strpos($_SERVER["HTTP_REFERER"],"gameIA.php")=== false &&
+                                            strpos($_SERVER["HTTP_REFERER"],"lose.php")=== false)){
+        header('HTTP/1.1 403 Forbidden');
+        echo "<div class ='forbidden'>
+            <h1>403 Forbidden</h1>
+            <h2>Acces no autoritzat a lose.php, accedeix desde game.php</h2>
+          </div>\n</body>\n</html>"; // Muestra un mensaje
+    exit; // Termina el script
+    }
+?>
     <!-- Aud  -->
     <audio id="sonidoAccion">
         <source src="sounds/action.mp3" type="audio/mpeg">
@@ -31,14 +46,13 @@
     <!-- Capa de overlay para que el background pille el filtro B/N  -->
     <div class="overlay"></div>
 
-    <img src="/images/pulpoLose.png" alt="medusa kawaii" class="imagenSalto">
-    <img src="/images/conchaLose.png" alt="estrella kawaii" class="imagenGiro">
+    <img src="/images/pulpoLose.png" alt="medusa dead" class="imagenSalto">
+    <img src="/images/conchaLose.png" alt="estrella dead" class="imagenGiro">
 
 <!-- Div principal-->
     <div class="loseBox">
         <p class="loseMsg">Has perdut!</p>
 <?php
-session_start();
 date_default_timezone_set('Europe/Madrid');
 
                     //condicion                     valorTrue    valorFalse             
@@ -90,8 +104,8 @@ echo '
         </div>
     </div>
 
-    <img src="/images/estrellaLose.png" alt="concha kawaii" class="imagenGiro">
-    <img src="/images/medusaLose.png" alt="pulpo kawaii" class="imagenSalto">
+    <img src="/images/estrellaLose.png" alt="concha dead" class="imagenGiro">
+    <img src="/images/medusaLose.png" alt="pulpo dead" class="imagenSalto">
 
     <script>
         //Script para reproducir el sonido nada mas entrar en la pagina

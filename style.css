@@ -193,7 +193,7 @@ body#game{
     background-image: url('images/backgroundGame3.png');
 }
 body#gameIA{
-    background-image: url('images/backgroundGame2.png');
+    background-image: url('images/backgroundGameIA.jpeg');
 }
 
 /*Estructura principal de las dos pantallas*/
@@ -270,7 +270,7 @@ body#gameIA table td.empty{
 
 body#game table td:hover,
 body#gameIA table td:hover{
-    cursor: url('images/cursorPala.png'), auto;
+    cursor: url('images/cursor1.cur'), auto;
 }
 
 
@@ -358,9 +358,15 @@ body#gameIA td[data-photo="estrella"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
-body#game td[data-photo="sand"],
-body#gameIA td[data-photo="sand"]{
+body#game td[data-photo="sand"]{
     background-image: url('images/sand.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+}
+
+body#gameIA td[data-photo="sand"]{
+    background-image: url('images/sand2.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; 
@@ -376,8 +382,7 @@ body#gameIA .tableDisabler {
 
 body#gameIA .tableEnabler {
     opacity: 1;
-    
-    box-shadow: 0 0 10px 5px #ffcf4c;
+    box-shadow: 0 0 10px 5px #B9FAF8;
 }
 
 /* Izquierda */
@@ -897,9 +902,10 @@ body#ranking .pagination a:hover:not(.active) {
 
 /*----------------------------------------------------------------------------------------------*/  
 body#win {
-    min-height: 100vh;/*toda la pantalla */
+    height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
     display: flex;
+    justify-content: center;
     align-items: center;
     background-image: url('images/backgroundWin.jpeg');
     background-size: cover; /*imagen al tamaño del contenedor */
@@ -983,6 +989,7 @@ body#win .winRegisterButton{
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px;
+    margin-top: 10px;
 }
 body#win .winScoreTitle{
     font: 3em "Fira Sans", sans-serif;
@@ -1017,17 +1024,18 @@ body#win input[type=text] {
 
 body#lose {
     margin: 0;
-    min-height: 100vh;/*toda la pantalla */
+    height: 100vh;/*toda la pantalla */
     overflow: hidden; /* Evita el scroll */
     display: flex;
     align-items: center;
+    justify-content: center;
     background-image: url('images/backgroundLose.jpeg');
     background-size: cover; /*imagen al tamaño del contenedor */
     background-position: center; 
     background-repeat: no-repeat; 
     background-color: rgba(15, 44, 73, 0.811);
     filter: grayscale(100%); /* B/N */
-    animation: gameOverEffect 10s ease-in-out forwards; /* Color normal (quitra B y N)*/
+    animation: gameOverEffect 4s ease-in-out forwards; /* Color normal (quitra B y N)*/
 }
 
 body#lose .overlay {
@@ -1087,12 +1095,12 @@ body#lose img{
 body#lose .loseMsg{
     font: 4.0em "Fira Sans", sans-serif;
     font-weight: bold;
-    color:#993341;
+    color:#B298DC;
 }
 
-body#lose .loseNewGameButton{
+body#lose .loseNewGameButton, .loseRankingButton{
     font: 2.4em "Fira Sans", sans-serif;
-    background-color: #3C3A3E; 
+    background-color: #6F2DBD; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
@@ -1103,22 +1111,14 @@ body#lose .loseHomeBtnLink{
     margin-right: 80px;
 }
 
-body#lose .loseRankingButton{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #3C3A3E; 
-    color: #fcd4a7; 
-    border-radius: 40px; 
-    border-color: #fcc486;
-    padding: 10px;
-}
-
 body#lose .loseRegisterButton{
     font: 2em "Fira Sans", sans-serif;
-    background-color: #3C3A3E; 
+    background-color: #6F2DBD; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px;
+    margin-top: 10px;
 }
 body#lose .loseScoreTitle{
     font: 3em "Fira Sans", sans-serif;
@@ -1149,6 +1149,36 @@ body#lose input[type=text] {
 	color: #ad1a2e;
     text-shadow: 0 8px 15px rgba(213, 206, 206, 0.7);
 }
+
+/*EWstilos para el forbbiden*/
+
+.forbidden{
+    display: grid;
+    place-items: center;
+    height: 80%;/*evita que se vea win.php*/
+    width: 80%;/*evita que se vea win.php*/
+    background-image: url('images/forbiddenEdit.png');
+    background-size: cover; /*imagen al tamaño del contenedor */
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
+.forbidden h1 {
+    font-size: 2.5em; /* Tamaño del título */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
+    border-radius: 5px;
+    color: #993341;
+}
+
+.forbidden h2 {
+    font-size: 1.5em; /* Tamaño del subtítulo */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco semi-transparente */
+    border-radius: 5px;
+    color: #39284E;
+}
+
 /*Animaciones*/
 
 /* Definimos la animación */
