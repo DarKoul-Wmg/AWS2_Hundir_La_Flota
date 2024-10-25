@@ -83,10 +83,14 @@
 
         // Regoger valores de los checkboxes
         $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"];
-        //$ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
+        $ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
         //$specialAttacks = isset($_SESSION["specialAttacks"]) ? $_SESSION["specialAttacks"] : false;
 
         //echo "<h1>Munició limitada: " . ($limmitedAmmo ? "Sí" : "No") .     "</h1>";
+
+        //div para recoger la opción de acorazados en un hidden y recogerla con JS
+        $ironcladShipsStr = $ironcladShips ? 'true' : 'false';
+        echo '<div id="contenedorAcorazados" data-ironcladShips="'. $ironcladShipsStr . '"style=visibility: hidden;></div>';
 
         // crear dos tableros 10x10 - por defecto sin conchas
         $boardUser = array_fill(1, 10, array_fill(1, 10, false));
@@ -164,7 +168,10 @@
             $ships = [];
             $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus","estrella"];
             $shipSizes = [1,1,1,1,2,2,2,3,3,4];
-
+            $life == 1;
+            if ($ironcladShips){
+                $life == 2;
+            };
             foreach ($shipSizes as $size) {
                 $randomIndex = array_rand($types);
                 $type = $types[$randomIndex];
@@ -174,7 +181,8 @@
                     'size' => $size,
                     'coordinates' => [], // Inicialmente vacío
                     'touchedCoordinates' => [],
-                    'shellType' => $type
+                    'shellType' => $type,
+                    'shellLife' => $life
                 ];
 
                 placeShip($ship, $size, $type, $board); // Pasar el barco actual a la función

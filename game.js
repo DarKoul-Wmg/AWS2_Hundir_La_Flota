@@ -44,6 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let isMunitionUserSpent = false;
     let isMunitionIaSpent = false;
 
+    //variables de acorazados
+    const  contenedorAcorazados = document.getElementById('contenedorAcorazados');
+    if (contenedorAcorazados){
+        const ironcladShips = contenedorAcorazados.getAttribute('data-ironcladShips');
+        var isIroncladShips = ironcladShips === 'true';
+    }
+
     // variable de las celdas que puedes darle click
     const cells = document.getElementsByClassName("selectCellsUser");
 
@@ -228,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (!isMunitionIaSpent) {
                             setTimeout(() => turnCPU(event, dicShellsIA), 2000);
                         } else {
-                            returnTurnToPlayer();
+                            returnTurnToPlayer(); //esto es para evitar que el jugador pueda volver a clicar celdas descubiertas
                         }
                     }
                 }
@@ -252,7 +259,6 @@ document.addEventListener("DOMContentLoaded", function () {
         tableUser.classList.remove("tableDisabler");
         tableIA.classList.add("tableDisabler");
         tableIA.classList.remove("tableEnabler");
-
     }
 
     function styleTurnCPU() { //estilos que marcan el turno de la CPU
