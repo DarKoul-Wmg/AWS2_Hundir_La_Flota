@@ -596,6 +596,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let touch = false;
         let cellState = "water";
         let groupIsDiscovered = false;
+        let life = 0;
 
         for (const shell of dicShells) {
             for (const coordinate of shell.coordinates) {
@@ -603,7 +604,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (compareCoordinates(coordinate, coordinateClickedCell)) { // si es una concha
                     touch = true;
                     cellState = "shell";
-
+                    life = shell.life - 1;
                     //Sonido de acierto
                     sonidoAcierto.play();
 
