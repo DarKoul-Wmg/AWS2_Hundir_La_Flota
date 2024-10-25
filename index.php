@@ -66,83 +66,90 @@
 
         <form action="index.php" method="post">
             <div class="landingPageCenterTextbox">
-                <input type="text" id="playerName" name="playerName"  placeholder="Registra el teu nom per jugar" minlength="3" maxlength="30" required>
+                <input type="text" id="playerName" name="playerName" placeholder="Registra el teu nom per jugar"
+                    minlength="3" maxlength="30" required>
             </div>
 
             <div class="landingPageCenterButtons">
 
-                    <input type="submit" class="landingPageNewGameButton" id="tutorialBtn" name="tutorial" value="Tutorial" formaction="game.php" disabled></button>
+                <input type="submit" class="landingPageNewGameButton" id="tutorialBtn" name="tutorial" value="Tutorial"
+                    formaction="game.php" disabled>
 
 
-                    <input type="submit" class="landingPageNewGameButton" id="vsCpuBtn" name="vsCPU" value="Vs CPU" formaction="gameIA.php" disabled></button>
+                <input type="submit" class="landingPageNewGameButton" id="vsCpuBtn" name="vsCPU" value="Vs CPU"
+                    formaction="gameIA.php" disabled>
 
                 <a href="ranking.php?page=1">
                     <button type="button" class="landingPageRankingButton">Ranking</button>
                 </a>
             </div>
-            
-            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img src="images/options.png" class="optionImg"></button>
+
+            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img
+                    src="images/options.png" class="optionImg"></button>
 
             <div class="landingPageOptions" id="landingPageOptions">
                 <div class="landingPageCheckboxWrapper">
                     <label for="limmitedAmmoCheckbox" class="landingPageLabel">Munició limitada</label>
-                     <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox" class="landingPageCheckbox">
-                    </div>
+                    <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox"
+                        class="landingPageCheckbox">
+                </div>
                 <div class="landingPageCheckboxWrapper">
                     <label for="ironcladShipsCheckbox" class="landingPageLabel">Vaixells acoirassats</label>
-                    <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox" class="landingPageCheckbox">
+                    <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox"
+                        class="landingPageCheckbox">
                 </div>
                 <div class="landingPageCheckboxWrapper">
                     <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
-                    <input type="checkbox" id="specialAttacksCheckbox" name="specialAttacksCheckbox" class="landingPageCheckbox" disabled>
+                    <input type="checkbox" id="specialAttacksCheckbox" name="specialAttacksCheckbox"
+                        class="landingPageCheckbox" disabled>
                 </div>
             </div>
         </form>
+    </div>
 
 
-        
-        <!--
+    <!--
         en la especificación no pone nada de que el menú de opciones tenga un botón de Guardar, así que tal vez sea mejor guardar las opciones en JS
         -->
-        <script>
+    <script>
 
-            const textbox = document.getElementById("playerName");
-            const tutorial = document.getElementById("tutorialBtn");
-            const vsCPU = document.getElementById("vsCpuBtn");
+        const textbox = document.getElementById("playerName");
+        const tutorial = document.getElementById("tutorialBtn");
+        const vsCPU = document.getElementById("vsCpuBtn");
 
-            function init() {
+        function init() {
 
-                textbox.addEventListener("input", eventHandler);
-                function eventHandler(event){
-                        if(textbox.value.length > 2){
-                            tutorial.disabled = false;
-                            vsCPU.disabled = false;
-                        }
-                        if(textbox.value.length < 3 ){
-                            tutorial.disabled = true;
-                            vsCPU.disabled = true;
-                        }
+            textbox.addEventListener("input", eventHandler);
+            function eventHandler(event) {
+                if (textbox.value.length > 2) {
+                    tutorial.disabled = false;
+                    vsCPU.disabled = false;
                 }
-                // función del botón checkBoxes landingPage
-                //landingPage, hacer clic en botón opciones para mostrar/esconder div
-                const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
-                let showOptions = true;
-                landingPageOptBtn.addEventListener("click", function() {
-                if (showOptions){
+                if (textbox.value.length < 3) {
+                    tutorial.disabled = true;
+                    vsCPU.disabled = true;
+                }
+            }
+            // función del botón checkBoxes landingPage
+            //landingPage, hacer clic en botón opciones para mostrar/esconder div
+            const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
+            let showOptions = true;
+            landingPageOptBtn.addEventListener("click", function () {
+                if (showOptions) {
                     document.getElementById("landingPageOptions").style.display = "block";
                     showOptions = false;
                 } else {
                     document.getElementById("landingPageOptions").style.display = "none";
                     showOptions = true;
                 }
-                });
+            });
         }
-    
-            window.addEventListener("DOMContentLoaded", init);
+
+        window.addEventListener("DOMContentLoaded", init);
 
 
 
-        </script>
+    </script>
 </body>
 
 </html>
