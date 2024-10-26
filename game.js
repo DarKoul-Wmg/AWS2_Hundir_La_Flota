@@ -44,6 +44,16 @@ document.addEventListener("DOMContentLoaded", function () {
     let isMunitionUserSpent = false;
     let isMunitionIaSpent = false;
 
+
+
+    // variables de ataques especiales
+    const contenedorAtaqueEspecial = document.getElementById('contenedorSpecialAttack');
+
+    if(contenedorAtaqueEspecial){
+        
+    }
+
+
     // variable de las celdas que puedes darle click
     const cells = document.getElementsByClassName("selectCellsUser");
 

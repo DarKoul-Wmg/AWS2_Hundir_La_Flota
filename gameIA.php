@@ -254,8 +254,24 @@
                                 $chrx = chr(64 + $j);
                                 echo "<td class='letter'> $chrx </td>";
                             } else {
+
+                                $typeShellShow;
+                                booleano = false
+
+                                for($shell of $shipsIA){
+                                    for($coordinate of $shell.coordinates){
+                                        if(i==coordinate[0] && j=coordinate[1 ])
+                                        typeShellShow = shell.Shelltype;
+                                    booleano = true
+                                    }
+
+                                    if(boolea = false){
+                                        $typeShellShow = sand
+                                    }
+                                }
+                                
                                 // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-touched='false' data-photo='none' data-type = $typeShellShow></td>";
                             }
                         }
                         echo "</tr>";
