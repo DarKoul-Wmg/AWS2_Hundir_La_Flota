@@ -74,10 +74,12 @@ echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
 // Si se ha enviado el formulario, guardar en el archivo y redirigir a ranking
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
     $playerName = $_POST["playerName"]; // obtener el playerName del formulario
-    
+
+    $_SESSION['playerName'] = $playerName; //actualizamos variable de nombre (para ranking)
+    $_SESSION['lastDate'] = $_SESSION['lastDate'] = date("d-m-Y H:i", strtotime($date));//ultima partida realizada (para highlight de ranking)
+
     if (strlen($playerName) >= 3 && strlen($playerName) <= 30){
         $array = [$playerName, $score, $date]; // datos para insertar en txt
-        
         // Guardar en el archivo
         $file = fopen('ranking.txt', "a");
         $processedLine = implode(',', $array) . "\n"; 
@@ -85,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
         fclose($file); 
 
         // Redirigir a ranking.php
-        header("Location: ranking.php?page=1");
+        header("Location: ranking.php");
         exit; // Terminar el script
     }
     

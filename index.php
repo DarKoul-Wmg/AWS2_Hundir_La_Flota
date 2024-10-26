@@ -67,7 +67,9 @@
         <?php
     // Crear sesión y guardar el nombre del jugador en una variable de sesión
     session_start();
+    session_unset(); // Eliminar todas las variables de sesión
 
+    
     if(isset($_POST["playerName"])){ //si tenemos nombre registrado, mostrar botones de juego activos
         $_SESSION["playerName"] = $_POST["playerName"];
 
@@ -115,7 +117,7 @@
                 </a>
             </div>
             
-            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img src="images/options.png" class="optionImg"></button>
+            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img src="images/options.png" class="optionImg">Opcions</button>
 
             <div class="landingPageOptions" id="landingPageOptions">
                 <div class="landingPageCheckboxWrapper">
