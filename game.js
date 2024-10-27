@@ -380,7 +380,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (compareCoordinates(currentCell, coordinateInCPUTable)) {
                 cell.attributes
                 cell.style.backgroundColor = "blue"; // marcar la celda escogida
-                cell.style.border = "1px solid blue";
+                
             }
         }
 
@@ -532,13 +532,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const tipeShell = shell.shellType;
                     cell.setAttribute('data-photo', tipeShell);
+                    cell.setAttribute(backgroundColor, "#EF5D3D");
                     isShell = true;
                 }
             }
         }
 
         if (!isShell) {
-            cell.setAttribute('data-photo', 'sand');
+            // cell.setAttribute('data-photo', 'sand');
         }
 
     }
