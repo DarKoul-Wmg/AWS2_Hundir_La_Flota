@@ -18,37 +18,38 @@ body#index .landingPageTitle{
 
 body#index .landingPageBox{
     margin: 35px;
-    background-color: #232f5f8c;
+    background-color: #251934a7;
     max-width: 40vw;
     padding: 20px;
     border-radius: 15px;
 }
 
-body#index .landingPageDescription{
+body#index .landingPageDescription {
     text-align: center;
     align-items: center;
     color: #fcd4a7;
     max-width: 35vw;
-    font: 2.4em "Fira Sans", sans-serif;
+    font: 1.8em "Fira Sans", sans-serif;
     margin: 30px;
     padding-top: 40px;
+    
 }
 
 body#index .landingPageNewGameButton,
-body#index .landingPageRankingButton,
-body#index .landingPageRegisterButton{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #434b71; 
+body#index .landingPageRankingButton{
+    font: 1.8em "Fira Sans", sans-serif;
+    background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px;
+    margin: 0 20px 0 20px;
 }
 
 body#index .landingPageNewGameButton:hover,
 body#index .landingPageRankingButton:hover,
 body#index .landingPageRegisterButton:hover{
-    background-color: #5b6597; 
+    background-color: #57466bc9; 
 }
 
 body#index .landingPageStartLinkBtn{
@@ -56,8 +57,8 @@ body#index .landingPageStartLinkBtn{
 }
 
 body#index .landingPageNewGameButton:disabled{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #636675; 
+    font: 1.8em "Fira Sans", sans-serif;
+    background-color: #6c6375; 
     color: #362f26; 
     border-radius: 40px; 
     border: 0;
@@ -81,10 +82,12 @@ body#index input[type=text] {
 	appearance: none;
 	border: none;
 	outline: none;
-	border-bottom: .2em solid #fcc486;
+	border-bottom: 0.2em solid #fcc486;
 	background: #ffdcb4;
 	border-radius: 15px;
-	padding: .4em;
+	padding: 0.4em;
+    margin-top: 20px;
+    margin-bottom: 20px;
 	color: #E91E63;
 }
 
@@ -100,7 +103,7 @@ body#index .landingPageOptionsButton{
     margin-top: 40px;
     align-items: center;
     font: 1.5em "Fira Sans", sans-serif;
-    background-color: #434b71; 
+    background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
@@ -119,7 +122,7 @@ body#index .landingPageOptions{
 }
 
 body#index .landingPageLabel{
-    font: 1.8em "Fira Sans", sans-serif;
+    font: 1.6em "Fira Sans", sans-serif;
     color: #fcd4a7; 
     vertical-align: middle;
 }
@@ -148,7 +151,7 @@ body#index input[type="checkbox"].landingPageCheckbox{
 }
 
 body#index input[type="checkbox"].landingPageCheckbox:checked{
-    background: #434b71;
+    background: #39284E;
 }
 
 
