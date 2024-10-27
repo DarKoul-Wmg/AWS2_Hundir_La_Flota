@@ -377,11 +377,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 coordinateInCPUTable = currentCell;
             };*/
 
-            if (compareCoordinates(currentCell, coordinateInCPUTable)) {
-                cell.attributes
-                cell.style.backgroundColor = "blue"; // marcar la celda escogida
-                
-            }
         }
 
 
@@ -391,6 +386,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
         cpuTouchedCells.push(coordinateInCPUTable); // Agregar la celda tocada a la lista
         markCellAsTouched(coordinateInCPUTable); // Marcar la celda como tocada
+
+        const cell = document.querySelector(`[data-x="${coordinateInCPUTable[0]}"][data-y="${coordinateInCPUTable[1]}"]`);
+        setImageInCell(dicShellsIA, coordinateInCPUTable, { target: cell }, false); //false es parametro opcional para no poner img
 
         printMessageOnClick(cellState);
         if (groupIsDiscovered) {
@@ -512,12 +510,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // mostrar todas las imagenes en tu tablero
+    // mostrar todas las imagenes shell en tu tablero
     const cellsTableIA = document.getElementsByClassName("selectCellsIA");
 
     for (let cell of cellsTableIA) {
-
-
         let x = parseInt(cell.getAttribute('data-x'));
         let y = parseInt(cell.getAttribute('data-y'));
         const coordinateCellClicked = [x, y];
@@ -531,17 +527,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (compareCoordinates(coordinate, coordinateCellClicked)) {
 
                     const tipeShell = shell.shellType;
-                    cell.setAttribute('data-photo', tipeShell);
-                    cell.setAttribute(backgroundColor, "#EF5D3D");
+                    // cell.setAttribute('data-photo', tipeShell);
+                    cell.style.backgroundColor = '#EF5D3D'
                     isShell = true;
                 }
             }
         }
-
-        if (!isShell) {
-            // cell.setAttribute('data-photo', 'sand');
-        }
-
     }
 
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
@@ -637,9 +628,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // mostrar la imagen en la celda
-    function setImageInCell(dicShells, coordinateClickedCell, e) {
+    function setImageInCell(dicShells, coordinateClickedCell, e, showImage = true) {
         const cell = e.target;
-
         let isShell = false;
 
         for (const shell of dicShells) {
@@ -648,8 +638,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (compareCoordinates(coordinate, coordinateClickedCell)) {
 
                     const tipeShell = shell.shellType;
-                    console.log(tipeShell);
-                    cell.setAttribute('data-photo', tipeShell);
+                    // console.log(tipeShell);
+                    if(showImage){
+                        cell.setAttribute('data-photo', tipeShell);
+                    }else{
+                        cell.style.backgroundColor = '#993341';
+                    }
                     isShell = true;
                 }
             }
