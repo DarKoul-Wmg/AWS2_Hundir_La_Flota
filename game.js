@@ -378,7 +378,6 @@ document.addEventListener("DOMContentLoaded", function () {
             };*/
 
             if (compareCoordinates(currentCell, coordinateInCPUTable)) {
-                cell.attributes
                 cell.style.backgroundColor = "blue"; // marcar la celda escogida
                 cell.style.border = "1px solid blue";
             }

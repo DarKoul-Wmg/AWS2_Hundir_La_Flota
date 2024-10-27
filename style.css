@@ -95,16 +95,12 @@ body#index input[type=text]::placeholder {
 }
 
 body#index .landingPageOptionsButton{
-    display: flex;
-    flex-direction: row;
     margin-top: 40px;
-    align-items: center;
-    font: 1.5em "Fira Sans", sans-serif;
+    font: 2.4em "Fira Sans", sans-serif;
     background-color: #434b71; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
-    padding-right: 15px;
 }
 
 body#index .optionImg{
@@ -540,6 +536,17 @@ body#gameIA #message {
 
   /*----------------------------------------------- RANKING -----------------------------------------------*/
 
+body#ranking .exit {
+    font-size: 2rem;
+    padding: 10px;
+    background-color: #251934a7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 90px;
+    border-radius: 50px;
+}
+
 body#ranking {
     background-image: url("images/backgroundRanking.jpg");
     background-position: top;
@@ -550,7 +557,6 @@ body#ranking {
 
 body#ranking .rankingBox{
     margin:auto;
-    width: 85%;
 }
 
 body#ranking .rankingTitle{
@@ -566,6 +572,7 @@ body#ranking .rankingTable{
     border-collapse: collapse;
     border-radius: 12px;
     margin: auto;
+    text-align: center;
     color: #fcd4a7;
     font: 1.4em "Fira Sans", sans-serif;
     font-weight: bold;
@@ -606,16 +613,13 @@ body#ranking .rankingTable tbody tr:hover:nth-of-type(even) {
 body#ranking .pagination{
     margin-top: 30px;
     margin-bottom: 30px;
-    text-align: center;
-
+    margin-left: 45vw;
 }
 
 body#ranking .pagination a{
     padding: 14px;
-    margin: 8px;
     font: 1.4em "Fira Sans", sans-serif;
     font-weight: bold;
-    
 }
 
 body#ranking .pagination a.active {
@@ -631,26 +635,6 @@ body#ranking .pagination a:not(.active) {
 
 body#ranking .pagination a:hover:not(.active) {
     background-color: #fcd4a7;
-}
-
-body#ranking .exit {
-    font-size: 2rem;
-    padding: 10px;
-    background-color: #251934a7;
-    color: white;
-    border: none;
-    cursor: pointer;
-    width: 90px;
-    border-radius: 50px;
-}
-
-body#ranking .rankingTable tr.highlight{
-    background-color: #39284e;
-    font-weight: bold;
-}
-body#ranking .rankingTable tr.highlight:hover{
-    background-color: #b298dcd8;
-    font-weight: bold;
 }
 
 /*---------------------------------------- WIN ------------------------------------------------------*/  
