@@ -615,6 +615,7 @@ body#ranking .pagination a{
     margin: 8px;
     font: 1.4em "Fira Sans", sans-serif;
     font-weight: bold;
+    text-decoration: none;
     
 }
 
@@ -625,12 +626,12 @@ body#ranking .pagination a.active {
 }
 
 body#ranking .pagination a:not(.active) {
-    background-color: #fcd4a76b;
+    background-color: #fcd4a7b5;
     color: #434b71;
 }
 
 body#ranking .pagination a:hover:not(.active) {
-    background-color: #fcd4a7;
+    background-color: #fcd4a7b5;
 }
 
 body#ranking .exit {

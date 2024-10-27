@@ -29,7 +29,7 @@ while ($line = fgets($file)) {
         $ranking[] = [
             'nombre' => trim($values[0]),
             'puntuacion' => (int) $values[1], // parse a int para ordenar
-            'fecha' => date("d-m-Y H:i", strtotime(trim($values[2]))) // parse a string
+            'fecha' => date("Y-m-d H:i", strtotime(trim($values[2]))) // parse a string
         ]; 
     }
 }
@@ -50,7 +50,7 @@ $playerPosition = 0;
 
 if($nomPlayer){ //solo crea indice si el player a jugado
   foreach ($ranking as $index => $player) {
-    if ($player['nombre'] === $nomPlayer && date("d-m-Y H:i", strtotime($player['fecha'])) === date("d-m-Y H:i", strtotime($datePlayer))) {
+    if ($player['nombre'] === $nomPlayer && date("Y-m-d H:i", strtotime($player['fecha'])) === date("Y-m-d H:i", strtotime($datePlayer))) {
         $playerPosition = $index + 1; // Asigna la posición correcta
         break; // Rompe el bucle al encontrar al jugador
     }

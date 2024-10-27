@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
     $playerName = $_POST["playerName"]; // obtener el playerName del formulario
 
     $_SESSION['playerName'] = $playerName; //actualizamos variable de nombre (para ranking)
-    $_SESSION['lastDate'] =  $_SESSION['lastDate'] = $_SESSION['lastDate'] = date("d-m-Y H:i", strtotime($date)); //ultima partida realizada (para highlight de ranking)
+    $_SESSION['lastDate'] =  $_SESSION['lastDate'] = $_SESSION['lastDate'] = date("Y-m-d H:i", strtotime($date)); //ultima partida realizada (para highlight de ranking)
     
     
     if (strlen($playerName) >= 3 && strlen($playerName) <= 30){

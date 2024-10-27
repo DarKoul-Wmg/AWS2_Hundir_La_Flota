@@ -230,12 +230,12 @@
                             <h3> Munición disponible </h3>
                             <div class="linea">
                                 <p>User:</p> 
-                                <p id="userMunition">40</p> 
+                                <p id="userMunition">4</p> 
                                 <p> /40</p>
                             </div>
                             <div class="linea">
                                 <p>IA:</p> 
-                                <p id="iaMunition">40</p> 
+                                <p id="iaMunition">4</p> 
                                 <p> /40</p>
                             </div>
                         </div>
