@@ -64,6 +64,41 @@
             Trova totes les petxines com més aviat millor!
         </p>
 
+        <?php
+    // Crear sesión y guardar el nombre del jugador en una variable de sesión
+    session_start();
+    session_unset(); // Eliminar todas las variables de sesión
+
+    
+    if(isset($_POST["playerName"])){ //si tenemos nombre registrado, mostrar botones de juego activos
+        $_SESSION["playerName"] = $_POST["playerName"];
+
+        // valores de los checkboxes enviados desde el formulario
+        $limmitedAmmo = isset($_POST['limmitedAmmoCheckbox']) ? true : false;
+        $ironcladShips = isset($_POST['ironcladShipsCheckbox']) ? true : false;
+        $specialAttacks = isset($_POST['specialAttacksCheckbox']) ? true : false;
+
+        // Guardar valores en la sesión para pasar a php2
+        $_SESSION["limmitedAmmo"] = $limmitedAmmo;
+        $_SESSION["ironcladShips"] = $ironcladShips;
+        $_SESSION["specialAttacks"] = $specialAttacks;
+
+        echo'
+            <div class="landingPageCenterButtons">
+                <a href="game.php" class="landingPageStartLinkBtn">
+                    <button type="button" class="landingPageNewGameButton">Tutorial</button>
+                </a>
+                <a href="gameIA.php" class="landingPageStartLinkBtn">
+                    <button type="button" class="landingPageNewGameButton">Vs CPU</button>
+                </a>
+                <a href="ranking.php?page=1">
+                    <button type="button" class="landingPageRankingButton">Ranking</button>
+                </a>
+            </div>
+        ';
+    } else{ //si NO tenemos nombre registrado, mostrar form con botones de juego desabilitados
+
+        echo'
         <form action="index.php" method="post">
             <div class="landingPageCenterTextbox">
                 <input type="text" id="playerName" name="playerName" placeholder="Registra el teu nom per jugar"
