@@ -17,6 +17,14 @@
 
 <?php
 session_start();
+// Verifica la procedencia de la página
+// if (!isset($_SERVER["HTTP_REFERER"]) || 
+//     (strpos($_SERVER["HTTP_REFERER"], "win.php") === false && 
+//      strpos($_SERVER["HTTP_REFERER"], "lose.php") === false)) {
+//     // Si no viene de win.php o lose.php, redirige a index.php
+//     header("Location: ranking.php");
+//     exit;
+// }
 
 // Procesar el formulario enviado desde win.php y guardar los datos en ranking.txt
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"]) && isset($_POST["score"])) {
@@ -59,20 +67,20 @@ usort($ranking, function($a, $b) {
 });
 
 // Jugador a resaltar (highlight)
-$nomPlayer = $_SESSION['playerName'] ?? '';
-$datePlayer = $_SESSION['lastDate'] ?? '';
+$nomPlayer = $_SESSION['playerName'];
+$datePlayer = $_SESSION['lastDate'];
 
 // Buscar al jugador en el ranking
-$playerPosition = 0;
+$playerPosition = -1;
 
-if($nomPlayer){ //solo crea indice si el player a jugado
-  foreach ($ranking as $index => $player) {
-    if ($player['nombre'] === $nomPlayer && date("Y-m-d H:i", strtotime($player['fecha'])) === date("Y-m-d H:i", strtotime($datePlayer))) {
-        $playerPosition = $index + 1; // Asigna la posición correcta
-        break; // Rompe el bucle al encontrar al jugador
-    }
+
+foreach ($ranking as $index => $player) {
+  if ($player['nombre'] === $nomPlayer && date("Y-m-d H:i", strtotime($player['fecha'])) === date("Y-m-d H:i", strtotime($datePlayer))) {
+      $playerPosition = $index + 1; // Asigna la posición correcta
+      break; // Rompe el bucle al encontrar al jugador
   }
 }
+
 
 // Pagina del jugador
 $pagePlayer = ($playerPosition > 0) ? ceil($playerPosition / 25) : 1;
