@@ -37,6 +37,10 @@
         <source src="sounds/cpuwin.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
+    <audio id="sonidoEspera">
+        <source src="sounds/shot.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
     
     <noscript>
         <div class="noscript-overlay">
