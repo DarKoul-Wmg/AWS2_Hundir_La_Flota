@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", function () {
         markCellAsTouched(coordinateInCPUTable); // Marcar la celda como tocada
 
         const cell = document.querySelector(`[data-x="${coordinateInCPUTable[0]}"][data-y="${coordinateInCPUTable[1]}"]`);
-        setImageInCell(dicShellsIA, coordinateInCPUTable, { target: cell }, false); //false es parametro opcional para no poner img
+        setImageInCell(dicShellsIA, coordinateInCPUTable, { target: cell });
 
         printMessageOnClick(cellState);
         if (groupIsDiscovered) {
@@ -628,7 +628,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // mostrar la imagen en la celda
-    function setImageInCell(dicShells, coordinateClickedCell, e, showImage = true) {
+    function setImageInCell(dicShells, coordinateClickedCell, e) {
         const cell = e.target;
         let isShell = false;
 
@@ -639,11 +639,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const tipeShell = shell.shellType;
                     // console.log(tipeShell);
-                    if(showImage){
-                        cell.setAttribute('data-photo', tipeShell);
-                    }else{
-                        cell.style.backgroundColor = '#993341';
-                    }
+                    cell.setAttribute('data-photo', tipeShell);
+                    cell.style.backgroundColor = 'rgba(0, 0, 0, 0.652)';
                     isShell = true;
                 }
             }

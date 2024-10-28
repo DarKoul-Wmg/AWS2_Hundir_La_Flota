@@ -649,11 +649,11 @@ body#ranking .exit {
 }
 
 body#ranking .rankingTable tr.highlight{
-    background-color: #39284e;
+    background-color: #39284e !important;
     font-weight: bold;
 }
 body#ranking .rankingTable tr.highlight:hover{
-    background-color: #b298dcd8;
+    background-color: #b298dcd8 !important;
     font-weight: bold;
 }
 
