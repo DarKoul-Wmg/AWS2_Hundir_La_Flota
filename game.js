@@ -347,14 +347,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function logicCPU(e, dicShellsIA) {
-        
-    //if (selectedHits.length > 0) {
-        //cpuTargetSelection(dicShellsIA);
 
-            
-    //}else{
-        cpuRandomSelection(dicShellsIA);
-    //}
+       // if (selectedHits.length > 0) { //si hay movimientos disponibles en la lista de movimientos seleccionados usarlos
+            //cpuTargetSelection(dicShellsIA);
+
+
+       // } else { // si no, buscar aleatoriamente
+            let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
+            let coordinateInCPUTable;
+            for (let cell of cellsTableIA) {
+                let x = parseInt(cell.getAttribute('data-x'));
+                let y = parseInt(cell.getAttribute('data-y'));
+                const currentCell = [x, y];
+                let rndSelection = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+
+                if (compareCoordinates(currentCell, rndSelection)) {
+                   
+                    cell.style.backgroundColor = "blue"; //marcar la celda escogida
+                    cell.style.border = "2px solid blue";
+                    coordinateInCPUTable = currentCell;
+                    var [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
+                    cell.setAttribute('data-life', life);
+                    //console.log(cpuLeftCells);
+                };
+            }
+            if (touch && life > 1) { //si es acierto y tiene vida restante guardar movimiento                
+            } else { //queremos quitar la celda de la lista de movimientos cuando es acierto pero no tiene vida o cuando no es acierto
+                cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes 
+            }
+            if (cellState == "shell") {
+                console.log(possibleAdjacentCells(coordinateInCPUTable, dicShellsIA));
+                selectedHits.push(coordinateInCPUTable);
+                selectedHits = selectedHits.concat(possibleAdjacentCells(coordinateInCPUTable, dicShellsIA));
+            }
+            console.log(selectedHits);
+       // }
 
 
         
@@ -393,32 +420,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function cpuRandomSelection(dicShellsIA){
 
-        let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
-        let coordinateInCPUTable;
-
-        for (let cell of cellsTableIA) {
-            let x = parseInt(cell.getAttribute('data-x'));
-            let y = parseInt(cell.getAttribute('data-y'));
-            const currentCell = [x, y];
-            let rndSelection = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
-
-            if (compareCoordinates(currentCell, rndSelection)) {
-                cell.style.backgroundColor= "blue"; //marcar la celda escogida
-                cell.style.border = "2px solid blue";
-                coordinateInCPUTable = currentCell;
-                cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes
-                console.log(cpuLeftCells);
-                var [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
-                if (touch && life >1 ){
-                    selectedHits.push(rndSelection);
-                    
-                }
-                if(cellState == "shell"){
-                    selectedHits.push(possibleAdjacentCells(rndSelection, dicShellsIA));
-                    
-                }               
-            }
-        }
 
     }
 
@@ -447,27 +448,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //función que devuelve las celdas válidas adyacentes, es decir: que estén dentro de la tabla y que no estén tocadas
-    function possibleAdjacentCells(cell, dicShellsIA){
+    function possibleAdjacentCells(cell){
         let adjacentCells = []
         let possibilities = [
-            [cell.x - 1, cell.y], //arriba
-            [cell.x + 1, cell.y], //abajo
-            [cell.x, cell.y - 1], //izquierda
-            [cell.x, cell.y + 1] //derecha
-        ]
+            [cell[0] - 1, cell[1]], //arriba
+            [cell[0] + 1, cell[1]], //abajo
+            [cell[0], cell[1] - 1], //izquierda
+            [cell[0], cell[1] + 1] //derecha
+        ];
         for (let pos of possibilities) {
             let invalid = false; //reiniciamos para cada posibilidad
             if (!isValidCell(pos)){ //si la posibilidad se sale de la tabla no hay nada que hacer
                 invalid = true;
             }
             if (!invalid){ //si la posibilidad es viable
-                for (let shell of dicShellsIA){
-                    for(let touchedCoord of shell.touchedCoordinates){
-                        if (compareCoordinates(touchedCoord, pos)){
+                for (let cells of cellsTableIA){
+                    console.log("Verificando cell:", cells);
+                    let x = parseInt(cells.getAttribute('data-x'));
+                    let y = parseInt(cells.getAttribute('data-y'));
+                    let life = parseInt(cells.getAttribute('data-life'));
+                    const currentCell = [x, y];
+
+                        if (compareCoordinates(currentCell, pos) && life < 1){
                             invalid = true; //si la posibilidad coincide con una celda ya tocada, marcar como inviable
                             break;
                         }
-                    } 
+                    
                     if (invalid){
                         break;
                     }              
@@ -475,9 +481,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (!invalid){
+                console.log("Celdas adyacentes posibles:", pos);
                 adjacentCells.push(pos); //insertar posibilidad si las condiciones se cumplen
             }
         }
+        
         return adjacentCells;    
     }
     function isValidCell([x, y]){

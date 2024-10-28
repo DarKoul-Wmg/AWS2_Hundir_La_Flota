@@ -264,8 +264,14 @@
                                 $chrx = chr(64 + $j);
                                 echo "<td class='letter'> $chrx </td>";
                             } else {
+                            //cambios a data-touched por data-life: añadimos sistema de vidas por celda, 0 == muerta, equivale a data-touched == true
+                            //reducimos en 1 por acierto
+                            $life = 1;
+                            if ($_SESSION["ironcladShips"]){
+                                $life = 2;
+                            };
                                 // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-life=$life data-touched='false' data-photo='none'></td>";
                             }
                         }
                         echo "</tr>";
