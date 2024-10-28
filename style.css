@@ -379,12 +379,15 @@ body#gameIA table#tableIA td.selectCellsIA {
 
 body#gameIA .tableDisabler {
     opacity: .5;
+    pointer-events: none;
 }
 
 body#gameIA .tableEnabler {
     opacity: 1;
     box-shadow: 0 0 10px 5px #B9FAF8;
 }
+
+
 
 /* Izquierda */
 

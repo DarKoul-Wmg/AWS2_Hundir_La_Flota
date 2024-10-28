@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //cambiada función anónima para poder referenciarla en el removeEventListener
     function eventHandler(event) {
-        event.target.removeEventListener("click",eventHandler);
+        //event.target.removeEventListener("click",eventHandler);
         if (gameMode == 0) {
             discoverCell(event, dicShellsUser);
         }
@@ -227,8 +227,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // si TIENE munición el user
                 if (!isMunitionUserSpent) {
-                    if (discoverCell(event, dicShellsUser) === 'water') { //si la celda clicada es agua pasar el turno a la CPU
+                    console.log("Llamando a discoverCell");
+                    var [cellState, life] = discoverCell(event, dicShellsUser) ;
+                    console.log(life);
+                    if (cellState === 'water' || life > 0) { //si la celda clicada es agua pasar el turno a la CPU
                         turn = false;
+                        console.log(life);
                         //estilos que marcan el turno de la CPU
                         styleTurnCPU();
 
@@ -251,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 checkGameOverByMunition();
             }
         }
-        //resetClickEvent();
+        resetClickEvent();
     }
 
     function styleTurnPlayer() { //estilos que marcan el turno del usuario
@@ -274,7 +278,8 @@ document.addEventListener("DOMContentLoaded", function () {
             cell.removeEventListener("click", eventHandler);
         };
         for (let cell of cells) {
-            if ((cell.getAttribute('data-photo')) === 'none') { //solo devoler el evento a las celdas vacías, importante para no perder turnos en celdas ya clicadas
+            let life = parseInt(cell.getAttribute('data-life'));
+            if (life > 0) { //solo devoler el evento a las celdas con vida
                 cell.addEventListener("click", eventHandler);
             }
         };
@@ -295,9 +300,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // diccionario que lleva la lista de movimientos posibles para la CPU
     var cpuLeftCells = [];
-
-    //array que lleva la cuenta de las coordenadas tocadas por la CPU
-    var cpuTouchedCells = [];
+    
     for (let x = 1; x < 11; x++) {
         for (let y = 1; y < 11; y++) {
             cpuLeftCells.push({
@@ -306,7 +309,8 @@ document.addEventListener("DOMContentLoaded", function () {
             })
         }
     }
-
+    var selectedHits = [];
+    var previousHit;
 
     function turnCPU(e, dicShellsIA) {
         if (!turn) {
@@ -343,77 +347,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function logicCPU(e, dicShellsIA) {
-        //let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
-        //let coordinateInCPUTable = findNextAttack(); // Busca una celda adyacente
-        let coordinateInCPUTable;
+        
+    //if (selectedHits.length > 0) {
+        //cpuTargetSelection(dicShellsIA);
 
-        // Verifica si hay aciertos en cpuTouchedCells
-        var hits = cpuTouchedCells.filter(function (cell) {
-            return checkIfHit(cell, dicShellsIA);
-        });
-
-
-        if (hits.length > 0) {
-            // Si hay aciertos, busca celdas adyacentes
-            coordinateInCPUTable = findNextAttackFromHits(hits);
-        }
-
-        // Si no hay celdas adyacentes, elige aleatoriamente
-        if (!coordinateInCPUTable) {
-            let availableCells = cpuLeftCells.filter(function (cell) {
-                return !cell.touched; // Filtra celdas que ya han sido tocadas
-            });
-            if (availableCells.length > 0) {
-                let randomIndex = Math.floor(Math.random() * availableCells.length);
-                coordinateInCPUTable = [availableCells[randomIndex].x, availableCells[randomIndex].y];
-                availableCells[randomIndex].touched = true; // Marcar como tocada
-                cpuTouchedCells.push(coordinateInCPUTable); // Agregar a celdas tocadas
-            }
-        }
-
-        for (let cell of cellsTableIA) {
-            let x = parseInt(cell.getAttribute('data-x'));
-            let y = parseInt(cell.getAttribute('data-y'));
-            const currentCell = [x, y];
-
-            /*let aux = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
-
-            if (compareCoordinates(currentCell, aux)) {
-                cell.style.backgroundColor= "green"; //marcar la celda escogida, faltan estilos
-                coordinateInCPUTable = currentCell;
-            };*/
-
-            if (compareCoordinates(currentCell, coordinateInCPUTable)) {
-                cell.style.backgroundColor = "blue"; // marcar la celda escogida
-                cell.style.border = "1px solid blue";
-            }
-        }
+            
+    //}else{
+        cpuRandomSelection(dicShellsIA);
+    //}
 
 
-        //console.log(dicShellsIA);
-
-        // Procesar el ataque
-        const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
-        cpuTouchedCells.push(coordinateInCPUTable); // Agregar la celda tocada a la lista
-        markCellAsTouched(coordinateInCPUTable); // Marcar la celda como tocada
+        
+        console.log(dicShellsIA);
 
         printMessageOnClick(cellState);
-        if (groupIsDiscovered) {
-            if (isWin(dicShellsIA)) {
-                //Sonido win
-                sonidoCpuWin.play();
-                printMessageOnClick('win');
 
-                //calcular puntos del final
-                loseEndgamePoints();
+        if (isWin(dicShellsIA)) {
+            //Sonido win
+            sonidoCpuWin.play();
+            printMessageOnClick('win');
 
-                // después de 2 segundo te vas a win.php
-                setTimeout(function () {
-                    document.getElementById("loseEndForm").submit();
-                    //window.location.href = "lose.php";
-                }, 4000);
-            }
+            //calcular puntos del final
+            loseEndgamePoints();
+
+            // después de 2 segundo te vas a win.php
+            setTimeout(function () {
+                document.getElementById("loseEndForm").submit();
+                //window.location.href = "lose.php";
+            }, 4000);
         }
+
 
         if (touch) { //HARDCODEAR DEMO
             setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
@@ -428,7 +391,98 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+    function cpuRandomSelection(dicShellsIA){
 
+        let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
+        let coordinateInCPUTable;
+
+        for (let cell of cellsTableIA) {
+            let x = parseInt(cell.getAttribute('data-x'));
+            let y = parseInt(cell.getAttribute('data-y'));
+            const currentCell = [x, y];
+            let rndSelection = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+
+            if (compareCoordinates(currentCell, rndSelection)) {
+                cell.style.backgroundColor= "blue"; //marcar la celda escogida
+                cell.style.border = "2px solid blue";
+                coordinateInCPUTable = currentCell;
+                cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes
+                console.log(cpuLeftCells);
+                var [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
+                if (touch && life >1 ){
+                    selectedHits.push(rndSelection);
+                    
+                }
+                if(cellState == "shell"){
+                    selectedHits.push(possibleAdjacentCells(rndSelection, dicShellsIA));
+                    
+                }               
+            }
+        }
+
+    }
+
+    function cpuTargetSelection(){
+        let randomIndex = Math.floor(Math.random() * selectedHits.length); //buscamos casilla random de la lista de hits seleccionados
+        for (let cell of cellsTableIA) {
+            let x = parseInt(cell.getAttribute('data-x'));
+            let y = parseInt(cell.getAttribute('data-y'));
+            const currentCell = [x, y];
+            let rndSelection = [selectedHits[randomIndex][0], selectedHits[randomIndex][1]];
+            if (compareCoordinates(currentCell, rndSelection)) {
+                cell.style.backgroundColor= "blue"; //marcar la celda escogida
+                cell.style.border = "2px solid blue";
+                coordinateInCPUTable = currentCell;
+                
+                // Actualiza cpuLeftCells eliminando la celda tocada
+                for (let i = 0; i < cpuLeftCells.length; i++) {
+                    if (cpuLeftCells[i].x === x && cpuLeftCells[i].y === y) {
+                        cpuLeftCells.splice(i, 1); // Elimina la celda tocada
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
+    //función que devuelve las celdas válidas adyacentes, es decir: que estén dentro de la tabla y que no estén tocadas
+    function possibleAdjacentCells(cell, dicShellsIA){
+        let adjacentCells = []
+        let possibilities = [
+            [cell.x - 1, cell.y], //arriba
+            [cell.x + 1, cell.y], //abajo
+            [cell.x, cell.y - 1], //izquierda
+            [cell.x, cell.y + 1] //derecha
+        ]
+        for (let pos of possibilities) {
+            let invalid = false; //reiniciamos para cada posibilidad
+            if (!isValidCell(pos)){ //si la posibilidad se sale de la tabla no hay nada que hacer
+                invalid = true;
+            }
+            if (!invalid){ //si la posibilidad es viable
+                for (let shell of dicShellsIA){
+                    for(let touchedCoord of shell.touchedCoordinates){
+                        if (compareCoordinates(touchedCoord, pos)){
+                            invalid = true; //si la posibilidad coincide con una celda ya tocada, marcar como inviable
+                            break;
+                        }
+                    } 
+                    if (invalid){
+                        break;
+                    }              
+                }
+            }
+
+            if (!invalid){
+                adjacentCells.push(pos); //insertar posibilidad si las condiciones se cumplen
+            }
+        }
+        return adjacentCells;    
+    }
+    function isValidCell([x, y]){
+        return x >= 1 && x <= 10 && y >= 1 && y <= 10; 
+    }
 
     // LOGICA DE TOCAR --
 
@@ -589,28 +643,37 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 
-    // comprueba si la celda tocada es aigua o qué
+    // comprueba si la celda tocada es aigua o qué 
     function checkClickedCell(dicShells, coordinateClickedCell) {
 
         // valores auxiliares
         let touch = false;
         let cellState = "water";
         let groupIsDiscovered = false;
-        let life = 0;
+        
 
         for (const shell of dicShells) {
+            let index = 0;
             for (const coordinate of shell.coordinates) {
+                
                 // se tienen que comparar cada una de las coordenadas, sino compara la dirección de memoria del objeto
                 if (compareCoordinates(coordinate, coordinateClickedCell)) { // si es una concha
                     touch = true;
                     cellState = "shell";
-                    life = shell.life - 1;
+                    
                     //Sonido de acierto
                     sonidoAcierto.play();
-
-                    // añadimos esta coordenada a las de touched
-                    shell.touchedCoordinates.push(coordinateClickedCell);
-                    console.log("coordenada añadida")
+                    
+                    //reducimos en 1 la vida de la casilla
+                    console.log(shell.lives);
+                    shell.lives[index]--;
+                    life = shell.lives[index];
+                    console.log(shell.lives);
+                    // añadimos esta coordenada a las de touched cuando su vida es 0
+                    if (shell.lives[index] < 1){
+                        shell.touchedCoordinates.push(coordinateClickedCell);
+                        console.log("coordenada añadida")
+                    }
 
                     // comprobar si todo el grupo ha sido descubierto
                     groupIsDiscovered = isGrupShellDiscovered(shell);
@@ -623,9 +686,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (turn) {
                         pointsAdd();
                     }
-
-                    return [touch, cellState, groupIsDiscovered];
+                    
+                    return [touch, cellState, groupIsDiscovered, life];
                 }
+                index++;
             }
         }
 
@@ -636,8 +700,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (turn) {
             pointsSubstract();
         }
-
-        return [touch, cellState, groupIsDiscovered];
+        life = 0; // si no es una concha la vida de la casilla es 0
+        return [touch, cellState, groupIsDiscovered, life];
 
     }
 
@@ -648,15 +712,22 @@ document.addEventListener("DOMContentLoaded", function () {
         let isShell = false;
 
         for (const shell of dicShells) {
+            let index = 0;
             for (const coordinate of shell.coordinates) {
 
                 if (compareCoordinates(coordinate, coordinateClickedCell)) {
 
                     const tipeShell = shell.shellType;
                     console.log(tipeShell);
-                    cell.setAttribute('data-photo', tipeShell);
+                    //No mostrar la imagen de la concha hasta ser descubierta del todox
+                    if(shell.lives[index] > 0){
+                        cell.style.backgroundColor = "blue";
+                    }else{                     
+                        cell.setAttribute('data-photo', tipeShell);
+                    }
                     isShell = true;
                 }
+                index++;
             }
         }
 
@@ -735,19 +806,24 @@ document.addEventListener("DOMContentLoaded", function () {
         let x = parseInt(cell.getAttribute('data-x'));
         let y = parseInt(cell.getAttribute('data-y'));
         const cellIsTouched = cell.getAttribute('data-touched');
+        let cellLife = parseInt(cell.getAttribute('data-life'));
         const coordinateCellClicked = [x, y];
+   
 
         console.log(coordinateCellClicked);
 
+
         // si no se ha tocado aún
-        if (cellIsTouched === 'false') {
+        //if (cellIsTouched === 'false') {
+        // if (cellLife > 0 ) {
 
             //cell.classList.add(nameOfClass);
 
-            const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShells, coordinateCellClicked);
-
+            let [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShells, coordinateCellClicked);
             // cambiar el estado de la celda para que no vuelvas a girarla
             cell.setAttribute('data-touched', 'true');
+
+            cell.setAttribute('data-life', life);
 
             // mostrar la imagen de la celda
             setImageInCell(dicShells, coordinateCellClicked, e);
@@ -774,9 +850,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             console.log("touch es " + touch + "\n y cellState es " + cellState + " y el grupo está descubierto? " + groupIsDiscovered);
-            return cellState; //necesito un return para saber si el jugador acierta y su turno sigue
-        }
-
+            return [cellState, life]; //necesito un return para saber si el jugador acierta y su turno sigue
+        // }
+        // return [cellState, life]; //necesito un return para saber si el jugador acierta y su turno sigue
+    
         for (const shell of dicShells) {
             console.log(shell);
         }
