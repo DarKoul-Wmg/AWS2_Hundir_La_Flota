@@ -310,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     var selectedHits = [];
-    var previousHit;
+    var initialHit = [];
 
     function turnCPU(e, dicShellsIA) {
         if (!turn) {
@@ -348,40 +348,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function logicCPU(e, dicShellsIA) {
 
-       // if (selectedHits.length > 0) { //si hay movimientos disponibles en la lista de movimientos seleccionados usarlos
+        var isRandom = true;
+        var targetSelection;
+        
+            if (selectedHits.length > 0) { //si hay movimientos disponibles en la lista de movimientos seleccionados usarlos
+                isRandom = false; 
+                targetSelection = [selectedHits[0][0], selectedHits[0][1]];
+            } else {
+                isRandom = true;
+                let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
+                targetSelection = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+            }
+    
             //cpuTargetSelection(dicShellsIA);
-
-
-       // } else { // si no, buscar aleatoriamente
-            let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
-            let coordinateInCPUTable;
             for (let cell of cellsTableIA) {
                 let x = parseInt(cell.getAttribute('data-x'));
                 let y = parseInt(cell.getAttribute('data-y'));
-                const currentCell = [x, y];
-                let rndSelection = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+                var currentCell = [x, y];                
+                
+                if (compareCoordinates(currentCell, targetSelection)) {
+                    cell.style.backgroundColor= "blue"; //marcar la celda escogida como primer hit
+                    cell.style.border = "2px solid blue";                
+                    var [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShellsIA, targetSelection);               
+                    cell.setAttribute('data-life', life); //cambiamos vida en la casilla
+                    if(life < 1){
+                        console.log("vida menor a 1");
+                        cell.style.backgroundColor= "red"; //marcar la celda escogida como hit definitivo
+                        cell.style.border = "2px solid red";
+                        // Actualiza cpuLeftCells eliminando la celda tocada
+                        for (let i = 0; i < cpuLeftCells.length; i++) {
+                            console.log("x: ",x, " y: ",y, " cpuX: ",cpuLeftCells[i].x, " cpuY: ", cpuLeftCells[i].y);
+                            if (cpuLeftCells[i].x === x && cpuLeftCells[i].y === y) {
+                                console.log("borrando movimientos");
+                                cpuLeftCells.splice(i, 1); // Elimina la celda tocada
+                                selectedHits.splice(0, 1); //borrar movimiento de la lista de posibles
+    
+                                break;
+                            }
+                        }
+                    } else {
+                        touch = false; //si la celda aún tiene vida no repetir turno
+                    }
+                    console.log("break");
+    
+                    break;
+                }
+            }
+            if ( life > 0 ) {
+                console.log(possibleAdjacentCells(targetSelection, dicShellsIA));
+                initialHit = targetSelection; //guardamos el impacto inicial
+                if (life > 1){
+                    console.log("añadiendo celda actual");
 
-                if (compareCoordinates(currentCell, rndSelection)) {
-                   
-                    cell.style.backgroundColor = "blue"; //marcar la celda escogida
-                    cell.style.border = "2px solid blue";
-                    coordinateInCPUTable = currentCell;
-                    var [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
-                    cell.setAttribute('data-life', life);
-                    //console.log(cpuLeftCells);
-                };
+                    selectedHits.push(targetSelection);
+                }
+                selectedHits = selectedHits.concat(possibleAdjacentCells(targetSelection, dicShellsIA));
             }
-            if (touch && life > 1) { //si es acierto y tiene vida restante guardar movimiento                
-            } else { //queremos quitar la celda de la lista de movimientos cuando es acierto pero no tiene vida o cuando no es acierto
-                cpuLeftCells.splice(randomIndex, 1); //eliminar la celda escogida de la lista de movimientos restantes 
+            if (groupIsDiscovered){ //si descubre un grupo borrarlo de la lista
+                for (let i = 0; i < cpuLeftCells.length; i++) {
+                    for (hit of selectedHits){
+                        if(hit[0] === cpuLeftCells[i].x && hit[1] === cpuLeftCells[i].y){
+                            cpuLeftCells.splice(i, 1); // Elimina la celda tocada
+
+                        }
+                    }
+                }
+                selectedHits = []; //vaciar lista de siguientes ataques
             }
-            if (cellState == "shell") {
-                console.log(possibleAdjacentCells(coordinateInCPUTable, dicShellsIA));
-                selectedHits.push(coordinateInCPUTable);
-                selectedHits = selectedHits.concat(possibleAdjacentCells(coordinateInCPUTable, dicShellsIA));
-            }
+
             console.log(selectedHits);
-       // }
 
 
         
@@ -406,13 +441,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (touch) { //HARDCODEAR DEMO
-            setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
-            //setTimeout(() => turnCPU(e, dicShellsIA), 1);
+            //setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
+            setTimeout(() => turnCPU(e, dicShellsIA), 500);
 
 
         } else { //HARDCODEAR DEMO
-            setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
-            //setTimeout(() => turnCPU(e, dicShellsIA), 1); //Repetir turno CPU al milisegundo
+            //setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
+            setTimeout(() => turnCPU(e, dicShellsIA), 500); //Repetir turno CPU al milisegundo
             // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
         }
 
@@ -463,7 +498,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (!invalid){ //si la posibilidad es viable
                 for (let cells of cellsTableIA){
-                    console.log("Verificando cell:", cells);
                     let x = parseInt(cells.getAttribute('data-x'));
                     let y = parseInt(cells.getAttribute('data-y'));
                     let life = parseInt(cells.getAttribute('data-life'));
