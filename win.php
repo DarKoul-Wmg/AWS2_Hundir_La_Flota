@@ -43,7 +43,7 @@ session_start();
     </audio>
 
 
-    <img src="/images/medusaWin.png" alt="medusa kawaii" class="imagenSalto">
+    <img src="images/medusaWin.png" alt="medusa kawaii" class="imagenSalto">
     <img src="/images/estrellaWin.png" alt="estrella kawaii" class="imagenGiro">
 
 <!-- Div principal-->
