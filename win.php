@@ -71,36 +71,13 @@ $date = date('Y-m-d h:i:s', time());
 echo '<p class="winScoreTitle">Puntuació: ',$_POST["score"],'</p>';
 echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
 
-// Si se ha enviado el formulario, guardar en el archivo y redirigir a ranking
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
-    $playerName = $_POST["playerName"]; // obtener el playerName del formulario
-
-    $_SESSION['playerName'] = $playerName; //actualizamos variable de nombre (para ranking)
-    $_SESSION['lastDate'] = date("Y-m-d H:i", strtotime($date));//ultima partida realizada (para highlight de ranking)
-
-    if (strlen($playerName) >= 3 && strlen($playerName) <= 30){
-        $array = [$playerName, $score, $date]; // datos para insertar en txt
-        // Guardar en el archivo
-        $file = fopen('ranking.txt', "a");
-        $processedLine = implode(',', $array) . "\n"; 
-        fwrite($file, $processedLine); 
-        fclose($file); 
-
-        // Redirigir a ranking.php
-        header("Location: ranking.php");
-        exit; // Terminar el script
-    }
-    
-}
 
 echo '
-<form  action="win.php" method="post" onsubmit="easterEgg(event)">
+<form  action="ranking.php" method="post" onsubmit="easterEgg(event)">
     <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" value ="',$playerName,'" required>
     <input type="hidden" name="score" value="',$score,'">
     <button type="submit" class="winRegisterButton">Registra</button>
-</form>   
-';
-
+</form>';
 ?>
         <div class="winCenterButtons">
             <a href="index.php" class="winHomeBtnLink">

@@ -42,14 +42,15 @@ body#index .landingPageRankingButton{
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
-    padding: 10px;
+    padding: 10px 20px 10px 20px;
     margin: 0 20px 0 20px;
 }
 
 body#index .landingPageNewGameButton:hover,
 body#index .landingPageRankingButton:hover,
 body#index .landingPageRegisterButton:hover{
-    background-color: #57466bc9; 
+    background-color: #57466bc9;
+    
 }
 
 body#index .landingPageStartLinkBtn{
@@ -63,7 +64,7 @@ body#index .landingPageNewGameButton:disabled{
     border-radius: 40px; 
     border: 0;
     border-color: #fcc486;
-    padding: 10px;
+    padding: 10px 20px 10px 20px;
 }
 
 body#index .landingPageCenterButtons{
@@ -673,7 +674,7 @@ body#win {
 }
 
 body#win .winBox {
-    background-color: #232f5f8c;
+    background-color: #251934a7;
     border-collapse: collapse;
     border-radius: 12px;
     margin: auto;
@@ -716,15 +717,17 @@ body#win .imagenGiro:hover{
 body#win .winVictoryMsg{
     font: 4.0em "Fira Sans", sans-serif;
     font-weight: bold;
+    color: #EF5D3D;
 }
 
 body#win .winNewGameButton{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #434b71; 
+    font: 1.8em "Fira Sans", sans-serif;
+    background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
-    padding: 10px;
+    padding: 10px 20px 10px 20px;
+    margin: 0 20px 0 20px;
 }
 
 body#win .winHomeBtnLink{
@@ -732,29 +735,30 @@ body#win .winHomeBtnLink{
 }
 
 body#win .winRankingButton{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #434b71; 
+    font: 1.8em "Fira Sans", sans-serif;
+    background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
-    padding: 10px;
+    padding: 10px 20px 10px 20px;
+    margin: 0 20px 0 20px;
 }
 
 body#win .winRegisterButton{
-    font: 2em "Fira Sans", sans-serif;
-    background-color: #434b71; 
+    font: 1.8em "Fira Sans", sans-serif;
+    background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
-    padding: 10px;
-    margin-top: 10px;
+    padding: 10px 20px 10px 20px;
+    margin: 0 20px 0 20px;
 }
 body#win .winScoreTitle{
-    font: 3em "Fira Sans", sans-serif;
+    font: 2.4em "Fira Sans", sans-serif;
 }
 
 body#win .winScoreDesc{
-    font: 3em "Fira Sans", sans-serif;
+    font: 2.2em "Fira Sans", sans-serif;
 }
 
 
@@ -792,7 +796,7 @@ body#lose {
     background-repeat: no-repeat; 
     background-color: rgba(15, 44, 73, 0.811);
     filter: grayscale(100%); /* B/N */
-    animation: gameOverEffect 4s ease-in-out forwards; /* Color normal (quitra B y N)*/
+    animation: gameOverEffect 5s ease-in-out forwards; /* Color normal (quitra B y N)*/
 }
 
 body#lose .overlay {
@@ -801,7 +805,7 @@ body#lose .overlay {
     left: 0;
     width: 100%;
     height: 100%;
-    animation: overlayOut 10s ease-in-out forwards; /*Animacion suave del blanco y negro (forwards es para que no vuelva a verse en B/N)*/
+    animation: overlayOut 5s ease-in-out forwards; /*Animacion suave del blanco y negro (forwards es para que no vuelva a verse en B/N)*/
     z-index: 21;
     background-color :#1f1e20cf ;
 
@@ -858,12 +862,13 @@ body#lose .loseMsg{
 }
 
 body#lose .loseNewGameButton, .loseRankingButton{
-    font: 2.4em "Fira Sans", sans-serif;
-    background-color: #6F2DBD; 
+    font: 1.8em "Fira Sans", sans-serif;
+    background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
-    padding: 10px;
+    padding: 10px 20px 10px 20px;
+    margin: 0 20px 0 20px;
 }
 
 body#lose .loseHomeBtnLink{
@@ -871,20 +876,20 @@ body#lose .loseHomeBtnLink{
 }
 
 body#lose .loseRegisterButton{
-    font: 2em "Fira Sans", sans-serif;
-    background-color: #6F2DBD; 
+    font: 1.8em "Fira Sans", sans-serif;
+    background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
-    padding: 10px;
-    margin-top: 10px;
+    padding: 10px 20px 10px 20px;
+    margin: 0 20px 0 20px;
 }
 body#lose .loseScoreTitle{
-    font: 3em "Fira Sans", sans-serif;
+    font: 2.4em "Fira Sans", sans-serif;
 }
 
 body#lose .loseScoreDesc{
-    font: 3em "Fira Sans", sans-serif;
+    font: 2.2em "Fira Sans", sans-serif;
 }
 
 

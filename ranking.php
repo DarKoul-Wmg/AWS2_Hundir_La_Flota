@@ -17,6 +17,31 @@
 
 <?php
 session_start();
+// Verifica la procedencia de la página
+// if (!isset($_SERVER["HTTP_REFERER"]) || 
+//     (strpos($_SERVER["HTTP_REFERER"], "win.php") === false && 
+//      strpos($_SERVER["HTTP_REFERER"], "lose.php") === false)) {
+//     // Si no viene de win.php o lose.php, redirige a index.php
+//     header("Location: ranking.php");
+//     exit;
+// }
+
+// Procesar el formulario enviado desde win.php y guardar los datos en ranking.txt
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"]) && isset($_POST["score"])) {
+  $playerName = trim($_POST["playerName"]);
+  $score = (int)$_POST["score"];
+  $date = date('Y-m-d H:i:s', time());
+
+  $_SESSION['playerName'] = $playerName;
+  $_SESSION['score'] = $score;
+  $_SESSION['lastDate'] = $date;
+
+  if (strlen($playerName) >= 3 && strlen($playerName) <= 30) {
+      $line = "$playerName,$score,$date\n";
+      file_put_contents('ranking.txt', $line, FILE_APPEND);
+  }
+}
+
 $filePath = "ranking.txt";
 $file = fopen($filePath, "r");
 
@@ -42,20 +67,20 @@ usort($ranking, function($a, $b) {
 });
 
 // Jugador a resaltar (highlight)
-$nomPlayer = $_SESSION['playerName'] ?? '';
-$datePlayer = $_SESSION['lastDate'] ?? '';
+$nomPlayer = $_SESSION['playerName'];
+$datePlayer = $_SESSION['lastDate'];
 
 // Buscar al jugador en el ranking
-$playerPosition = 0;
+$playerPosition = -1;
 
-if($nomPlayer){ //solo crea indice si el player a jugado
-  foreach ($ranking as $index => $player) {
-    if ($player['nombre'] === $nomPlayer && date("Y-m-d H:i", strtotime($player['fecha'])) === date("Y-m-d H:i", strtotime($datePlayer))) {
-        $playerPosition = $index + 1; // Asigna la posición correcta
-        break; // Rompe el bucle al encontrar al jugador
-    }
+
+foreach ($ranking as $index => $player) {
+  if ($player['nombre'] === $nomPlayer && date("Y-m-d H:i", strtotime($player['fecha'])) === date("Y-m-d H:i", strtotime($datePlayer))) {
+      $playerPosition = $index + 1; // Asigna la posición correcta
+      break; // Rompe el bucle al encontrar al jugador
   }
 }
+
 
 // Pagina del jugador
 $pagePlayer = ($playerPosition > 0) ? ceil($playerPosition / 25) : 1;
@@ -63,7 +88,11 @@ $pagePlayer = ($playerPosition > 0) ? ceil($playerPosition / 25) : 1;
 $currentPage = isset($_GET["page"]) ? (int)$_GET["page"] : 1; // Página actual desde la URL
 
  //redirigir hacia la pagina con el highlight, comprobando que haya player y no sea la pag actual (crea buvle)
- if ($nomPlayer && $pagePlayer != $currentPage && $pagePlayer <= ceil(count($ranking) / 25)) {
+ //variable de sesion 'redirected' sirve para redireccionar al highlight solo la primera vez (evita forzar la redireccion) 
+if ($nomPlayer && $pagePlayer != $currentPage && $pagePlayer <= ceil(count($ranking) / 25) && isset($_SESSION['redirected'])){
+  
+  //variable de sesion para controlar la carga del paginator
+  unset($_SESSION['redirected']);
   header("Location: ranking.php?page=$pagePlayer");
   exit();
 }
@@ -119,7 +148,8 @@ if ($currentPage < $numberOfPages) {
   echo '<a href="?page=' . $numberOfPages . '" class="last-page">></a>';
 }
 echo '</div>';
-unset($_SESSION['playerName']);
+// unset($_SESSION['playerName']);
+
 ?>
 </body>
 </html>
