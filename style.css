@@ -568,7 +568,7 @@ body#ranking .rankingTable{
     background-color: #232f5f8c;
     border-collapse: collapse;
     border-radius: 12px;
-    text-align: start;
+    text-align: left;
     margin: auto;
     color: #fcd4a7;
     font: 1.4em "Fira Sans", sans-serif;
