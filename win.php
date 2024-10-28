@@ -44,7 +44,7 @@ session_start();
 
 
     <img src="images/medusaWin.png" alt="medusa kawaii" class="imagenSalto">
-    <img src="/images/estrellaWin.png" alt="estrella kawaii" class="imagenGiro">
+    <img src="images/estrellaWin.png" alt="estrella kawaii" class="imagenGiro">
 
 <!-- Div principal-->
     <div class="winBox">
@@ -112,8 +112,8 @@ echo '
         </div>
     </div>
 
-    <img src="/images/conchaWin.png" alt="concha kawaii" class="imagenGiro">
-    <img src="/images/pulpoWin.png" alt="pulpo kawaii" class="imagenSalto">
+    <img src="images/conchaWin.png" alt="concha kawaii" class="imagenGiro">
+    <img src="images/pulpoWin.png" alt="pulpo kawaii" class="imagenSalto">
 
     <script>
         function easterEgg(event) {
