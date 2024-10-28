@@ -88,7 +88,11 @@ $pagePlayer = ($playerPosition > 0) ? ceil($playerPosition / 25) : 1;
 $currentPage = isset($_GET["page"]) ? (int)$_GET["page"] : 1; // Página actual desde la URL
 
  //redirigir hacia la pagina con el highlight, comprobando que haya player y no sea la pag actual (crea buvle)
- if ($nomPlayer && $pagePlayer != $currentPage && $pagePlayer <= ceil(count($ranking) / 25)) {
+ //variable de sesion 'redirected' sirve para redireccionar al highlight solo la primera vez (evita forzar la redireccion) 
+if ($nomPlayer && $pagePlayer != $currentPage && $pagePlayer <= ceil(count($ranking) / 25) && isset($_SESSION['redirected'])){
+  
+  //variable de sesion para controlar la carga del paginator
+  unset($_SESSION['redirected']);
   header("Location: ranking.php?page=$pagePlayer");
   exit();
 }
@@ -145,6 +149,7 @@ if ($currentPage < $numberOfPages) {
 }
 echo '</div>';
 // unset($_SESSION['playerName']);
+
 ?>
 </body>
 </html>
