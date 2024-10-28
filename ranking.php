@@ -17,6 +17,23 @@
 
 <?php
 session_start();
+
+// Procesar el formulario enviado desde win.php y guardar los datos en ranking.txt
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"]) && isset($_POST["score"])) {
+  $playerName = trim($_POST["playerName"]);
+  $score = (int)$_POST["score"];
+  $date = date('Y-m-d H:i:s', time());
+
+  $_SESSION['playerName'] = $playerName;
+  $_SESSION['score'] = $score;
+  $_SESSION['lastDate'] = $date;
+
+  if (strlen($playerName) >= 3 && strlen($playerName) <= 30) {
+      $line = "$playerName,$score,$date\n";
+      file_put_contents('ranking.txt', $line, FILE_APPEND);
+  }
+}
+
 $filePath = "ranking.txt";
 $file = fopen($filePath, "r");
 
@@ -119,7 +136,7 @@ if ($currentPage < $numberOfPages) {
   echo '<a href="?page=' . $numberOfPages . '" class="last-page">></a>';
 }
 echo '</div>';
-unset($_SESSION['playerName']);
+// unset($_SESSION['playerName']);
 ?>
 </body>
 </html>
