@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let sonidoAccion = document.getElementById('sonidoAccion');
     let sonidoAgua = document.getElementById('sonidoAgua');
     let sonidoAcierto = document.getElementById('sonidoAcierto');
+    let sonidoEspera = document.getElementById('sonidoEspera');
 
     // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
     let botones = document.querySelectorAll('button');
@@ -453,11 +454,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
 
                         turn = false;
+                        //sonido cuando IA vaya a disparar:
+                        sonidoEspera.play();
                         //estilos que marcan el turno de la CPU
                         styleTurnCPU();
 
                         if (!isMunitionIaSpent) {
-                            setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                            setTimeout(() => turnCPU(event, dicShellsIA), 4000);
                         } else {
                             returnTurnToPlayer();
                         }
@@ -469,8 +472,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     printMessageOnClick('userNotMun');
                     console.log("mensaje de que no tiene munición el user ")
                     turn = false;
+                    //sonido cuando IA vaya a disparar:
+                    sonidoEspera.play();
                     styleTurnCPU();
-                    setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                    setTimeout(() => turnCPU(event, dicShellsIA), 4000);
                 }
                 checkGameOverByMunition();
             }
@@ -545,6 +550,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function turnCPU(e, dicShellsIA) {
+
         if (!turn) {
             for (let cell of cells) {
                 //quitamos el evento click de las celdas hasta que le vuelva a tocar al jugador         
@@ -619,10 +625,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 coordinateInCPUTable = currentCell;
             };*/
 
-            if (compareCoordinates(currentCell, coordinateInCPUTable)) {
-                cell.style.backgroundColor = "blue"; // marcar la celda escogida
-                cell.style.border = "1px solid blue";
-            }
         }
 
 
@@ -632,6 +634,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const [touch, cellState, groupIsDiscovered] = checkClickedCell(dicShellsIA, coordinateInCPUTable);
         cpuTouchedCells.push(coordinateInCPUTable); // Agregar la celda tocada a la lista
         markCellAsTouched(coordinateInCPUTable); // Marcar la celda como tocada
+
+        const cell = document.querySelector(`[data-x="${coordinateInCPUTable[0]}"][data-y="${coordinateInCPUTable[1]}"]`);
+        setImageInCell(dicShellsIA, coordinateInCPUTable, { target: cell });
 
         printMessageOnClick(cellState);
         if (groupIsDiscovered) {
@@ -652,7 +657,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (touch) { //HARDCODEAR DEMO
-            setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
+            //sonido cuando IA vaya a disparar:
+            sonidoEspera.play();
+            setTimeout(() => turnCPU(e, dicShellsIA), 4000); //Repetir turno CPU a los 2 segundos
             //setTimeout(() => turnCPU(e, dicShellsIA), 1);
 
 
@@ -753,12 +760,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // mostrar todas las imagenes en tu tablero
+    // mostrar todas las imagenes shell en tu tablero
     const cellsTableIA = document.getElementsByClassName("selectCellsIA");
 
     for (let cell of cellsTableIA) {
-
-
         let x = parseInt(cell.getAttribute('data-x'));
         let y = parseInt(cell.getAttribute('data-y'));
         const coordinateCellClicked = [x, y];
@@ -772,16 +777,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (compareCoordinates(coordinate, coordinateCellClicked)) {
 
                     const tipeShell = shell.shellType;
-                    cell.setAttribute('data-photo', tipeShell);
+                    // cell.setAttribute('data-photo', tipeShell);
+                    cell.style.backgroundColor = '#EF5D3D'
                     isShell = true;
                 }
             }
         }
-
-        if (!isShell) {
-            cell.setAttribute('data-photo', 'sand');
-        }
-
     }
 
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
@@ -879,7 +880,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // mostrar la imagen en la celda
     function setImageInCell(dicShells, coordinateClickedCell, e) {
         const cell = e.target;
-
         let isShell = false;
 
         for (const shell of dicShells) {
@@ -888,8 +888,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (compareCoordinates(coordinate, coordinateClickedCell)) {
 
                     const tipeShell = shell.shellType;
-                    console.log(tipeShell);
+                    // console.log(tipeShell);
                     cell.setAttribute('data-photo', tipeShell);
+                    cell.style.backgroundColor = 'rgba(0, 0, 0, 0.652)';
                     isShell = true;
                 }
             }

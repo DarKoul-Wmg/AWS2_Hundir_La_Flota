@@ -67,7 +67,9 @@
         <?php
     // Crear sesión y guardar el nombre del jugador en una variable de sesión
     session_start();
-
+    // session_unset(); // Eliminar todas las variables de sesión
+    $_SESSION['redirected'] = true;
+    
     if(isset($_POST["playerName"])){ //si tenemos nombre registrado, mostrar botones de juego activos
         $_SESSION["playerName"] = $_POST["playerName"];
 
@@ -99,72 +101,94 @@
         echo'
         <form action="index.php" method="post">
             <div class="landingPageCenterTextbox">
-                <input type="text" id="playerName" name="playerName"  placeholder="Registra el teu nom per jugar" minlength="3" maxlength="30" required>
-                <input type="submit" class="landingPageRegisterButton" value="Registra">
+                <input type="text" id="playerName" name="playerName" placeholder="Registra el teu nom per jugar"
+                    minlength="3" maxlength="30" required>
             </div>
 
             <div class="landingPageCenterButtons">
-                <a href="game.php" class="landingPageStartLinkBtn">
-                    <button type="button" class="landingPageNewGameButton" disabled>Tutorial</button>
-                </a>
-                <a href="gameIA.php" class="landingPageStartLinkBtn">
-                    <button type="button" class="landingPageNewGameButton" disabled>Vs CPU</button>
-                </a>
+
+                <input type="submit" class="landingPageNewGameButton" id="tutorialBtn" name="tutorial" value="Tutorial"
+                    formaction="game.php" disabled>
+
+
+                <input type="submit" class="landingPageNewGameButton" id="vsCpuBtn" name="vsCPU" value="Vs CPU"
+                    formaction="gameIA.php" disabled>
+
                 <a href="ranking.php?page=1">
                     <button type="button" class="landingPageRankingButton">Ranking</button>
                 </a>
             </div>
-            
-            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img src="images/options.png" class="optionImg"></button>
+
+            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton">
+                <img src="images/options.png" class="optionImg">Opcions
+            </button>
 
             <div class="landingPageOptions" id="landingPageOptions">
                 <div class="landingPageCheckboxWrapper">
                     <label for="limmitedAmmoCheckbox" class="landingPageLabel">Munició limitada</label>
-                     <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox"
-                    class="landingPageCheckbox" ' . (isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"] ? 'checked' : '') . '>
-                    </div>
+                    <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox"
+                        class="landingPageCheckbox">
+                </div>
                 <div class="landingPageCheckboxWrapper">
                     <label for="ironcladShipsCheckbox" class="landingPageLabel">Vaixells acoirassats</label>
                     <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox"
-                    class="landingPageCheckbox" ' . (isset($_SESSION["ironclad"]) && $_SESSION["ironclad"] ? 'checked' : '') . '>
+                        class="landingPageCheckbox">
                 </div>
                 <div class="landingPageCheckboxWrapper">
                     <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
                     <input type="checkbox" id="specialAttacksCheckbox" name="specialAttacksCheckbox"
                     class="landingPageCheckbox" '. (isset($_SESSION["specialAttacks"]) && $_SESSION["specialAttacks"] ? 'checked' : '') . '>
+
                 </div>
             </div>
-
         </form>
-        ';
-    };
-
+    </div>';
+    }
 ?>
-        
-        <!--
+
+
+    <!--
         en la especificación no pone nada de que el menú de opciones tenga un botón de Guardar, así que tal vez sea mejor guardar las opciones en JS
         -->
-        <script>
-            function init() {
+    <script>
+
+        const textbox = document.getElementById("playerName");
+        const tutorial = document.getElementById("tutorialBtn");
+        const vsCPU = document.getElementById("vsCpuBtn");
+
+        function init() {
+
+            textbox.addEventListener("input", eventHandler);
+            function eventHandler(event) {
+                if (textbox.value.length > 2) {
+                    tutorial.disabled = false;
+                    vsCPU.disabled = false;
+                }
+                if (textbox.value.length < 3) {
+                    tutorial.disabled = true;
+                    vsCPU.disabled = true;
+                }
+            }
             // función del botón checkBoxes landingPage
             //landingPage, hacer clic en botón opciones para mostrar/esconder div
             const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
             let showOptions = true;
-            landingPageOptBtn.addEventListener("click", function() {
-            if (showOptions){
-                document.getElementById("landingPageOptions").style.display = "block";
-                showOptions = false;
-            } else {
-                document.getElementById("landingPageOptions").style.display = "none";
-                showOptions = true;
-            }
+            landingPageOptBtn.addEventListener("click", function () {
+                if (showOptions) {
+                    document.getElementById("landingPageOptions").style.display = "block";
+                    showOptions = false;
+                } else {
+                    document.getElementById("landingPageOptions").style.display = "none";
+                    showOptions = true;
+                }
             });
         }
-            window.addEventListener("DOMContentLoaded", init);
+
+        window.addEventListener("DOMContentLoaded", init);
 
 
 
-        </script>
+    </script>
 </body>
 
 </html>
