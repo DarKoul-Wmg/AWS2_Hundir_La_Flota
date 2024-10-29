@@ -99,10 +99,8 @@
 
         // Regoger valores de los checkboxes
         $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"];
-        //$ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
-        //$specialAttacks = isset($_SESSION["specialAttacks"]) ? $_SESSION["specialAttacks"] : false;
-
-        //echo "<h1>Munició limitada: " . ($limmitedAmmo ? "Sí" : "No") .     "</h1>";
+        //$ironclad = isset($_SESSION["ironclad"]) && $_SESSION["ironclad"];
+        $specialAttacks = isset($_SESSION["specialAttacks"]) && $_SESSION["specialAttacks"];
 
         // crear dos tableros 10x10 - por defecto sin conchas
         $boardUser = array_fill(1, 10, array_fill(1, 10, false));
@@ -219,27 +217,26 @@
             <!-- botón hacia atrás -->
             <a href="index.php" ><button id ="btnAccion" class="exit">&larrhk;</button></a>
             
-
             <!-- información de la munición -->
              <?php
                 
                 // poner que se vea o no
-                $visibilityStyle = $limmitedAmmo ? 'visible' : 'hidden';
-                $limitedAmmoStr = $limmitedAmmo ? 'true' : 'false';
+                $visibilityStyleMunition = $limmitedAmmo ? 'visible' : 'hidden';
+                $limmitedAmmoStr = $limmitedAmmo ? 'true' : 'false';
                 
                 // hardcodear munición
                 echo '
-                    <div id="contenedorMunicion" data-limitedMunition="' . $limitedAmmoStr . '" style="visibility: ' . $visibilityStyle . ';">
+                    <div id="contenedorMunicion" data-limitedMunition="' . $limmitedAmmoStr . '" style="visibility: ' . $visibilityStyleMunition . ';">
                         <div id="contenidoHidMunicion">
                             <h3> Munición disponible </h3>
                             <div class="linea">
                                 <p>User:</p> 
-                                <p id="userMunition">4</p> 
+                                <p id="userMunition">40</p> 
                                 <p> /40</p>
                             </div>
                             <div class="linea">
                                 <p>IA:</p> 
-                                <p id="iaMunition">4</p> 
+                                <p id="iaMunition">40</p> 
                                 <p> /40</p>
                             </div>
                         </div>
@@ -270,6 +267,7 @@
                                 $chrx = chr(64 + $j);
                                 echo "<td class='letter'> $chrx </td>";
                             } else {
+                                
                                 // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
                                 echo "<td class='selectCellsIA' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
                             }
@@ -281,37 +279,51 @@
             </table>
 
         </div>
-        
-        <!-- tablero del usuario-->
-        <table id="tableUser">
-            <?php
-            $filas = 11;
-            $columnas = 11;
-            for ($i = 0; $i < $filas; $i++) {
-                echo "<tr>";
-                for ($j = 0; $j < $columnas; $j++) {
-                    # Crear un ID único para cada celda
-                    # En el caso de que sea el puesto superior izquierda no pinte nada
-                    if ($j == 0 && $i == 0) {
-                        echo "<td class='empty'>⛧</td>";
 
-                    # primera columna
-                    } elseif ($j == 0 && $i >= 1) {
-                        echo "<td class='number'> $i </td>";
-                    
-                    # primera columna
-                    } elseif ($j >= 1 && $i == 0) {
-                        $chrx = chr(64 + $j);
-                        echo "<td class='letter'> $chrx </td>";
-                    } else {
-                        // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                        echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
-                    }
-                }
-                echo "</tr>";
-            }
+
+        <div class="centerContainer">
+            <!-- información de los ataques especiales -->
+            <?php
+                // poner que se vea o no
+                $visibilityStyleSpecialAttack = $specialAttacks ? 'visible' : 'hidden';
+                echo '
+                    <div id="contenedorSpecialAttack" style="visibility: ' . $visibilityStyleSpecialAttack . ';">
+                        <img class="pala" data-selected="false" data-used="false" src="images/palaPlaceHolder.png" alt="pala de minecraft">
+                        <img class="pala" data-selected="false" data-used="false" src="images/palaPlaceHolder.png" alt="pala de minecraft">
+                    </div>
+                ';
             ?>
-        </table>
+            <!-- tablero del usuario-->
+            <table id="tableUser">
+                <?php
+                $filas = 11;
+                $columnas = 11;
+                for ($i = 0; $i < $filas; $i++) {
+                    echo "<tr>";
+                    for ($j = 0; $j < $columnas; $j++) {
+                        # Crear un ID único para cada celda
+                        # En el caso de que sea el puesto superior izquierda no pinte nada
+                        if ($j == 0 && $i == 0) {
+                            echo "<td class='empty'>⛧</td>";
+
+                        # primera columna
+                        } elseif ($j == 0 && $i >= 1) {
+                            echo "<td class='number'> $i </td>";
+                        
+                        # primera columna
+                        } elseif ($j >= 1 && $i == 0) {
+                            $chrx = chr(64 + $j);
+                            echo "<td class='letter'> $chrx </td>";
+                        } else {
+                            // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
+                            echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                        }
+                    }
+                    echo "</tr>";
+                }
+                ?>
+            </table>
+        </div>
         
         <div class ="rightContainer">
             <!-- nombre -->
