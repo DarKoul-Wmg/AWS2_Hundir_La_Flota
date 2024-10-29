@@ -51,6 +51,11 @@
         <source src="sounds/especialAtac.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
+
+    <audio id="sonidoEnterrado">
+        <source src="sounds/water3.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
     
     <noscript>
         <div class="noscript-overlay">

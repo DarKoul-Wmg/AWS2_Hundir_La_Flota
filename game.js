@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let sonidoPalaEsp = document.getElementById('sonidoPalaEsp');
     let sonidoAtaqueEsp = document.getElementById('sonidoAtaqueEsp');
 
+    let sonidoEnterrado = document.getElementById('sonidoEnterrado');
+
     // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
     let botones = document.querySelectorAll('button');
 
@@ -741,6 +743,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (keepTurn) { //HARDCODEAR DEMO
+            sonidoEspera.play();
             setTimeout(() => turnCPU(e, dicShellsIA), 4000); //Repetir turno CPU a los 2 segundos
             //setTimeout(() => turnCPU(e, dicShellsIA), 500);
 
@@ -1014,7 +1017,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.log("coordenada añadida")
                     }
                     else{
-                        sonidoAgua.play();
+                        sonidoEnterrado.play();
                     }
 
                     // comprobar si todo el grupo ha sido descubierto
