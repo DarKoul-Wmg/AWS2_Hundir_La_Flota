@@ -135,7 +135,7 @@
                         class="landingPageCheckbox">
                 </div>
                 <div class="landingPageCheckboxWrapper">
-                    <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
+                    <label for="specialAttacksCheckbox" class="landingPageLabel">Pala especial</label>
                     <input type="checkbox" id="specialAttacksCheckbox" name="specialAttacksCheckbox"
                     class="landingPageCheckbox">
 
