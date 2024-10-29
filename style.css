@@ -282,15 +282,23 @@ body#gameIA .centerContainer{
 body#gameIA .centerContainer #contenedorSpecialAttack{
     display: flex;
     flex-direction: row;
-    width: 12%;
-    margin-left: 71%;
-    background-color: red;
+    width: 22%;
+    max-height: 10%;
+    margin-right: auto;
+    margin-left: 74%;
+    justify-content: right;
 }
 
 body#gameIA .centerContainer #contenedorSpecialAttack img {
-    width: 100%;
-    height: 70%;
+    width: 100px;
     margin: 4px;
+    padding: 4%;
+}
+
+body#gameIA .centerContainer #contenedorSpecialAttack img[data-selected="true"] {
+    background-color: #b9faf8;
+    border-radius: 16px;
+    box-shadow: 0px 5px 15px 2px rgba(0, 0, 0, 0.20);
 }
 
 
@@ -439,6 +447,7 @@ body#gameIA #contenedorMunicion{
     padding: 1px 0px 1px 13px;
     margin-left: 20%;
     margin-right: 10%;
+    margin-top: 4%;
     background-color: #251934a7;
     color: whitesmoke;
     
@@ -501,7 +510,7 @@ body#gameIA #points{
     font: 1.5rem "Fira Sans", sans-serif;
     font-weight: bold;
     color: white;
-    height: 33%;
+    height: 18%;
     display: flex;
     justify-content: center;
 }
@@ -530,7 +539,7 @@ body#game #containerMessage,
 body#gameIA #containerMessage{
     width: 96%;
     opacity: 0.8;
-    margin: auto;
+    margin: 20px 0px;
 }
 
 body#game #message,

@@ -232,26 +232,27 @@ document.addEventListener("DOMContentLoaded", function () {
         const isAlreadyUsed = e.target.getAttribute('data-used');
 
         if(isAlreadyUsed === 'false'){
-            // Recorrer todas las palas y deseleccionarlas
-            for (let pala of palas) {
 
-                // si la pala no está usada
-                if(pala.getAttribute('data-used')==='false'){
-                    pala.src = "images/palaPlaceHolder.png";
-                    pala.setAttribute("data-selected", "false");
-                    specialAttackSelected = false;
-                }
+            // si la pala ya estaba seleccionada
+            if (e.target.getAttribute("data-selected") === "true") {
+                // deselecciona la pala
+                e.target.setAttribute("data-selected", "false");
+                // desactiva el ataque especial
+                specialAttackSelected = false;  
             }
 
-            // si la pala que has seleccionado está en palaPlaceHolder se cambia la foto y se selecciona
-            if (rutaRelativa === "images/palaPlaceHolder.png") {
-                //cambiar la foto
-                e.target.src = "images/palaSeleccionada.png";
-                //seleccionar la pala
+            else {
+                // si no está seleccionada, deselecciona todas las palas y selecciona la del evento
+                for (let pala of palas) {
+                    pala.setAttribute("data-selected", "false");
+                }
+    
+                // Selecciona la pala clicada
                 e.target.setAttribute("data-selected", "true");
-                //activar ataque especial
+                // activa el ataque especial
                 specialAttackSelected = true;
             }
+           
         }
 
         console.log("El ataque especial está en: "+specialAttackSelected);
@@ -292,12 +293,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedShovel = document.querySelector('.pala[data-selected="true"]');
             selectedShovel.setAttribute('data-used', 'true');
             selectedShovel.setAttribute('data-selected', 'false');
+            // cambia la foto al usar la pala
+            selectedShovel.src = "images/palaUsada.png";
             specialAttackSelected = false;
 
             // restar munición si esta está activada
             if(isLimitedMunition){
                 if(updatedMunitionValue>0){
-                    updatedMunitionValue--;
+                    updatedMunitionValue = updatedMunitionValue-numberOfAdjacentCells;
                     document.getElementById('userMunition').innerHTML = updatedMunitionValue;
                 }
             }
@@ -305,6 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return throwTheSpecialAttack(adjacentCells);
         }
         
+        printMessageOnClick('userNotEnouthMunition');
         return true;
 
     }
@@ -896,8 +900,9 @@ document.addEventListener("DOMContentLoaded", function () {
             groupShell: "Informació<br/><br/>Tocal i enfonsat",
             win: "Èxit<br/><br/>Has guanyat!",
             lose: "Perill<br/><br/>Has perdut!",
-            userNotMun: "Informació<br/><br/>Ja no tens més munició",
-            iaNotMun: "Informació<br/><br/>L'ia ja no té més munició",
+            userNotMun: "Alerta<br/><br/>Ja no tens més munició",
+            iaNotMun: "Alerta<br/><br/>L'ia ja no té més munició",
+            userNotEnouthMunition: "Alerta<br/><br/>No tens suficient munició"
 
         };
 
@@ -912,7 +917,7 @@ document.addEventListener("DOMContentLoaded", function () {
             messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
         }
 
-        else if (cellState == 'userNotMun' || cellState == 'iaNotMun') {
+        else if (cellState == 'userNotMun' || cellState == 'iaNotMun' || cellState == 'userNotEnouthMunition') {
             messageElement.style.border = "3px solid yellow";
             messageElement.style.borderLeft = "5px solid yellow";
             messageElement.style.color = "rgb(231, 211, 63)";
