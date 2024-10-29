@@ -74,6 +74,19 @@
 
     <?php
     session_start();
+    //almacenamos nombre de jugador en sesión
+    $_SESSION["playerName"] = $_POST["playerName"];
+
+    // valores de los checkboxes enviados desde el formulario
+    $limmitedAmmo = isset($_POST['limmitedAmmoCheckbox']) ? true : false;
+    $ironcladShips = isset($_POST['ironcladShipsCheckbox']) ? true : false;
+    $specialAttacks = isset($_POST['specialAttacksCheckbox']) ? true : false;
+
+    // Guardar valores en la sesión para pasar a php2
+    $_SESSION["limmitedAmmo"] = $limmitedAmmo;
+    $_SESSION["ironcladShips"] = $ironcladShips;
+    $_SESSION["specialAttacks"] = $specialAttacks;
+
 
     // Regoger valores de los checkboxes
     $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) ? $_SESSION["limmitedAmmo"] : false;

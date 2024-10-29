@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let sonidoAccion = document.getElementById('sonidoAccion');
     let sonidoAgua = document.getElementById('sonidoAgua');
     let sonidoAcierto = document.getElementById('sonidoAcierto');
+    let sonidoEspera = document.getElementById('sonidoEspera');
 
     // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
     let botones = document.querySelectorAll('button');
@@ -44,11 +45,33 @@ document.addEventListener("DOMContentLoaded", function () {
     let isMunitionUserSpent = false;
     let isMunitionIaSpent = false;
 
+
+    // ACORAZADOS --
+  
     //variables de acorazados
     const  contenedorAcorazados = document.getElementById('contenedorAcorazados');
     if (contenedorAcorazados){
         const ironcladShips = contenedorAcorazados.getAttribute('data-ironcladShips');
         var isIroncladShips = ironcladShips === 'true';
+    }
+
+  
+    // ATAQUES ESPECIALES --
+
+    // variables de ataques especiales
+    const contenedorAtaqueEspecial = document.getElementById('contenedorSpecialAttack');
+    let specialAttackSelected = false;
+
+    if(contenedorAtaqueEspecial){
+        const palas = document.getElementsByClassName("pala");
+
+        // evento click para las palas de ataque especial
+        for (let pala of palas) {
+            // creamos una función para poder pasar el parámetro event         
+            pala.addEventListener("click", function(event){
+                clickToShovel(event,palas);
+            });
+        };
     }
 
     // variable de las celdas que puedes darle click
@@ -60,10 +83,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // gameMode 1 => VS CPU
     var turn = true;    // turnos: TRUE => Jugador, FALSE => CPU
 
-    if (window.location.href == "http://localhost:8080/game.php") {
+    const currentPath = window.location.pathname;
+    //console.log(currentPath);
+
+    if (currentPath === "/game.php") {
         gameMode = 0;
-    }
-    if (window.location.href == "http://localhost:8080/gameIA.php") {
+    } else if (currentPath === "/gameIA.php") {
         gameMode = 1;
     }
 
@@ -202,6 +227,189 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    // ATAQUES ESPECIALES--
+
+    // función que se activa al hacer click a la celda y activa el ataque especial
+    function clickToShovel(e,palas){
+
+        // cambia la foto al clicar la pala
+        const rutaActualCompleta = e.target.src;
+        const rutaRelativa = rutaActualCompleta.replace(window.location.origin + "/", "");
+        console.log(rutaRelativa);
+
+
+        const isAlreadyUsed = e.target.getAttribute('data-used');
+
+        if(isAlreadyUsed === 'false'){
+
+            // si la pala ya estaba seleccionada
+            if (e.target.getAttribute("data-selected") === "true") {
+                // deselecciona la pala
+                e.target.setAttribute("data-selected", "false");
+                // desactiva el ataque especial
+                specialAttackSelected = false;  
+            }
+
+            else {
+                // si no está seleccionada, deselecciona todas las palas y selecciona la del evento
+                for (let pala of palas) {
+                    pala.setAttribute("data-selected", "false");
+                }
+    
+                // Selecciona la pala clicada
+                e.target.setAttribute("data-selected", "true");
+                // activa el ataque especial
+                specialAttackSelected = true;
+            }
+           
+        }
+
+        console.log("El ataque especial está en: "+specialAttackSelected);
+    }
+
+    // función para hacer clicks a las celdas adyacentes a la vez
+    function isTurnUserAndDiscoverCellsWithSpecialAttack(coordinateCellClicked){
+
+        const adjacentCells = [];
+        const directions = [
+            [-1, 0],   // arriba
+            [-1, 1],   // arriba derecha
+            [0, 1],    // derecha
+            [1, 1],    // abajo derecha
+            [1, 0],    // abajo
+            [1, -1],   // abajo izquierda
+            [0, -1],   // izquierda
+            [-1, -1]   // arriba izquierda   
+        ];
+
+        for (const [dx, dy] of directions) {
+            const newX = coordinateCellClicked[0] + dx;
+            const newY = coordinateCellClicked[1] + dy;
+            if (newX >= 1 && newX <= 10 && newY >= 1 && newY <= 10) {
+                adjacentCells.push([newX, newY]);
+            }
+        }
+        adjacentCells.push(coordinateCellClicked);
+        console.log(adjacentCells);
+
+        // comprueba que puedas hacer el ataque especial
+        const numberOfAdjacentCells = adjacentCells.length;
+        let updatedMunitionValue = getCurrentMunition(true);
+
+        if(updatedMunitionValue>=numberOfAdjacentCells){
+
+            // poner la pala como USED como que se ha usado el ataque especial
+            const selectedShovel = document.querySelector('.pala[data-selected="true"]');
+            selectedShovel.setAttribute('data-used', 'true');
+            selectedShovel.setAttribute('data-selected', 'false');
+            // cambia la foto al usar la pala
+            selectedShovel.src = "images/palaUsada.png";
+            specialAttackSelected = false;
+
+            // restar munición si esta está activada
+            if(isLimitedMunition){
+                if(updatedMunitionValue>0){
+                    updatedMunitionValue = updatedMunitionValue-numberOfAdjacentCells;
+                    document.getElementById('userMunition').innerHTML = updatedMunitionValue;
+                }
+            }
+
+            return throwTheSpecialAttack(adjacentCells);
+        }
+        
+        printMessageOnClick('userNotEnouthMunition');
+        return true;
+
+    }
+
+    // función que hace la lógica de tirar la bomba
+    function throwTheSpecialAttack(adjacentCells){
+        // variables
+        let someShellIsDiscovered = 'water';
+        let groupIsDiscovered = false;
+
+        // por cada coordenada que se ha tocada con el ataque especial
+        for (const coordinateAD of adjacentCells){
+            // recoger el informe de la celda
+            const [touch, cellState, groupIsDiscoveredTemp] = checkClickedCell(dicShellsUser,coordinateAD);
+
+            
+            const cell = document.querySelector(`#tableUser td[data-x="${coordinateAD[0]}"][data-y="${coordinateAD[1]}"]`);
+            
+            if(cell){
+
+                // levanta la celda si esta no ha sido levantada ya
+                if(cell.getAttribute('data-touched') === 'false'){
+                    //cambiar el atributo a true para no volverla a girar
+                    cell.setAttribute('data-touched', 'true');
+
+                    // poner que se ha encontrado un grupo entero
+                    if(groupIsDiscoveredTemp){
+                        groupIsDiscovered = groupIsDiscoveredTemp;
+                    }
+
+                    // muestro la imagen
+                    let isShell = false;
+
+                    for (const shell of dicShellsUser) {
+                        for (const coordinate of shell.coordinates) {
+
+                            if (compareCoordinates(coordinate, coordinateAD)) {
+
+                                const tipeShell = shell.shellType;
+                                console.log(tipeShell);
+                                cell.setAttribute('data-photo', tipeShell);
+                                isShell = true;
+                                someShellIsDiscovered='shell';
+                            }
+                        }
+                    }
+                    if (!isShell) {
+                        cell.setAttribute('data-photo', 'sand');
+                    }
+
+                    // para mostrar el mensaje de que se ha descubierto un grupo de conchas
+                    if(groupIsDiscovered){
+                        someShellIsDiscovered='groupShell';
+                    }
+                }
+            }
+
+        } 
+
+        // printear un mensaje correspondiente
+        printMessageOnClick(someShellIsDiscovered);
+
+        console.log("GroupIsDiscovered: "+groupIsDiscovered);
+        // comprueba si has ganado la partida
+        if(groupIsDiscovered){
+            if(isWin(dicShellsUser)){
+                console.log("HAS GANADO CON EL ATAQUE ESPECIAL")
+                //Sonido win
+                sonidoWin.play();
+                printMessageOnClick('win');
+
+                //calcular puntos del final
+                endgamePoints();
+
+                // después de 2 segundo te vas a win.php
+                setTimeout(function () {
+                    document.getElementById("endForm").submit();
+                    //window.location.href = "win.php";
+                }, 6000);
+            }      
+        }
+        // pasar el turno a la CPU
+        else if(someShellIsDiscovered === 'water'){
+            console.log("SE LE PASA EL TURNO A LA CPU");
+            return false;
+        }
+
+        console.log("NO SE PASA EL TURNO A LA CPU");
+        return true;
+    }
+
+
     // TURNOS --
 
 
@@ -214,34 +422,64 @@ document.addEventListener("DOMContentLoaded", function () {
         if (gameMode == 1) {
             if (turn) {
 
-                // munición user
-                if (isLimitedMunition) {
-                    let updatedMunitionValue = getCurrentMunition(turn);
-
-                    if (updatedMunitionValue > 0) {
-                        updatedMunitionValue--;
-                        document.getElementById('userMunition').innerHTML = updatedMunitionValue;
-                    }
-
-                }
-
                 // si TIENE munición el user
                 if (!isMunitionUserSpent) {
-                    console.log("Llamando a discoverCell");
-                    var [cellState, life] = discoverCell(event, dicShellsUser) ;
-                    console.log(life);
-                    if (cellState === 'water' || life > 0) { //si la celda clicada es agua pasar el turno a la CPU
-                        turn = false;
-                        console.log(life);
-                        //estilos que marcan el turno de la CPU
-                        styleTurnCPU();
 
-                        if (!isMunitionIaSpent) {
-                            setTimeout(() => turnCPU(event, dicShellsIA), 2000);
-                        } else {
-                            returnTurnToPlayer(); //esto es para evitar que el jugador pueda volver a clicar celdas descubiertas
+                    // si ataque especial está ACTIVADO
+                    if(specialAttackSelected){
+
+                        const cell = event.target;
+
+                        let x = parseInt(cell.getAttribute('data-x'));
+                        let y = parseInt(cell.getAttribute('data-y'));
+                        const coordinateCellClicked = [x, y];
+
+                        // si no se ha tocado aún
+                        if (cell.getAttribute('data-touched') === 'false'){
+
+                            if(isTurnUserAndDiscoverCellsWithSpecialAttack(coordinateCellClicked)){ // te devuelve si es el turno del user
+                                returnTurnToPlayer();
+                            }
+                            else{
+                                turn = false;
+                                styleTurnCPU();
+                                setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                            }
                         }
+
                     }
+
+                    else if (!specialAttackSelected) {
+                        console.log("Llamando a discoverCell");
+                        var [cellState, life] = discoverCell(event, dicShellsUser) ;
+                        console.log(life);
+                        
+                        // RESTA munición al user
+                        if (isLimitedMunition) {
+                            let updatedMunitionValue = getCurrentMunition(turn);
+
+                            if (updatedMunitionValue > 0) {
+                                updatedMunitionValue--;
+                                document.getElementById('userMunition').innerHTML = updatedMunitionValue;
+                            }
+                        }
+                      
+                      
+                        if (cellState === 'water' || life > 0) {
+                            turn = false;
+                            //sonido cuando IA vaya a disparar:
+                            sonidoEspera.play();
+                            //estilos que marcan el turno de la CPU
+                            styleTurnCPU();
+                          
+                            if (!isMunitionIaSpent) {
+                                setTimeout(() => turnCPU(event, dicShellsIA), 4000);
+                            } 
+                            else {
+                                returnTurnToPlayer(); //esto es para evitar que el jugador pueda volver a clicar celdas descubiertas
+                            }                              
+                        }
+                     }
                 }
 
                 else if (isMunitionUserSpent) {
@@ -249,8 +487,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     printMessageOnClick('userNotMun');
                     console.log("mensaje de que no tiene munición el user ")
                     turn = false;
+                    //sonido cuando IA vaya a disparar:
+                    sonidoEspera.play();
                     styleTurnCPU();
-                    setTimeout(() => turnCPU(event, dicShellsIA), 2000);
+                    setTimeout(() => turnCPU(event, dicShellsIA), 4000);
                 }
                 checkGameOverByMunition();
             }
@@ -264,6 +504,11 @@ document.addEventListener("DOMContentLoaded", function () {
         tableUser.classList.remove("tableDisabler");
         tableIA.classList.add("tableDisabler");
         tableIA.classList.remove("tableEnabler");
+
+        const shovels = document.getElementsByClassName('pala');
+        for(const shovel of shovels){
+            shovel.classList.remove('shovelDisable');
+        }
     }
 
     function styleTurnCPU() { //estilos que marcan el turno de la CPU
@@ -271,6 +516,12 @@ document.addEventListener("DOMContentLoaded", function () {
         tableUser.classList.remove("tableEnabler");
         tableIA.classList.add("tableEnabler");
         tableIA.classList.remove("tableDisabler");
+
+        const shovels = document.getElementsByClassName('pala');
+        for(const shovel of shovels){
+            shovel.classList.add('shovelDisable');
+        }
+        
     }
 
     function resetClickEvent() {
@@ -315,6 +566,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //var thisHit, previousHit =[];
 
     function turnCPU(e, dicShellsIA) {
+
         if (!turn) {
             for (let cell of cells) {
                 //quitamos el evento click de las celdas hasta que le vuelva a tocar al jugador         
@@ -443,6 +695,9 @@ document.addEventListener("DOMContentLoaded", function () {
         
         console.log(dicShellsIA);
 
+        const cell = document.querySelector(`[data-x="${coordinateInCPUTable[0]}"][data-y="${coordinateInCPUTable[1]}"]`);
+        setImageInCell(dicShellsIA, coordinateInCPUTable, { target: cell });
+
         printMessageOnClick(cellState);
 
         if (isWin(dicShellsIA)) {
@@ -461,8 +716,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 4000);
         }
 
-
         if (keepTurn) { //HARDCODEAR DEMO
+            //sonido cuando IA vaya a disparar:
+            sonidoEspera.play();
             setTimeout(() => turnCPU(e, dicShellsIA), 4000); //Repetir turno CPU a los 2 segundos
             //setTimeout(() => turnCPU(e, dicShellsIA), 500);
 
@@ -635,12 +891,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // }
 
 
-    // mostrar todas las imagenes en tu tablero
+    // mostrar todas las imagenes shell en tu tablero
     const cellsTableIA = document.getElementsByClassName("selectCellsIA");
 
     for (let cell of cellsTableIA) {
-
-
         let x = parseInt(cell.getAttribute('data-x'));
         let y = parseInt(cell.getAttribute('data-y'));
         const coordinateCellClicked = [x, y];
@@ -654,16 +908,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (compareCoordinates(coordinate, coordinateCellClicked)) {
 
                     const tipeShell = shell.shellType;
-                    cell.setAttribute('data-photo', tipeShell);
+                    // cell.setAttribute('data-photo', tipeShell);
+                    cell.style.backgroundColor = '#EF5D3D'
                     isShell = true;
                 }
             }
         }
-
-        if (!isShell) {
-            cell.setAttribute('data-photo', 'sand');
-        }
-
     }
 
     // función auxiliar que compara dos coordenadas: devuelve true si son iguales or false si no son iguales
@@ -772,7 +1022,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // mostrar la imagen en la celda
     function setImageInCell(dicShells, coordinateClickedCell, e) {
         const cell = e.target;
-
         let isShell = false;
 
         for (const shell of dicShells) {
@@ -782,12 +1031,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (compareCoordinates(coordinate, coordinateClickedCell)) {
 
                     const tipeShell = shell.shellType;
+
                     console.log(tipeShell);
                     //No mostrar la imagen de la concha hasta ser descubierta del todox
                     if(shell.lives[index] > 0){
                         cell.style.backgroundColor = "blue";
                     }else{                     
                         cell.setAttribute('data-photo', tipeShell);
+                        cell.style.backgroundColor = 'rgba(0, 0, 0, 0.652)';
                     }
                     isShell = true;
                 }
@@ -811,8 +1062,9 @@ document.addEventListener("DOMContentLoaded", function () {
             groupShell: "Informació<br/><br/>Tocal i enfonsat",
             win: "Èxit<br/><br/>Has guanyat!",
             lose: "Perill<br/><br/>Has perdut!",
-            userNotMun: "Informació<br/><br/>Ja no tens més munició",
-            iaNotMun: "Informació<br/><br/>L'ia ja no té més munició",
+            userNotMun: "Alerta<br/><br/>Ja no tens més munició",
+            iaNotMun: "Alerta<br/><br/>L'ia ja no té més munició",
+            userNotEnouthMunition: "Alerta<br/><br/>No tens suficient munició"
 
         };
 
@@ -827,7 +1079,7 @@ document.addEventListener("DOMContentLoaded", function () {
             messageElement.style.backgroundColor = "rgba(255, 253, 253, 0.365)";
         }
 
-        else if (cellState == 'userNotMun' || cellState == 'iaNotMun') {
+        else if (cellState == 'userNotMun' || cellState == 'iaNotMun' || cellState == 'userNotEnouthMunition') {
             messageElement.style.border = "3px solid yellow";
             messageElement.style.borderLeft = "5px solid yellow";
             messageElement.style.color = "rgb(231, 211, 63)";
