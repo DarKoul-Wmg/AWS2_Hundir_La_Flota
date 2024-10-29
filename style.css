@@ -336,6 +336,16 @@ body#gameIA td[data-photo="nautilus"]{
     background-repeat: no-repeat; 
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="nautilusEnt"],
+body#gameIA td[data-photo="nautilusEnt"]{
+    background-image: url('images/nautiloEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
+
 body#game td[data-photo="mejillon"],
 body#gameIA td[data-photo="mejillon"]{
 
@@ -345,6 +355,16 @@ body#gameIA td[data-photo="mejillon"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="mejillonEnt"],
+body#gameIA td[data-photo="mejillonEnt"]{
+
+    background-image: url('images/mejillonEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="erizo"],
 body#gameIA td[data-photo="erizo"]{
 
@@ -354,6 +374,16 @@ body#gameIA td[data-photo="erizo"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="erizoEnt"],
+body#gameIA td[data-photo="erizoEnt"]{
+
+    background-image: url('images/erizo-de-marEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="concha"],
 body#gameIA td[data-photo="concha"]{
     background-image: url('images/cascaraC.png');
@@ -362,6 +392,15 @@ body#gameIA td[data-photo="concha"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="conchaEnt"],
+body#gameIA td[data-photo="conchaEnt"]{
+    background-image: url('images/cascaraEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="caracola"],
 body#gameIA td[data-photo="caracola"]{
     background-image: url('images/caracolaC.png');
@@ -370,6 +409,15 @@ body#gameIA td[data-photo="caracola"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="caracolaEnt"],
+body#gameIA td[data-photo="caracolaEnt"]{
+    background-image: url('images/caracolaEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="caracol"],
 body#gameIA td[data-photo="caracol"]{
     background-image: url('images/caracol-de-marC.png');
@@ -378,6 +426,15 @@ body#gameIA td[data-photo="caracol"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="caracolEnt"],
+body#gameIA td[data-photo="caracolEnt"]{
+    background-image: url('images/caracol-de-marEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="caparazon2"],
 body#gameIA td[data-photo="caparazon2"]{
     background-image: url('images/caparazon2C.png');
@@ -386,6 +443,15 @@ body#gameIA td[data-photo="caparazon2"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="caparazon2Ent"],
+body#gameIA td[data-photo="caparazon2Ent"]{
+    background-image: url('images/caparazon2Ent.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="caparazon"],
 body#gameIA td[data-photo="caparazon"]{
     background-image: url('images/caparazonC.png');
@@ -394,6 +460,15 @@ body#gameIA td[data-photo="caparazon"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="caparazonEnt"],
+body#gameIA td[data-photo="caparazonEnt"]{
+    background-image: url('images/caparazonEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="ermitano"],
 body#gameIA td[data-photo="ermitano"]{
     background-image: url('images/cangrejo-ermitanoC.png');
@@ -402,6 +477,15 @@ body#gameIA td[data-photo="ermitano"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="ermitanoEnt"],
+body#gameIA td[data-photo="ermitanoEnt"]{
+    background-image: url('images/cangrejo-ermitanoEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="estrella"],
 body#gameIA td[data-photo="estrella"]{
     background-image: url('images/estrella-de-marC.png');
@@ -410,6 +494,15 @@ body#gameIA td[data-photo="estrella"]{
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.652);
 }
+body#game td[data-photo="estrellaEnt"],
+body#gameIA td[data-photo="estrellaEnt"]{
+    background-image: url('images/estrella-de-marEnt.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.652);
+}
+
 body#game td[data-photo="sand"]{
     background-image: url('images/sand.png');
     background-size: cover;

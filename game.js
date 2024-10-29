@@ -640,9 +640,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 var currentCell = [x, y];                
                 
                 if (compareCoordinates(currentCell, targetSelection)) { //buscamos celda en tabla que coincida con la selección
-
-                    cell.style.backgroundColor= "blue"; //marcar la celda escogida como primer hit
-                    cell.style.border = "2px solid blue";                
+                
                     var [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShellsIA, targetSelection); //alteramos en el diccionario   
                     keepTurn = touch;
                     // if (touch){ //intenté hacer que la IA siguiese las casillas del barco en cuanto destape dos, pero no me sale
@@ -660,8 +658,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     if(life < 1){ //si es el segundo hit o es arena
 
                         console.log("vida menor a 1");
-                        cell.style.backgroundColor= "red"; //marcar la celda escogida como hit definitivo
-                        cell.style.border = "2px solid red";
 
                         // Actualiza cpuLeftCells eliminando la celda tocada
                         i = cpuLeftCells.length;
@@ -926,7 +922,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const tipeShell = shell.shellType;
                     // cell.setAttribute('data-photo', tipeShell);
-                    cell.style.backgroundColor = '#EF5D3D'
+                    cell.style.backgroundColor = '#993341'
                     isShell = true;
                 }
             }
