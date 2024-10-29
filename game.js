@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let sonidoAcierto = document.getElementById('sonidoAcierto');
     let sonidoEspera = document.getElementById('sonidoEspera');
 
+    let sonidoPalaEsp = document.getElementById('sonidoPalaEsp');
+    let sonidoAtaqueEsp = document.getElementById('sonidoAtaqueEsp');
+
     // Selecciona todos los botones en la página (sonido DEFAULT para todos los botones)
     let botones = document.querySelectorAll('button');
 
@@ -260,6 +263,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 e.target.setAttribute("data-selected", "true");
                 // activa el ataque especial
                 specialAttackSelected = true;
+                //sonido seleccion
+                sonidoPalaEsp.play();
+
             }
            
         }
@@ -327,6 +333,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // variables
         let someShellIsDiscovered = 'water';
         let groupIsDiscovered = false;
+
+        //sonido especial:
+        sonidoAtaqueEsp.play();
 
         // por cada coordenada que se ha tocada con el ataque especial
         for (const coordinateAD of adjacentCells){
@@ -483,12 +492,14 @@ document.addEventListener("DOMContentLoaded", function () {
                       
                         if (cellState === 'water' || life > 0) {
                             turn = false;
-                            //sonido cuando IA vaya a disparar:
-                            sonidoEspera.play();
+                            
+
                             //estilos que marcan el turno de la CPU
                             styleTurnCPU();
                           
                             if (!isMunitionIaSpent) {
+                                //sonido cuando IA vaya a disparar:
+                                sonidoEspera.play();
                                 setTimeout(() => turnCPU(event, dicShellsIA), 4000);
                             } 
                             else {
@@ -733,8 +744,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (keepTurn) { //HARDCODEAR DEMO
-            //sonido cuando IA vaya a disparar:
-            sonidoEspera.play();
             setTimeout(() => turnCPU(e, dicShellsIA), 4000); //Repetir turno CPU a los 2 segundos
             //setTimeout(() => turnCPU(e, dicShellsIA), 500);
 
