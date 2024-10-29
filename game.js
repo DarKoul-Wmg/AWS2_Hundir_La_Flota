@@ -695,8 +695,8 @@ document.addEventListener("DOMContentLoaded", function () {
         
         console.log(dicShellsIA);
 
-        const cell = document.querySelector(`[data-x="${coordinateInCPUTable[0]}"][data-y="${coordinateInCPUTable[1]}"]`);
-        setImageInCell(dicShellsIA, coordinateInCPUTable, { target: cell });
+        const cell = document.querySelector(`[data-x="${targetSelection[0]}"][data-y="${targetSelection[1]}"]`);
+        setImageInCell(dicShellsIA, targetSelection, { target: cell });
 
         printMessageOnClick(cellState);
 

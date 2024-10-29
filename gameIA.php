@@ -241,7 +241,7 @@
                             <h3> Munición disponible </h3>
                             <div class="linea">
                                 <p>User:</p> 
-                                <p id="userMunition">40</p> 
+                                <p id="userMunition">10</p> 
                                 <p> /40</p>
                             </div>
                             <div class="linea">
