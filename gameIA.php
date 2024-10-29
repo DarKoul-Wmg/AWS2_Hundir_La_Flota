@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css?t=<?php echo time();?>"/>
 	<script src="game.js"></script>
     
-    <title>Troba la petxina VS IA</title>
+    <title>Trova la petxina VS IA</title>
 </head>
 
 <body id="gameIA">
@@ -35,6 +35,25 @@
     </audio>
     <audio id="sonidoCpuWin">
         <source src="sounds/cpuwin.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+    <audio id="sonidoEspera">
+        <source src="sounds/shot.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
+    <audio id="sonidoAtaqueEsp">
+        <source src="sounds/breakPala.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
+    <audio id="sonidoPalaEsp">
+        <source src="sounds/especialAtac.mp3" type="audio/mpeg">
+        Sonido no habilitado
+    </audio>
+
+    <audio id="sonidoEnterrado">
+        <source src="sounds/water3.mp3" type="audio/mpeg">
         Sonido no habilitado
     </audio>
     
@@ -80,13 +99,24 @@
 
     <?php
         session_start();
+        //almacenamos nombre de jugador en sesión
+        $_SESSION["playerName"] = $_POST["playerName"];
 
-        // Regoger valores de los checkboxes
-        $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"];
-        //$ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
-        //$specialAttacks = isset($_SESSION["specialAttacks"]) ? $_SESSION["specialAttacks"] : false;
+        // valores de los checkboxes enviados desde el formulario
+        $limmitedAmmo = isset($_POST['limmitedAmmoCheckbox']) ? true : false;
+        $ironcladShips = isset($_POST['ironcladShipsCheckbox']) ? true : false;
+        $specialAttacks = isset($_POST['specialAttacksCheckbox']) ? true : false;
 
-        //echo "<h1>Munició limitada: " . ($limmitedAmmo ? "Sí" : "No") .     "</h1>";
+        // Guardar valores en la sesión para pasar a php2
+        $_SESSION["limmitedAmmo"] = $limmitedAmmo;
+        $_SESSION["ironcladShips"] = $ironcladShips;
+        $_SESSION["specialAttacks"] = $specialAttacks;
+
+       
+
+        //div para recoger la opción de acorazados en un hidden y recogerla con JS
+        $ironcladShipsStr = $ironcladShips ? 'true' : 'false';
+        echo '<div id="contenedorAcorazados" data-ironcladShips="'. $ironcladShipsStr . '"style=visibility: hidden;></div>';
 
         // crear dos tableros 10x10 - por defecto sin conchas
         $boardUser = array_fill(1, 10, array_fill(1, 10, false));
@@ -140,20 +170,26 @@
         
                 if (isEmpty($startX, $startY, $size, $direction, $board)) {
                     $shipCoordinates = [];
+                    $shipLives = [];
+                    $maxLife = 1;
+                    if ($_SESSION["ironcladShips"]){
+                        $maxLife = 2;
+                    };
         
                     for ($i = 0; $i < $size; $i++) {
                         if ($direction == 'horizontal') {
                             $board[$startX + $i][$startY] = true;
-                            $shipCoordinates[] = [$startX + $i, $startY];
+                            $shipCoordinates[] = [$startX + $i, $startY]; 
                         } else {
                             $board[$startX][$startY + $i] = true;
-                            $shipCoordinates[] = [$startX, $startY + $i];
+                            $shipCoordinates[] = [$startX, $startY + $i]; 
                         }
+                        $shipLives[] = $maxLife;
                     }
         
                     // Aquí asignas las coordenadas al barco actual
                     $ship['coordinates'] = $shipCoordinates;
-        
+                    $ship['lives'] = $shipLives;
                     $placed = true;
                 }
             }
@@ -163,8 +199,7 @@
         function generateShips(&$board) {
             $ships = [];
             $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus","estrella"];
-            $shipSizes = [1,1,1,1,2,2,2,3,3,4];
-
+            $shipSizes = [1,1,1,1,2,2,2,3,3,4];           
             foreach ($shipSizes as $size) {
                 $randomIndex = array_rand($types);
                 $type = $types[$randomIndex];
@@ -174,7 +209,8 @@
                     'size' => $size,
                     'coordinates' => [], // Inicialmente vacío
                     'touchedCoordinates' => [],
-                    'shellType' => $type
+                    'shellType' => $type,
+                    'lives' => []
                 ];
 
                 placeShip($ship, $size, $type, $board); // Pasar el barco actual a la función
@@ -203,19 +239,18 @@
             <!-- botón hacia atrás -->
             <a href="index.php" ><button id ="btnAccion" class="exit">&larrhk;</button></a>
             
-
             <!-- información de la munición -->
              <?php
                 
                 // poner que se vea o no
-                $visibilityStyle = $limmitedAmmo ? 'visible' : 'hidden';
-                $limitedAmmoStr = $limmitedAmmo ? 'true' : 'false';
+                $visibilityStyleMunition = $limmitedAmmo ? 'visible' : 'hidden';
+                $limmitedAmmoStr = $limmitedAmmo ? 'true' : 'false';
                 
                 // hardcodear munición
                 echo '
-                    <div id="contenedorMunicion" data-limitedMunition="' . $limitedAmmoStr . '" style="visibility: ' . $visibilityStyle . ';">
+                    <div id="contenedorMunicion" data-limitedMunition="' . $limmitedAmmoStr . '" style="visibility: ' . $visibilityStyleMunition . ';">
                         <div id="contenidoHidMunicion">
-                            <h3> Munición disponible </h3>
+                            <h3> Usos disponibles </h3>
                             <div class="linea">
                                 <p>User:</p> 
                                 <p id="userMunition">40</p> 
@@ -254,8 +289,15 @@
                                 $chrx = chr(64 + $j);
                                 echo "<td class='letter'> $chrx </td>";
                             } else {
+
+                                //cambios a data-touched por data-life: añadimos sistema de vidas por celda, 0 == muerta, equivale a data-touched == true
+                                //reducimos en 1 por acierto
+                                $life = 1;
+                                if ($_SESSION["ironcladShips"]){
+                                    $life = 2;
+                                };
                                 // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-life=$life data-touched='false' data-photo='none'></td>";
                             }
                         }
                         echo "</tr>";
@@ -265,37 +307,57 @@
             </table>
 
         </div>
-        
-        <!-- tablero del usuario-->
-        <table id="tableUser">
-            <?php
-            $filas = 11;
-            $columnas = 11;
-            for ($i = 0; $i < $filas; $i++) {
-                echo "<tr>";
-                for ($j = 0; $j < $columnas; $j++) {
-                    # Crear un ID único para cada celda
-                    # En el caso de que sea el puesto superior izquierda no pinte nada
-                    if ($j == 0 && $i == 0) {
-                        echo "<td class='empty'>⛧</td>";
 
-                    # primera columna
-                    } elseif ($j == 0 && $i >= 1) {
-                        echo "<td class='number'> $i </td>";
-                    
-                    # primera columna
-                    } elseif ($j >= 1 && $i == 0) {
-                        $chrx = chr(64 + $j);
-                        echo "<td class='letter'> $chrx </td>";
-                    } else {
-                        // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                        echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
-                    }
-                }
-                echo "</tr>";
-            }
+
+        <div class="centerContainer">
+            <!-- información de los ataques especiales -->
+            <?php
+                // poner que se vea o no
+                $visibilityStyleSpecialAttack = $specialAttacks ? 'visible' : 'hidden';
+                echo '
+                    <div id="contenedorSpecialAttack" style="visibility: ' . $visibilityStyleSpecialAttack . ';">
+                        <img class="pala" data-selected="false" data-used="false" src="images/palaPlaceHolder.png" alt="pala de minecraft">
+                        <img class="pala" data-selected="false" data-used="false" src="images/palaPlaceHolder.png" alt="pala de minecraft">
+                    </div>
+                ';
             ?>
-        </table>
+            <!-- tablero del usuario-->
+            <table id="tableUser">
+                <?php
+                $filas = 11;
+                $columnas = 11;
+                for ($i = 0; $i < $filas; $i++) {
+                    echo "<tr>";
+                    for ($j = 0; $j < $columnas; $j++) {
+                        # Crear un ID único para cada celda
+                        # En el caso de que sea el puesto superior izquierda no pinte nada
+                        if ($j == 0 && $i == 0) {
+                            echo "<td class='empty'>⛧</td>";
+
+                        # primera columna
+                        } elseif ($j == 0 && $i >= 1) {
+                            echo "<td class='number'> $i </td>";
+                        
+                        # primera columna
+                        } elseif ($j >= 1 && $i == 0) {
+                            $chrx = chr(64 + $j);
+                            echo "<td class='letter'> $chrx </td>";
+                        } else {
+                            //cambios a data-touched por data-life: añadimos sistema de vidas por celda, 0 == muerta, equivale a data-touched == true
+                            //reducimos en 1 por acierto
+                            $life = 1;
+                            if ($_SESSION["ironcladShips"]){
+                                $life = 2;
+                            };
+                            // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
+                            echo "<td class='selectCellsUser' data-x=$i data-y=$j data-life=$life data-touched='false' data-photo='none'></td>";
+                        }
+                    }
+                    echo "</tr>";
+                }
+                ?>
+            </table>
+        </div>
         
         <div class ="rightContainer">
             <!-- nombre -->

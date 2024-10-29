@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Troba la petxina</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Trova la petxina</title>
+    <link rel="stylesheet" type="text/css" href="style.css?t=<?php echo time();?>"/>
     <script src="game.js"></script>
 </head>
 
@@ -43,8 +43,8 @@ session_start();
     </audio>
 
 
-    <img src="/images/medusaWin.png" alt="medusa kawaii" class="imagenSalto">
-    <img src="/images/estrellaWin.png" alt="estrella kawaii" class="imagenGiro">
+    <img src="images/medusaWin.png" alt="medusa kawaii" class="imagenSalto">
+    <img src="images/estrellaWin.png" alt="estrella kawaii" class="imagenGiro">
 
 <!-- Div principal-->
     <div class="winBox">
@@ -71,34 +71,13 @@ $date = date('Y-m-d h:i:s', time());
 echo '<p class="winScoreTitle">Puntuació: ',$_POST["score"],'</p>';
 echo '<p class="winScoreDesc">Registra el nom al Hall of fame: </p>';
 
-// Si se ha enviado el formulario, guardar en el archivo y redirigir a ranking
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
-    $playerName = $_POST["playerName"]; // obtener el playerName del formulario
-    
-    if (strlen($playerName) >= 3 && strlen($playerName) <= 30){
-        $array = [$playerName, $score, $date]; // datos para insertar en txt
-        
-        // Guardar en el archivo
-        $file = fopen('ranking.txt', "a");
-        $processedLine = implode(',', $array) . "\n"; 
-        fwrite($file, $processedLine); 
-        fclose($file); 
-
-        // Redirigir a ranking.php
-        header("Location: ranking.php?page=1");
-        exit; // Terminar el script
-    }
-    
-}
 
 echo '
-<form  action="win.php" method="post" onsubmit="easterEgg(event)">
+<form  action="ranking.php" method="post" onsubmit="easterEgg(event)">
     <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" value ="',$playerName,'" required>
     <input type="hidden" name="score" value="',$score,'">
     <button type="submit" class="winRegisterButton">Registra</button>
-</form>   
-';
-
+</form>';
 ?>
         <div class="winCenterButtons">
             <a href="index.php" class="winHomeBtnLink">
@@ -110,8 +89,8 @@ echo '
         </div>
     </div>
 
-    <img src="/images/conchaWin.png" alt="concha kawaii" class="imagenGiro">
-    <img src="/images/pulpoWin.png" alt="pulpo kawaii" class="imagenSalto">
+    <img src="images/conchaWin.png" alt="concha kawaii" class="imagenGiro">
+    <img src="images/pulpoWin.png" alt="pulpo kawaii" class="imagenSalto">
 
     <script>
         function easterEgg(event) {
