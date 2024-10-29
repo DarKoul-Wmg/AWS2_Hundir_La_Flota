@@ -253,10 +253,7 @@ body#gameIA table#tableIA td{
     padding: 0.1vw;
 }
 
-
-/*Centro*/
-
-
+/* Estructura de las celdas que no sean las principales*/
 body#game table td.number,
 body#game table td.letter,
 body#game table td.empty,
@@ -272,6 +269,28 @@ body#gameIA table td.empty{
 body#game table td:hover,
 body#gameIA table td:hover{
     cursor: url('images/cursor1.cur'), auto;
+}
+
+
+/*Centro*/
+
+body#gameIA .centerContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+body#gameIA .centerContainer #contenedorSpecialAttack{
+    display: flex;
+    flex-direction: row;
+    width: 12%;
+    margin-left: 71%;
+    background-color: red;
+}
+
+body#gameIA .centerContainer #contenedorSpecialAttack img {
+    width: 100%;
+    height: 70%;
+    margin: 4px;
 }
 
 

@@ -86,8 +86,6 @@
         //$ironclad = isset($_SESSION["ironclad"]) && $_SESSION["ironclad"];
         $specialAttacks = isset($_SESSION["specialAttacks"]) && $_SESSION["specialAttacks"];
 
-        //echo "<h1>Iron clad: " . ($specialAttacks ? "Sí" : "No") .     "</h1>";
-
         // crear dos tableros 10x10 - por defecto sin conchas
         $boardUser = array_fill(1, 10, array_fill(1, 10, false));
         $boardIA = array_fill(1, 10, array_fill(1, 10, false));
@@ -217,7 +215,7 @@
                             <h3> Munición disponible </h3>
                             <div class="linea">
                                 <p>User:</p> 
-                                <p id="userMunition">40</p> 
+                                <p id="userMunition">10</p> 
                                 <p> /40</p>
                             </div>
                             <div class="linea">
@@ -266,47 +264,50 @@
 
         </div>
 
-        <!-- información de los ataques especiales -->
-        <?php
-            // poner que se vea o no
-            $visibilityStyleSpecialAttack = $specialAttacks ? 'visible' : 'hidden';
-            echo '
-                <div id="contenedorSpecialAttack" style="visibility: ' . $visibilityStyleSpecialAttack . ';">
-                    <img src="images/palaPlaceHolder.png" alt="pala de minecraft">
-                    <img src="images/palaPlaceHolder.png" alt="pala de minecraft">
-                </div>
-            ';
-        ?>
-        <!-- tablero del usuario-->
-        <table id="tableUser">
-            <?php
-            $filas = 11;
-            $columnas = 11;
-            for ($i = 0; $i < $filas; $i++) {
-                echo "<tr>";
-                for ($j = 0; $j < $columnas; $j++) {
-                    # Crear un ID único para cada celda
-                    # En el caso de que sea el puesto superior izquierda no pinte nada
-                    if ($j == 0 && $i == 0) {
-                        echo "<td class='empty'>⛧</td>";
 
-                    # primera columna
-                    } elseif ($j == 0 && $i >= 1) {
-                        echo "<td class='number'> $i </td>";
-                    
-                    # primera columna
-                    } elseif ($j >= 1 && $i == 0) {
-                        $chrx = chr(64 + $j);
-                        echo "<td class='letter'> $chrx </td>";
-                    } else {
-                        // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                        echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
-                    }
-                }
-                echo "</tr>";
-            }
+        <div class="centerContainer">
+            <!-- información de los ataques especiales -->
+            <?php
+                // poner que se vea o no
+                $visibilityStyleSpecialAttack = $specialAttacks ? 'visible' : 'hidden';
+                echo '
+                    <div id="contenedorSpecialAttack" style="visibility: ' . $visibilityStyleSpecialAttack . ';">
+                        <img class="pala" data-selected="false" data-used="false" src="images/palaPlaceHolder.png" alt="pala de minecraft">
+                        <img class="pala" data-selected="false" data-used="false" src="images/palaPlaceHolder.png" alt="pala de minecraft">
+                    </div>
+                ';
             ?>
-        </table>
+            <!-- tablero del usuario-->
+            <table id="tableUser">
+                <?php
+                $filas = 11;
+                $columnas = 11;
+                for ($i = 0; $i < $filas; $i++) {
+                    echo "<tr>";
+                    for ($j = 0; $j < $columnas; $j++) {
+                        # Crear un ID único para cada celda
+                        # En el caso de que sea el puesto superior izquierda no pinte nada
+                        if ($j == 0 && $i == 0) {
+                            echo "<td class='empty'>⛧</td>";
+
+                        # primera columna
+                        } elseif ($j == 0 && $i >= 1) {
+                            echo "<td class='number'> $i </td>";
+                        
+                        # primera columna
+                        } elseif ($j >= 1 && $i == 0) {
+                            $chrx = chr(64 + $j);
+                            echo "<td class='letter'> $chrx </td>";
+                        } else {
+                            // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
+                            echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                        }
+                    }
+                    echo "</tr>";
+                }
+                ?>
+            </table>
+        </div>
         
         <div class ="rightContainer">
             <!-- nombre -->
