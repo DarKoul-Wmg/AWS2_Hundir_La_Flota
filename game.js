@@ -997,9 +997,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     touch = true;
                     cellState = "halfTouched";
                     
-                    //Sonido de acierto
-                    sonidoAcierto.play();
-                    
+
                     //reducimos en 1 la vida de la casilla
                     console.log(shell.lives);
                     shell.lives[index]--;
@@ -1007,9 +1005,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.log(shell.lives);
                     // añadimos esta coordenada a las de touched cuando su vida es 0
                     if (shell.lives[index] < 1){
+                        
+                        //Sonido de acierto
+                        sonidoAcierto.play();
+
                         cellState = "shell";
                         shell.touchedCoordinates.push(coordinateClickedCell);
                         console.log("coordenada añadida")
+                    }
+                    else{
+                        sonidoAgua.play();
                     }
 
                     // comprobar si todo el grupo ha sido descubierto
