@@ -254,8 +254,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 checkGameOverByMunition();
             }
+            
         }
-        resetClickEvent();
+        resetClickEvent(); // esto es para que el user no gaste la munición clicando en celdas descubiertas
     }
 
     function styleTurnPlayer() { //estilos que marcan el turno del usuario
@@ -309,8 +310,9 @@ document.addEventListener("DOMContentLoaded", function () {
             })
         }
     }
+
     var selectedHits = [];
-    var initialHit = [];
+    //var thisHit, previousHit =[];
 
     function turnCPU(e, dicShellsIA) {
         if (!turn) {
@@ -347,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function logicCPU(e, dicShellsIA) {
-
+        var keepTurn = false;
         var isRandom = true;
         var targetSelection;
         
@@ -358,58 +360,77 @@ document.addEventListener("DOMContentLoaded", function () {
                 isRandom = true;
                 let randomIndex = Math.floor(Math.random() * cpuLeftCells.length); // seleccionar índice aleatorio de la lista de movimientos restantes
                 targetSelection = [cpuLeftCells[randomIndex].x, cpuLeftCells[randomIndex].y];
+               
             }
     
             //cpuTargetSelection(dicShellsIA);
             for (let cell of cellsTableIA) {
+
                 let x = parseInt(cell.getAttribute('data-x'));
                 let y = parseInt(cell.getAttribute('data-y'));
                 var currentCell = [x, y];                
                 
-                if (compareCoordinates(currentCell, targetSelection)) {
+                if (compareCoordinates(currentCell, targetSelection)) { //buscamos celda en tabla que coincida con la selección
+
                     cell.style.backgroundColor= "blue"; //marcar la celda escogida como primer hit
                     cell.style.border = "2px solid blue";                
-                    var [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShellsIA, targetSelection);               
+                    var [touch, cellState, groupIsDiscovered, life] = checkClickedCell(dicShellsIA, targetSelection); //alteramos en el diccionario   
+                    keepTurn = touch;
+                    // if (touch){ //intenté hacer que la IA siguiese las casillas del barco en cuanto destape dos, pero no me sale
+                    //     previousHit = thisHit;
+                    //     thisHit = targetSelection;
+                    //     if (previousHit != undefined &&thisHit != undefined){
+                    //         //si tenemos dos aciertos seguidos modificar la lista de movimientos siguientes
+                    //         modifySelectedHits();
+                    //         thisHit = undefined;
+                    //         previousHit = undefined;
+                    //     }
+                    // }            
                     cell.setAttribute('data-life', life); //cambiamos vida en la casilla
-                    if(life < 1){
+
+                    if(life < 1){ //si es el segundo hit o es arena
+
                         console.log("vida menor a 1");
                         cell.style.backgroundColor= "red"; //marcar la celda escogida como hit definitivo
                         cell.style.border = "2px solid red";
+
                         // Actualiza cpuLeftCells eliminando la celda tocada
-                        for (let i = 0; i < cpuLeftCells.length; i++) {
+                        i = cpuLeftCells.length;
+                        while (i--) {
                             console.log("x: ",x, " y: ",y, " cpuX: ",cpuLeftCells[i].x, " cpuY: ", cpuLeftCells[i].y);
                             if (cpuLeftCells[i].x === x && cpuLeftCells[i].y === y) {
                                 console.log("borrando movimientos");
-                                cpuLeftCells.splice(i, 1); // Elimina la celda tocada
-                                selectedHits.splice(0, 1); //borrar movimiento de la lista de posibles
-    
+                                cpuLeftCells.splice(i, 1); // Elimina la celda tocada    
                                 break;
                             }
                         }
                     } else {
-                        touch = false; //si la celda aún tiene vida no repetir turno
+                        keepTurn = false; //si la celda aún tiene vida no repetir turno
                     }
+
+                    selectedHits.splice(0, 1); //borrar movimiento de la lista de posibles
                     console.log("break");
     
                     break;
                 }
             }
-            if ( life > 0 ) {
-                console.log(possibleAdjacentCells(targetSelection, dicShellsIA));
-                initialHit = targetSelection; //guardamos el impacto inicial
-                if (life > 1){
-                    console.log("añadiendo celda actual");
-
-                    selectedHits.push(targetSelection);
+            
+            if(!isIroncladShips){
+                if ( touch ) {
+                    //console.log(possibleAdjacentCells(targetSelection));
+                    selectedHits = selectedHits.concat(possibleAdjacentCells(targetSelection));
                 }
-                selectedHits = selectedHits.concat(possibleAdjacentCells(targetSelection, dicShellsIA));
+            }else {
+                if ( life > 0 ){
+                    selectedHits = selectedHits.concat(possibleAdjacentCells(targetSelection));
+                }
             }
+            
             if (groupIsDiscovered){ //si descubre un grupo borrarlo de la lista
-                for (let i = 0; i < cpuLeftCells.length; i++) {
+                for (let i = 0; i < cpuLeftCells.length-1; i++) {
                     for (hit of selectedHits){
                         if(hit[0] === cpuLeftCells[i].x && hit[1] === cpuLeftCells[i].y){
                             cpuLeftCells.splice(i, 1); // Elimina la celda tocada
-
                         }
                     }
                 }
@@ -426,6 +447,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isWin(dicShellsIA)) {
             //Sonido win
+            turn = true;
             sonidoCpuWin.play();
             printMessageOnClick('win');
 
@@ -440,52 +462,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        if (touch) { //HARDCODEAR DEMO
-            //setTimeout(() => turnCPU(e, dicShellsIA), 2000); //Repetir turno CPU a los 2 segundos
-            setTimeout(() => turnCPU(e, dicShellsIA), 500);
+        if (keepTurn) { //HARDCODEAR DEMO
+            setTimeout(() => turnCPU(e, dicShellsIA), 4000); //Repetir turno CPU a los 2 segundos
+            //setTimeout(() => turnCPU(e, dicShellsIA), 500);
 
 
         } else { //HARDCODEAR DEMO
-            //setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
-            setTimeout(() => turnCPU(e, dicShellsIA), 500); //Repetir turno CPU al milisegundo
+            setTimeout(returnTurnToPlayer, 2000); //devolver turno al jugador a los 2 segundos
+            //setTimeout(() => turnCPU(e, dicShellsIA), 500); //Repetir turno CPU al milisegundo
             // la línea de arriba hace que solo juegue la CPU, deshabilitar returnToPlayer y invertir las líneas del if anterior
         }
 
-    }
-
-    function cpuRandomSelection(dicShellsIA){
-
-
-    }
-
-    function cpuTargetSelection(){
-        let randomIndex = Math.floor(Math.random() * selectedHits.length); //buscamos casilla random de la lista de hits seleccionados
-        for (let cell of cellsTableIA) {
-            let x = parseInt(cell.getAttribute('data-x'));
-            let y = parseInt(cell.getAttribute('data-y'));
-            const currentCell = [x, y];
-            let rndSelection = [selectedHits[randomIndex][0], selectedHits[randomIndex][1]];
-            if (compareCoordinates(currentCell, rndSelection)) {
-                cell.style.backgroundColor= "blue"; //marcar la celda escogida
-                cell.style.border = "2px solid blue";
-                coordinateInCPUTable = currentCell;
-                
-                // Actualiza cpuLeftCells eliminando la celda tocada
-                for (let i = 0; i < cpuLeftCells.length; i++) {
-                    if (cpuLeftCells[i].x === x && cpuLeftCells[i].y === y) {
-                        cpuLeftCells.splice(i, 1); // Elimina la celda tocada
-                        break;
-                    }
-                }
-
-            }
-        }
     }
 
     //función que devuelve las celdas válidas adyacentes, es decir: que estén dentro de la tabla y que no estén tocadas
     function possibleAdjacentCells(cell){
         let adjacentCells = []
         let possibilities = [
+            [cell[0], cell[1]], //centro
             [cell[0] - 1, cell[1]], //arriba
             [cell[0] + 1, cell[1]], //abajo
             [cell[0], cell[1] - 1], //izquierda
@@ -502,15 +496,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     let y = parseInt(cells.getAttribute('data-y'));
                     let life = parseInt(cells.getAttribute('data-life'));
                     const currentCell = [x, y];
-
-                        if (compareCoordinates(currentCell, pos) && life < 1){
-                            invalid = true; //si la posibilidad coincide con una celda ya tocada, marcar como inviable
-                            break;
-                        }
-                    
-                    if (invalid){
+                    //console.log("currentcell: ", currentCell, "pos: ", pos, "life: ", life);
+                    if (compareCoordinates(currentCell, pos) && life < 1){
+                        invalid = true; //si la posibilidad coincide con una celda ya tocada, marcar como inviable
                         break;
-                    }              
+                    }                               
                 }
             }
 
@@ -525,92 +515,124 @@ document.addEventListener("DOMContentLoaded", function () {
     function isValidCell([x, y]){
         return x >= 1 && x <= 10 && y >= 1 && y <= 10; 
     }
+    
+    // function modifySelectedHits(){
+    //     if (getOrientation(thisHit, previousHit) === 'horizontal'){
+    //         i = selectedHits.length;
+    //         while(i--){ //bucle inverso para no mover los valores al hacer splice
+    //             if(thisHit[0]!=selectedHits[i][0]){
+    //                 selectedHits.splice(i, 1);
+    //             }
+    //         }
+    //     }
+    //     if (getOrientation(thisHit, previousHit) === 'vertical'){
+    //         i = selectedHits.length;
+    //         while(i--){
+    //             if(thisHit[1]!=selectedHits[i][1]){
+    //                 selectedHits.splice(i, 1);
+    //             }
+    //         }
+    //     }
+    // }
+    // // Función para determinar la orientación
+    // function getOrientation(firstHit, secondHit) {
+    //     if (compareCoordinates(firstHit,secondHit)){
+    //         return null;
+    //     }
+    //     if (firstHit[0] === secondHit[0]) {
+    //         return 'horizontal'; // mismo x, diferente y
+    //     } else if (firstHit[1] === secondHit[1]) {
+    //         return 'vertical'; // mismo y, diferente x
+    //     }
+    //     return null; // no es válido
+    // }
 
+    //esto no se usa
     // LOGICA DE TOCAR --
 
-    // Marcar la celda como tocada
-    function markCellAsTouched([x, y]) {
-        for (let cell of cellsTableIA) {
-            const cellX = parseInt(cell.getAttribute('data-x'));
-            const cellY = parseInt(cell.getAttribute('data-y'));
-            if (cellX === x && cellY === y) {
-                cell.setAttribute('data-touched', 'true'); // Marca la celda como tocada
+    // // Marcar la celda como tocada
+    // function markCellAsTouched([x, y]) {
+    //     for (let cell of cellsTableIA) {
+    //         const cellX = parseInt(cell.getAttribute('data-x'));
+    //         const cellY = parseInt(cell.getAttribute('data-y'));
+    //         if (cellX === x && cellY === y) {
+    //             cell.setAttribute('data-touched', 'true'); // Marca la celda como tocada
 
-                // Actualiza cpuLeftCells eliminando la celda tocada
-                for (var j = 0; j < cpuLeftCells.length; j++) {
-                    if (cpuLeftCells[j].x === x && cpuLeftCells[j].y === y) {
-                        cpuLeftCells.splice(j, 1); // Elimina la celda tocada
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-    }
+    //             // Actualiza cpuLeftCells eliminando la celda tocada
+    //             for (var j = 0; j < cpuLeftCells.length; j++) {
+    //                 if (cpuLeftCells[j].x === x && cpuLeftCells[j].y === y) {
+    //                     cpuLeftCells.splice(j, 1); // Elimina la celda tocada
+    //                     break;
+    //                 }
+    //             }
+    //             break;
+    //         }
+    //     }
+    // }
 
-    // Función para obtener las celdas adyacentes
-    function getAdjacentCells([x, y]) {
-        const adjacent = [];
-        const directions = [
-            [0, 1],   // derecha
-            [1, 0],   // abajo
-            [0, -1],  // izquierda
-            [-1, 0],  // arriba
-        ];
+    // // Función para obtener las celdas adyacentes
+    // function getAdjacentCells([x, y]) {
+    //     const adjacent = [];
+    //     const directions = [
+    //         [0, 1],   // derecha
+    //         [1, 0],   // abajo
+    //         [0, -1],  // izquierda
+    //         [-1, 0],  // arriba
+    //     ];
 
-        for (const [dx, dy] of directions) {
-            const newX = x + dx;
-            const newY = y + dy;
-            if (newX >= 1 && newX <= 10 && newY >= 1 && newY <= 10) {
-                adjacent.push([newX, newY]);
-            }
-        }
-        return adjacent;
-    }
+    //     for (const [dx, dy] of directions) {
+    //         const newX = x + dx;
+    //         const newY = y + dy;
+    //         if (newX >= 1 && newX <= 10 && newY >= 1 && newY <= 10) {
+    //             adjacent.push([newX, newY]);
+    //         }
+    //     }
+    //     return adjacent;
+    // }
 
-    // Función para verificar si la celda está disponible
-    function isCellAvailable([x, y]) {
-        // Comprobar si la celda ha sido tocada
-        for (const cell of cellsTableIA) {
-            const cellX = parseInt(cell.getAttribute('data-x'));
-            const cellY = parseInt(cell.getAttribute('data-y'));
-            if (cellX === x && cellY === y) {
-                return cell.getAttribute('data-touched') === 'false'; // Solo devolver true si no ha sido tocada
-            }
-        }
-        return false; // Si la celda no existe o ya ha sido tocada
-    }
+    // // Función para verificar si la celda está disponible
+    // function isCellAvailable([x, y]) {
+    //     // Comprobar si la celda ha sido tocada
+    //     for (const cell of cellsTableIA) {
+    //         const cellX = parseInt(cell.getAttribute('data-x'));
+    //         const cellY = parseInt(cell.getAttribute('data-y'));
+    //         if (cellX === x && cellY === y) {
+    //             return cell.getAttribute('data-touched') === 'false'; // Solo devolver true si no ha sido tocada
+    //         }
+    //     }
+    //     return false; // Si la celda no existe o ya ha sido tocada
+    // }
 
 
-    // Nueva función para encontrar celdas adyacentes a aciertos
-    function findNextAttackFromHits(hits) {
-        const adjacentCells = new Set();
+    // // Nueva función para encontrar celdas adyacentes a aciertos
+    // function findNextAttackFromHits(hits) {
+    //     const adjacentCells = new Set();
 
-        hits.forEach(function (hit) {
-            const cells = getAdjacentCells(hit);
-            cells.forEach(function (cell) {
-                if (isCellAvailable(cell)) {
-                    adjacentCells.add(JSON.stringify(cell)); // Usa un Set para evitar duplicados
-                }
-            });
-        });
+    //     hits.forEach(function (hit) {
+    //         const cells = getAdjacentCells(hit);
+    //         cells.forEach(function (cell) {
+    //             if (isCellAvailable(cell)) {
+    //                 adjacentCells.add(JSON.stringify(cell)); // Usa un Set para evitar duplicados
+    //             }
+    //         });
+    //     });
 
-        if (adjacentCells.size > 0) {
-            const randomCell = Array.from(adjacentCells)[Math.floor(Math.random() * adjacentCells.size)];
-            return JSON.parse(randomCell);
-        }
+    //     if (adjacentCells.size > 0) {
+    //         const randomCell = Array.from(adjacentCells)[Math.floor(Math.random() * adjacentCells.size)];
+    //         return JSON.parse(randomCell);
+    //     }
 
-        return null; // Si no hay celdas adyacentes disponibles
-    }
+    //     return null; // Si no hay celdas adyacentes disponibles
+    // }
 
-    // Verifica si la celda es un acierto
-    function checkIfHit(cell, dicShells) {
-        return dicShells.some(function (shell) {
-            return shell.touchedCoordinates.some(function (touched) {
-                return compareCoordinates(touched, cell);
-            });
-        });
-    }
+    // // Verifica si la celda es un acierto
+    // function checkIfHit(cell, dicShells) {
+    //     return dicShells.some(function (shell) {
+    //         return shell.touchedCoordinates.some(function (touched) {
+    //             return compareCoordinates(touched, cell);
+    //         });
+    //     });
+    // }
 
 
     // mostrar todas las imagenes en tu tablero
