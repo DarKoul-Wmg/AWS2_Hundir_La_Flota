@@ -360,20 +360,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             if (compareCoordinates(coordinate, coordinateAD)) {
 
-                                const tipeShell = shell.shellType;
+                                let tipeShell = shell.shellType;
                                 console.log(tipeShell);
 
                                 //No mostrar la imagen de la concha hasta ser descubierta del todox
                                 if(shell.lives[index] > 0){
-                                    cell.style.backgroundColor = "blue";
+                                    tipeShell = tipeShell + "Ent";
                                     someShellIsDiscovered='halfTouched';
                                 }
-
                                 else{
-                                    cell.setAttribute('data-photo', tipeShell);
-                                    cell.style.backgroundColor = 'rgba(0, 0, 0, 0.652)';
                                     someShellIsDiscovered='shell';
                                 }
+                                
+                                cell.setAttribute('data-photo', tipeShell);
+                                cell.style.backgroundColor = 'rgba(0, 0, 0, 0.652)';
+                                
                                 isShell = true;
                             }
                             index++;
@@ -1047,16 +1048,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (compareCoordinates(coordinate, coordinateClickedCell)) {
 
-                    const tipeShell = shell.shellType;
+                    let tipeShell = shell.shellType;
 
                     console.log(tipeShell);
                     //No mostrar la imagen de la concha hasta ser descubierta del todox
                     if(shell.lives[index] > 0){
-                        cell.style.backgroundColor = "blue";
-                    }else{                     
-                        cell.setAttribute('data-photo', tipeShell);
-                        cell.style.backgroundColor = 'rgba(0, 0, 0, 0.652)';
+                        tipeShell = tipeShell + "Ent";
                     }
+
+                    cell.setAttribute('data-photo', tipeShell);
+                    cell.style.backgroundColor = 'rgba(0, 0, 0, 0.652)';
                     isShell = true;
                 }
                 index++;
