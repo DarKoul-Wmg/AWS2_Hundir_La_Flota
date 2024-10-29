@@ -325,6 +325,10 @@ body#gameIA .centerContainer #contenedorSpecialAttack .shovelDisable{
     opacity:0.5;
 }
 
+body#gameIA .centerContainer #contenedorSpecialAttack img[data-used="true"] {
+    cursor: not-allowed;
+}
+
 
 /* Clases para las fotos*/
 
