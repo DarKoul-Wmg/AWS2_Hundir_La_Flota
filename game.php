@@ -90,6 +90,8 @@
 
     // Regoger valores de los checkboxes
     $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) ? $_SESSION["limmitedAmmo"] : false;
+    $ironcladShips = isset($_SESSION["ironcladShips"]) && $_SESSION["ironcladShips"];
+
     //$ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
     //$specialAttacks = isset($_SESSION["specialAttacks"]) ? $_SESSION["specialAttacks"] : false;
 
@@ -145,6 +147,11 @@
 
             if (isEmpty($startX, $startY, $size, $direction, $board)) {
                 $shipCoordinates = [];
+                $shipLives = [];
+                $maxLife = 1;
+                if ($_SESSION["ironcladShips"]){
+                    $maxLife = 2;
+                };
 
                 for ($i = 0; $i < $size; $i++) {
                     if ($direction == 'horizontal') {
@@ -154,11 +161,12 @@
                         $board[$startX][$startY + $i] = true;
                         $shipCoordinates[] = [$startX, $startY + $i];
                     }
+                    $shipLives[] = $maxLife;
                 }
 
                 // Aquí asignas las coordenadas al barco actual
                 $ship['coordinates'] = $shipCoordinates;
-
+                $ship['lives'] = $shipLives;
                 $placed = true;
             }
         }
@@ -179,7 +187,8 @@
                 'size' => $size,
                 'coordinates' => [], // Inicialmente vacío
                 'touchedCoordinates' => [],
-                'shellType' => $type
+                'shellType' => $type,
+                'lives' => []
             ];
 
             placeShip($ship, $size, $type, $board); // Pasar el barco actual a la función
@@ -229,8 +238,12 @@
                         $chrx = chr(64 + $j);
                         echo "<td class='letter'> $chrx </td>";
                     } else {
+                        $life = 1;
+                        if ($_SESSION["ironcladShips"]){
+                            $life = 2;
+                        };
                         // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                        echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                        echo "<td class='selectCellsUser' data-x=$i data-y=$j data-life=$life data-touched='false' data-photo='none'></td>";
                     }
                 }
                 echo "</tr>";

@@ -99,8 +99,12 @@
 
         // Regoger valores de los checkboxes
         $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"];
-        //$ironclad = isset($_SESSION["ironclad"]) && $_SESSION["ironclad"];
+        $ironcladShips = isset($_SESSION["ironcladShips"]) && $_SESSION["ironcladShips"];
         $specialAttacks = isset($_SESSION["specialAttacks"]) && $_SESSION["specialAttacks"];
+
+        //div para recoger la opción de acorazados en un hidden y recogerla con JS
+        $ironcladShipsStr = $ironcladShips ? 'true' : 'false';
+        echo '<div id="contenedorAcorazados" data-ironcladShips="'. $ironcladShipsStr . '"style=visibility: hidden;></div>';
 
         // crear dos tableros 10x10 - por defecto sin conchas
         $boardUser = array_fill(1, 10, array_fill(1, 10, false));
@@ -154,20 +158,26 @@
         
                 if (isEmpty($startX, $startY, $size, $direction, $board)) {
                     $shipCoordinates = [];
+                    $shipLives = [];
+                    $maxLife = 1;
+                    if ($_SESSION["ironcladShips"]){
+                        $maxLife = 2;
+                    };
         
                     for ($i = 0; $i < $size; $i++) {
                         if ($direction == 'horizontal') {
                             $board[$startX + $i][$startY] = true;
-                            $shipCoordinates[] = [$startX + $i, $startY];
+                            $shipCoordinates[] = [$startX + $i, $startY]; 
                         } else {
                             $board[$startX][$startY + $i] = true;
-                            $shipCoordinates[] = [$startX, $startY + $i];
+                            $shipCoordinates[] = [$startX, $startY + $i]; 
                         }
+                        $shipLives[] = $maxLife;
                     }
         
                     // Aquí asignas las coordenadas al barco actual
                     $ship['coordinates'] = $shipCoordinates;
-        
+                    $ship['lives'] = $shipLives;
                     $placed = true;
                 }
             }
@@ -177,8 +187,7 @@
         function generateShips(&$board) {
             $ships = [];
             $types = ["ermitano", "caparazon", "caparazon2", "caracol","caracola","concha","erizo","mejillon","nautilus","estrella"];
-            $shipSizes = [1,1,1,1,2,2,2,3,3,4];
-
+            $shipSizes = [1,1,1,1,2,2,2,3,3,4];           
             foreach ($shipSizes as $size) {
                 $randomIndex = array_rand($types);
                 $type = $types[$randomIndex];
@@ -188,7 +197,8 @@
                     'size' => $size,
                     'coordinates' => [], // Inicialmente vacío
                     'touchedCoordinates' => [],
-                    'shellType' => $type
+                    'shellType' => $type,
+                    'lives' => []
                 ];
 
                 placeShip($ship, $size, $type, $board); // Pasar el barco actual a la función
@@ -267,9 +277,15 @@
                                 $chrx = chr(64 + $j);
                                 echo "<td class='letter'> $chrx </td>";
                             } else {
-                                
+
+                                //cambios a data-touched por data-life: añadimos sistema de vidas por celda, 0 == muerta, equivale a data-touched == true
+                                //reducimos en 1 por acierto
+                                $life = 1;
+                                if ($_SESSION["ironcladShips"]){
+                                    $life = 2;
+                                };
                                 // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                                echo "<td class='selectCellsIA' data-x=$i data-y=$j data-life=$life data-touched='false' data-photo='none'></td>";
                             }
                         }
                         echo "</tr>";
@@ -315,8 +331,14 @@
                             $chrx = chr(64 + $j);
                             echo "<td class='letter'> $chrx </td>";
                         } else {
+                            //cambios a data-touched por data-life: añadimos sistema de vidas por celda, 0 == muerta, equivale a data-touched == true
+                            //reducimos en 1 por acierto
+                            $life = 1;
+                            if ($_SESSION["ironcladShips"]){
+                                $life = 2;
+                            };
                             // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                            echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                            echo "<td class='selectCellsUser' data-x=$i data-y=$j data-life=$life data-touched='false' data-photo='none'></td>";
                         }
                     }
                     echo "</tr>";
