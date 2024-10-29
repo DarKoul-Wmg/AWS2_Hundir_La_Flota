@@ -125,12 +125,12 @@
 
             <div class="landingPageOptions" id="landingPageOptions">
                 <div class="landingPageCheckboxWrapper">
-                    <label for="limmitedAmmoCheckbox" class="landingPageLabel">Munició limitada</label>
+                    <label for="limmitedAmmoCheckbox" class="landingPageLabel">Usos limitats</label>
                     <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox"
                         class="landingPageCheckbox">
                 </div>
                 <div class="landingPageCheckboxWrapper">
-                    <label for="ironcladShipsCheckbox" class="landingPageLabel">Vaixells acoirassats</label>
+                    <label for="ironcladShipsCheckbox" class="landingPageLabel">Petxines amagades</label>
                     <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox"
                         class="landingPageCheckbox">
                 </div>
