@@ -737,10 +737,10 @@ body#win .winBox {
 }
 
 body#win img{
-    max-width: 150px;
-    max-height: 150px;
-    margin-right: 50px;
-    margin-left: 50px;
+    max-width: 130px;
+    max-height: 130px;
+    margin-right: 35px;
+    margin-left: 35px;
 }
 /*efectos de las imagenes*/
 body#win .imagenSalto{
@@ -792,13 +792,13 @@ body#win .winRankingButton{
 }
 
 body#win .winRegisterButton{
-    font: 1.8em "Fira Sans", sans-serif;
+    font: 1.5em "Fira Sans", sans-serif;
     background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px 20px 10px 20px;
-    margin: 0 20px 0 20px;
+    margin: 20px 20px 0 10px;
 }
 body#win .winScoreTitle{
     font: 2.4em "Fira Sans", sans-serif;
@@ -818,11 +818,11 @@ body#win .winCenterButtons{
 }
 
 body#win input[type=text] {
-    font: 2em "Fira Sans", sans-serif;
+    font: 1.6em "Fira Sans", sans-serif;
 	appearance: none;
 	border: none;
 	outline: none;
-	border-bottom: .2em solid #fcc486;
+	border-bottom: 0.2em solid #fcc486;
 	background: #ffdcb4;
 	border-radius: 15px;
 	padding: .4em;
@@ -876,10 +876,10 @@ body#lose .loseBox {
 }
 
 body#lose img{
-    max-width: 150px;
-    max-height: 150px;
-    margin-right: 50px;
-    margin-left: 50px;
+    max-width: 130px;
+    max-height: 130px;
+    margin-right: 35px;
+    margin-left: 35px;
     z-index: 20;
 }
 
@@ -923,13 +923,13 @@ body#lose .loseHomeBtnLink{
 }
 
 body#lose .loseRegisterButton{
-    font: 1.8em "Fira Sans", sans-serif;
+    font: 1.5em "Fira Sans", sans-serif;
     background-color: #39284E; 
     color: #fcd4a7; 
     border-radius: 40px; 
     border-color: #fcc486;
     padding: 10px 20px 10px 20px;
-    margin: 0 20px 0 20px;
+    margin: 20px 20px 0 10px;
 }
 body#lose .loseScoreTitle{
     font: 2.4em "Fira Sans", sans-serif;
@@ -949,7 +949,7 @@ body#lose .loseCenterButtons{
 }
 
 body#lose input[type=text] {
-    font: 2em "Fira Sans", sans-serif;
+    font: 1.6em "Fira Sans", sans-serif;
 	appearance: none;
 	border: none;
 	outline: none;
