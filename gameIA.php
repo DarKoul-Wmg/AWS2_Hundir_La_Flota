@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css?t=<?php echo time();?>"/>
 	<script src="game.js"></script>
     
     <title>Trova la petxina VS IA</title>
