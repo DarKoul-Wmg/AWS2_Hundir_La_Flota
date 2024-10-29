@@ -235,7 +235,7 @@
                 echo '
                     <div id="contenedorMunicion" data-limitedMunition="' . $limmitedAmmoStr . '" style="visibility: ' . $visibilityStyleMunition . ';">
                         <div id="contenidoHidMunicion">
-                            <h3> Munición disponible </h3>
+                            <h3> Usos disponibles </h3>
                             <div class="linea">
                                 <p>User:</p> 
                                 <p id="userMunition">20</p> 
