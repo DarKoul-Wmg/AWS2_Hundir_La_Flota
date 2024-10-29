@@ -97,10 +97,7 @@
         $_SESSION["ironcladShips"] = $ironcladShips;
         $_SESSION["specialAttacks"] = $specialAttacks;
 
-        // Regoger valores de los checkboxes
-        $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"];
-        $ironcladShips = isset($_SESSION["ironcladShips"]) && $_SESSION["ironcladShips"];
-        $specialAttacks = isset($_SESSION["specialAttacks"]) && $_SESSION["specialAttacks"];
+       
 
         //div para recoger la opción de acorazados en un hidden y recogerla con JS
         $ironcladShipsStr = $ironcladShips ? 'true' : 'false';

@@ -137,7 +137,7 @@
                 <div class="landingPageCheckboxWrapper">
                     <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
                     <input type="checkbox" id="specialAttacksCheckbox" name="specialAttacksCheckbox"
-                    class="landingPageCheckbox" '. (isset($_SESSION["specialAttacks"]) && $_SESSION["specialAttacks"] ? 'checked' : '') . '>
+                    class="landingPageCheckbox">
 
                 </div>
             </div>
