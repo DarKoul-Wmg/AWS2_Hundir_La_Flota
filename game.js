@@ -484,6 +484,11 @@ document.addEventListener("DOMContentLoaded", function () {
         tableIA.classList.add("tableDisabler");
         tableIA.classList.remove("tableEnabler");
 
+        const shovels = document.getElementsByClassName('pala');
+        for(const shovel of shovels){
+            shovel.classList.remove('shovelDisable');
+        }
+
     }
 
     function styleTurnCPU() { //estilos que marcan el turno de la CPU
@@ -491,6 +496,12 @@ document.addEventListener("DOMContentLoaded", function () {
         tableUser.classList.remove("tableEnabler");
         tableIA.classList.add("tableEnabler");
         tableIA.classList.remove("tableDisabler");
+
+        const shovels = document.getElementsByClassName('pala');
+        for(const shovel of shovels){
+            shovel.classList.add('shovelDisable');
+        }
+        
     }
 
     function resetClickEvent() {
