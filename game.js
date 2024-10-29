@@ -366,6 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 //No mostrar la imagen de la concha hasta ser descubierta del todox
                                 if(shell.lives[index] > 0){
                                     cell.style.backgroundColor = "blue";
+                                    someShellIsDiscovered='halfTouched';
                                 }
 
                                 else{
@@ -414,7 +415,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }      
         }
         // pasar el turno a la CPU
-        else if(someShellIsDiscovered === 'water'){
+        else if(someShellIsDiscovered === 'water' || someShellIsDiscovered === 'halfTouched'){
             console.log("SE LE PASA EL TURNO A LA CPU");
             return false;
         }
@@ -988,7 +989,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // se tienen que comparar cada una de las coordenadas, sino compara la dirección de memoria del objeto
                 if (compareCoordinates(coordinate, coordinateClickedCell)) { // si es una concha
                     touch = true;
-                    cellState = "shell";
+                    cellState = "halfTouched";
                     
                     //Sonido de acierto
                     sonidoAcierto.play();
@@ -1000,6 +1001,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.log(shell.lives);
                     // añadimos esta coordenada a las de touched cuando su vida es 0
                     if (shell.lives[index] < 1){
+                        cellState = "shell";
                         shell.touchedCoordinates.push(coordinateClickedCell);
                         console.log("coordenada añadida")
                     }
@@ -1079,8 +1081,8 @@ document.addEventListener("DOMContentLoaded", function () {
             lose: "Perill<br/><br/>Has perdut!",
             userNotMun: "Alerta<br/><br/>Ja no tens més munició",
             iaNotMun: "Alerta<br/><br/>L'ia ja no té més munició",
-            userNotEnouthMunition: "Alerta<br/><br/>No tens suficient munició"
-
+            userNotEnouthMunition: "Alerta<br/><br/>No tens suficient munició",
+            halfTouched: "Informació<br/><br/>Potser has trobat una petxina, qui sap?"
         };
 
         // Mostrar el string en el div con id="resultado" | <div id="message"></div>
