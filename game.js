@@ -331,17 +331,20 @@ document.addEventListener("DOMContentLoaded", function () {
         // por cada coordenada que se ha tocada con el ataque especial
         for (const coordinateAD of adjacentCells){
             // recoger el informe de la celda
-            const [touch, cellState, groupIsDiscoveredTemp] = checkClickedCell(dicShellsUser,coordinateAD);
+            const [touch, cellState, groupIsDiscoveredTemp,life] = checkClickedCell(dicShellsUser,coordinateAD);
 
             
             const cell = document.querySelector(`#tableUser td[data-x="${coordinateAD[0]}"][data-y="${coordinateAD[1]}"]`);
             
             if(cell){
 
-                // levanta la celda si esta no ha sido levantada ya
-                if(cell.getAttribute('data-touched') === 'false'){
+                let lifeCell = parseInt(cell.getAttribute('data-life'));
+                // si la celda tiene vida
+                if (lifeCell>0){
                     //cambiar el atributo a true para no volverla a girar
                     cell.setAttribute('data-touched', 'true');
+                    //actualiza las vidas
+                    cell.setAttribute('data-life', life);
 
                     // poner que se ha encontrado un grupo entero
                     if(groupIsDiscoveredTemp){
@@ -352,16 +355,27 @@ document.addEventListener("DOMContentLoaded", function () {
                     let isShell = false;
 
                     for (const shell of dicShellsUser) {
+                        let index = 0;
                         for (const coordinate of shell.coordinates) {
 
                             if (compareCoordinates(coordinate, coordinateAD)) {
 
                                 const tipeShell = shell.shellType;
                                 console.log(tipeShell);
-                                cell.setAttribute('data-photo', tipeShell);
+
+                                //No mostrar la imagen de la concha hasta ser descubierta del todox
+                                if(shell.lives[index] > 0){
+                                    cell.style.backgroundColor = "blue";
+                                }
+
+                                else{
+                                    cell.setAttribute('data-photo', tipeShell);
+                                    cell.style.backgroundColor = 'rgba(0, 0, 0, 0.652)';
+                                    someShellIsDiscovered='shell';
+                                }
                                 isShell = true;
-                                someShellIsDiscovered='shell';
                             }
+                            index++;
                         }
                     }
                     if (!isShell) {
@@ -434,8 +448,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         let y = parseInt(cell.getAttribute('data-y'));
                         const coordinateCellClicked = [x, y];
 
-                        // si no se ha tocado aún
-                        if (cell.getAttribute('data-touched') === 'false'){
+                        let lifeCell = parseInt(cell.getAttribute('data-life'));
+                        // si la celda tiene vida
+                        if (lifeCell>0){
 
                             if(isTurnUserAndDiscoverCellsWithSpecialAttack(coordinateCellClicked)){ // te devuelve si es el turno del user
                                 returnTurnToPlayer();
