@@ -36,9 +36,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"]) && isse
   $_SESSION['score'] = $score;
   $_SESSION['lastDate'] = $date;
 
+  echo "<p> playerName -> {$playerName}
+            score -> {$score}
+            lastDate ->  {$date}
+        </p>";
+
   if (strlen($playerName) >= 3 && strlen($playerName) <= 30) {
       $line = "$playerName,$score,$date\n";
       file_put_contents('ranking.txt', $line, FILE_APPEND);
+      echo "<p> Archic subido - > {$playerName}</p>";
   }
 }
 
