@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trova la petxina</title>
+    <title>Trova la petxina-Lose</title>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="style.css?t=<?php echo time();?>"/>
     <script src="game.js"></script>
 </head>
