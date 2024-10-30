@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Troba la petxina</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Trova la petxina</title>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="style.css?t=<?php echo time();?>"/>
     <script src="game.js"></script>
 </head>
 
@@ -59,15 +60,17 @@
     </audio>
 
     <div class="landingPageBox">
-        <p class="landingPageTitle">Troba la petxina</p>
+        <p class="landingPageTitle">Trova la petxina</p>
         <p class="landingPageDescription">
-            Troba totes les petxines com més aviat millor!
+            Trova totes les petxines com més aviat millor!
         </p>
 
         <?php
     // Crear sesión y guardar el nombre del jugador en una variable de sesión
     session_start();
-
+    // session_unset(); // Eliminar todas las variables de sesión
+    $_SESSION['redirected'] = true;
+    
     if(isset($_POST["playerName"])){ //si tenemos nombre registrado, mostrar botones de juego activos
         $_SESSION["playerName"] = $_POST["playerName"];
 
@@ -99,84 +102,94 @@
         echo'
         <form action="index.php" method="post">
             <div class="landingPageCenterTextbox">
-                <input type="text" id="playerName" name="playerName"  placeholder="Registra el teu nom per jugar" minlength="3" maxlength="30" required>
-                <input type="submit" class="landingPageRegisterButton" value="Registra">
+                <input type="text" id="playerName" name="playerName" placeholder="Registra el teu nom per jugar"
+                    minlength="3" maxlength="30" required>
             </div>
 
             <div class="landingPageCenterButtons">
-                <a href="game.php" class="landingPageStartLinkBtn">
-                    <button type="button" class="landingPageNewGameButton" disabled>Tutorial</button>
-                </a>
-                <a href="gameIA.php" class="landingPageStartLinkBtn">
-                    <button type="button" class="landingPageNewGameButton" disabled>Vs CPU</button>
-                </a>
+
+                <input type="submit" class="landingPageNewGameButton" id="tutorialBtn" name="tutorial" value="Tutorial"
+                    formaction="game.php" disabled>
+
+
+                <input type="submit" class="landingPageNewGameButton" id="vsCpuBtn" name="vsCPU" value="Vs CPU"
+                    formaction="gameIA.php" disabled>
+
                 <a href="ranking.php?page=1">
                     <button type="button" class="landingPageRankingButton">Ranking</button>
                 </a>
             </div>
 
+            <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton">
+                <img src="images/options.png" class="optionImg">Opcions
+            </button>
+
             <div class="landingPageOptions" id="landingPageOptions">
                 <div class="landingPageCheckboxWrapper">
-                    <label for="limmitedAmmoCheckbox" class="landingPageLabel">Munició limitada</label>
-                     <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox" class="landingPageCheckbox" ' . (isset($_SESSION["limmitedAmmo"]) && $_SESSION["limmitedAmmo"] ? 'checked' : '') . '>
-                    </div>
-                <div class="landingPageCheckboxWrapper">
-                    <label for="ironcladShipsCheckbox" class="landingPageLabel">Vaixells acoirassats</label>
-                    <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox" class="landingPageCheckbox" disabled>
+                    <label for="limmitedAmmoCheckbox" class="landingPageLabel">Usos limitats</label>
+                    <input type="checkbox" id="limmitedAmmoCheckbox" name="limmitedAmmoCheckbox"
+                        class="landingPageCheckbox">
                 </div>
                 <div class="landingPageCheckboxWrapper">
-                    <label for="specialAttacksCheckbox" class="landingPageLabel">Atacs especials</label>
-                    <input type="checkbox" id="specialAttacksCheckbox" name="specialAttacksCheckbox" class="landingPageCheckbox" disabled>
+                    <label for="ironcladShipsCheckbox" class="landingPageLabel">Petxines amagades</label>
+                    <input type="checkbox" id="ironcladShipsCheckbox" name="ironcladShipsCheckbox"
+                        class="landingPageCheckbox">
+                </div>
+                <div class="landingPageCheckboxWrapper">
+                    <label for="specialAttacksCheckbox" class="landingPageLabel">Pala especial</label>
+                    <input type="checkbox" id="specialAttacksCheckbox" name="specialAttacksCheckbox"
+                    class="landingPageCheckbox">
+
                 </div>
             </div>
-
         </form>
-        ';
-    };
-
+    </div>';
+    }
 ?>
-        <button type="button" id="landingPageOptionsButton" class="landingPageOptionsButton"><img src="images/options.png" class="optionImg"></button>
-        
-        <!--
+
+
+    <!--
         en la especificación no pone nada de que el menú de opciones tenga un botón de Guardar, así que tal vez sea mejor guardar las opciones en JS
         -->
-        <script>
-            function init() {
-                var checkbox = document.getElementById("limmitedAmmoCheckbox");
-                //comprobar valor de la variable en la cookie de sesión
-                //cambiar checkbox en la página
-                if (sessionStorage.ammoCheckbox == 'true') {
-                    checkbox.checked = true; 
-                } else {
-                    checkbox.checked = false;
+    <script>
+
+        const textbox = document.getElementById("playerName");
+        const tutorial = document.getElementById("tutorialBtn");
+        const vsCPU = document.getElementById("vsCpuBtn");
+
+        function init() {
+
+            textbox.addEventListener("input", eventHandler);
+            function eventHandler(event) {
+                if (textbox.value.length > 2) {
+                    tutorial.disabled = false;
+                    vsCPU.disabled = false;
                 }
-                checkbox.addEventListener("change", save); //llamar a save() cuando la checkbox cambia de estado
+                if (textbox.value.length < 3) {
+                    tutorial.disabled = true;
+                    vsCPU.disabled = true;
+                }
             }
-
-            //guardar estado de la checkbox en una cookie
-            function save() {
-                var ammoCheckboxVal = document.getElementById("limmitedAmmoCheckbox").checked;
-                sessionStorage.setItem('ammoCheckbox', ammoCheckboxVal);
-            }
-
-            //ejecutar script después de cargar el DOM
-            window.addEventListener("DOMContentLoaded", init);
-
             // función del botón checkBoxes landingPage
             //landingPage, hacer clic en botón opciones para mostrar/esconder div
             const landingPageOptBtn = document.getElementById("landingPageOptionsButton");
             let showOptions = true;
-            landingPageOptBtn.addEventListener("click", function() {
-            if (showOptions){
-                document.getElementById("landingPageOptions").style.display = "block";
-                showOptions = false;
-            } else {
-                document.getElementById("landingPageOptions").style.display = "none";
-                showOptions = true;
-            }
+            landingPageOptBtn.addEventListener("click", function () {
+                if (showOptions) {
+                    document.getElementById("landingPageOptions").style.display = "block";
+                    showOptions = false;
+                } else {
+                    document.getElementById("landingPageOptions").style.display = "none";
+                    showOptions = true;
+                }
             });
+        }
 
-        </script>
+        window.addEventListener("DOMContentLoaded", init);
+
+
+
+    </script>
 </body>
 
 </html>

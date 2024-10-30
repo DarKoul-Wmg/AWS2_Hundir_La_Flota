@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css?t=<?php echo time();?>"/>
 	<script src="game.js"></script>
     
-    <title>Troba la petxina</title>
+    <title>Troba la petxina-Tutorial</title>
 </head>
 
 <body id="game">
@@ -74,9 +74,24 @@
 
     <?php
     session_start();
+    //almacenamos nombre de jugador en sesión
+    $_SESSION["playerName"] = $_POST["playerName"];
+
+    // valores de los checkboxes enviados desde el formulario
+    $limmitedAmmo = isset($_POST['limmitedAmmoCheckbox']) ? true : false;
+    $ironcladShips = isset($_POST['ironcladShipsCheckbox']) ? true : false;
+    $specialAttacks = isset($_POST['specialAttacksCheckbox']) ? true : false;
+
+    // Guardar valores en la sesión para pasar a php2
+    $_SESSION["limmitedAmmo"] = $limmitedAmmo;
+    $_SESSION["ironcladShips"] = $ironcladShips;
+    $_SESSION["specialAttacks"] = $specialAttacks;
+
 
     // Regoger valores de los checkboxes
     $limmitedAmmo = isset($_SESSION["limmitedAmmo"]) ? $_SESSION["limmitedAmmo"] : false;
+    $ironcladShips = isset($_SESSION["ironcladShips"]) && $_SESSION["ironcladShips"];
+
     //$ironcladShips = isset($_SESSION["ironcladShips"]) ? $_SESSION["ironcladShips"] : false;
     //$specialAttacks = isset($_SESSION["specialAttacks"]) ? $_SESSION["specialAttacks"] : false;
 
@@ -132,6 +147,11 @@
 
             if (isEmpty($startX, $startY, $size, $direction, $board)) {
                 $shipCoordinates = [];
+                $shipLives = [];
+                $maxLife = 1;
+                if ($_SESSION["ironcladShips"]){
+                    $maxLife = 2;
+                };
 
                 for ($i = 0; $i < $size; $i++) {
                     if ($direction == 'horizontal') {
@@ -141,11 +161,12 @@
                         $board[$startX][$startY + $i] = true;
                         $shipCoordinates[] = [$startX, $startY + $i];
                     }
+                    $shipLives[] = $maxLife;
                 }
 
                 // Aquí asignas las coordenadas al barco actual
                 $ship['coordinates'] = $shipCoordinates;
-
+                $ship['lives'] = $shipLives;
                 $placed = true;
             }
         }
@@ -166,7 +187,8 @@
                 'size' => $size,
                 'coordinates' => [], // Inicialmente vacío
                 'touchedCoordinates' => [],
-                'shellType' => $type
+                'shellType' => $type,
+                'lives' => []
             ];
 
             placeShip($ship, $size, $type, $board); // Pasar el barco actual a la función
@@ -216,8 +238,12 @@
                         $chrx = chr(64 + $j);
                         echo "<td class='letter'> $chrx </td>";
                     } else {
+                        $life = 1;
+                        if ($_SESSION["ironcladShips"]){
+                            $life = 2;
+                        };
                         // Mostrar la celda como ocupada si contiene un barco (true) esto es solo para enseñar donde se colocan
-                        echo "<td class='selectCellsUser' data-x=$i data-y=$j data-touched='false' data-photo='none'></td>";
+                        echo "<td class='selectCellsUser' data-x=$i data-y=$j data-life=$life data-touched='false' data-photo='none'></td>";
                     }
                 }
                 echo "</tr>";

@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Troba la petxina</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Trova la petxina-Lose</title>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="style.css?t=<?php echo time();?>"/>
     <script src="game.js"></script>
 </head>
 
@@ -20,7 +21,7 @@ session_start();
         header('HTTP/1.1 403 Forbidden');
         echo "<div class ='forbidden'>
             <h1>403 Forbidden</h1>
-            <h2>Acces no autoritzat a lose.php, accedeix desde game.php</h2>
+            <h2>Acces no autoritzat a lose.php, accedeix perdent</h2>
           </div>\n</body>\n</html>"; // Muestra un mensaje
     exit; // Termina el script
     }
@@ -46,8 +47,8 @@ session_start();
     <!-- Capa de overlay para que el background pille el filtro B/N  -->
     <div class="overlay"></div>
 
-    <img src="/images/pulpoLose.png" alt="medusa dead" class="imagenSalto">
-    <img src="/images/conchaLose.png" alt="estrella dead" class="imagenGiro">
+    <img src="images/pulpoLose.png" alt="medusa dead" class="imagenSalto">
+    <img src="images/conchaLose.png" alt="estrella dead" class="imagenGiro">
 
 <!-- Div principal-->
     <div class="loseBox">
@@ -65,28 +66,8 @@ $date = date('Y-m-d h:i:s', time());
 echo '<p class="loseScoreTitle">Puntuació: ',$score,'</p>';
 echo '<p class="loseScoreDesc">Registra el nom al Hall of fame: </p>';
 
-// Si se ha enviado el formulario, guardar en el archivo y redirigir a ranking
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"])) {
-    $playerName = $_POST["playerName"]; // obtener el playerName del formulario
-    
-    if (strlen($playerName) >= 3 && strlen($playerName) <= 30){
-        $array = [$playerName, $score, $date]; // datos para insertar en txt
-        
-        // Guardar en el archivo
-        $file = fopen('ranking.txt', "a");
-        $processedLine = implode(',', $array) . "\n"; 
-        fwrite($file, $processedLine); 
-        fclose($file); 
-
-        // Redirigir a ranking.php
-        header("Location: ranking.php?page=1");
-        exit; // Terminar el script
-    }
-    
-}
-
 echo '
-<form  action="lose.php" method="post" onsubmit="easterEgg(event)">
+<form  action="ranking.php" method="post" onsubmit="easterEgg(event)">
     <input type="text" id="playerName" name="playerName" minlength="3" maxlength="30" value ="',$playerName,'" required>
     <input type="hidden" name="score" value="',$score,'">
     <button type="submit" class="loseRegisterButton">Registra</button>
@@ -104,8 +85,8 @@ echo '
         </div>
     </div>
 
-    <img src="/images/estrellaLose.png" alt="concha dead" class="imagenGiro">
-    <img src="/images/medusaLose.png" alt="pulpo dead" class="imagenSalto">
+    <img src="images/estrellaLose.png" alt="concha dead" class="imagenGiro">
+    <img src="images/medusaLose.png" alt="pulpo dead" class="imagenSalto">
 
     <script>
         //Script para reproducir el sonido nada mas entrar en la pagina

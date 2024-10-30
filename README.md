@@ -1,9 +1,9 @@
 
-# Proyecto AWS2 Hundir la flota - Troba la petxina
+# Proyecto AWS2 Hundir la flota - Trova la petxina
 
 ![](https://github.com/DarKoul-Wmg/AWS2_Hundir_La_Flota/blob/dev/images/backgroundGame2.png)
 
-¡Bienvenido a **Troba la Petxina**! Este es un juego interactivo en el que los jugadores deberán encontrar las conchas perdidas por la playa, utilizando una mecánica similar al clásico juego "Hundir la flota".
+¡Bienvenido a **Trova la Petxina**! Este es un juego interactivo en el que los jugadores deberán encontrar las conchas perdidas por la playa, utilizando una mecánica similar al clásico juego "Hundir la flota".
 Esta temática brinda una experiencia relajante y divertida, evocando la sensación de un placido atardecer en la playa, donde cada descubrimiento se siente como un pequeño tesoro encontrado.
 
 
@@ -19,7 +19,7 @@ Esta temática brinda una experiencia relajante y divertida, evocando la sensaci
 
 ## Descripción del juego
 
-En **Troba la Petxina**, el objetivo del juego es encontrar las conchas que encuentres por la playa. El jugador encuentre todas las conchas, gana la partida.
+En **Trova la Petxina**, el objetivo del juego es encontrar las conchas que encuentres por la playa. El jugador encuentre todas las conchas, gana la partida.
 
 
 ## Características
@@ -38,7 +38,7 @@ En **Troba la Petxina**, el objetivo del juego es encontrar las conchas que encu
 
 ## Sistemas de puntos
 
-Troba la petxina tiene un sistema de puntos basado en el tiempo que tardes en encontrar todas las conchas, así que sé listo y ten una estrategia preparado.
+Trova la petxina tiene un sistema de puntos basado en el tiempo que tardes en encontrar todas las conchas, así que sé listo y ten una estrategia preparado.
 Las rachas de acietos que tengas también influirán en la puntuación final.
 
 
