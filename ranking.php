@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trova la petxina</title>
+    <title>Trova la petxina-Ranking</title>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="style.css?t=<?php echo time();?>"/>
     <script src="game.js"></script>
 </head>
@@ -36,15 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["playerName"]) && isse
   $_SESSION['score'] = $score;
   $_SESSION['lastDate'] = $date;
 
-  echo "<p> playerName -> {$playerName}
-            score -> {$score}
-            lastDate ->  {$date}
-        </p>";
+  // echo "<p> playerName -> {$playerName}
+  //           score -> {$score}
+  //           lastDate ->  {$date}
+  //       </p>";
 
   if (strlen($playerName) >= 3 && strlen($playerName) <= 30) {
       $line = "$playerName,$score,$date\n";
       file_put_contents('ranking.txt', $line, FILE_APPEND);
-      echo "<p> Archic subido - > {$playerName}</p>";
+      // echo "<p> Archic subido - > {$playerName}</p>";
   }
 }
 
